@@ -1,45 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   User.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 16:09:11 by adelille         ###   ########.fr       */
+/*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
+/*   Updated: 2022/04/20 15:47:09 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "Server.hpp"
-#include <iostream>
-// signal
+#ifndef USER_HPP
+# define USER_HPP
 
-#ifndef DEBUG
-# define DEBUG	0
-#endif
+class Server;
 
-int	main(int ac, char **av)
+class User
 {
-	if (DEBUG)
-		std::cout << "[DEBUG]" << std::endl;
+	public:
+		User();
+		~User();
+	
+		User	&operator=(const User &src);
 
-	if (ac != 3)
-	{
-		std::cout << "./ircserv <port> <poassword>" << std::endl;
-		return (1);
-	}
-	
-	//Server	server;
-	// possibly handle SIGINT
+	private:
+};
 
-	(void)av;
-	// set port
-	// set password
-	
-	// init
-	
-	// do things
-	
-
-	return (0);
-}
+#endif

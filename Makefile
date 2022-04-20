@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/03/10 12:47:34 by adelille         ###   ########.fr        #
+#    Updated: 2022/04/20 16:21:34 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,6 +82,15 @@ all:		launch $(NAME)
 test:		all
 	@./$(NAME)
 
+cfdebug:
+	$(eval CFLAGS += -DDEBUG=1)
+
+debug: fclean cfdebug all
+
+quiet:
+	$(eval MAKEFLAGS += --silent)
+	@$(MAKE)
+
 launch:
 	$(call progress_bar)
 
@@ -98,6 +107,6 @@ re:			fclean all
 
 -include $(OBJS:.o=.d)
 
-.PHONY: all clean fclean re launch test
+.PHONY: all clean fclean re launch test cfdebug debug quiet
 
 # **************************************************************************** #
