@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 19:50:03 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/20 20:03:03 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,27 @@
 
 Config::Config()
 {
-	// open config file
+	std::ifstream	ifs(FILE, std::ifstream::in);
+	
+	if (!ifs.good())
+		exit(error("ifstream config file", 1));
 
-	std::string	line;
+	std::stringstream	line;
 
-	while (/*file*/)
+	while (!ifs.eof())
 	{
+		std::getline(ifs, line);
+
 		std::string	key;
+		std::string	val;
 
 		std::getline(line, key, SEP);
+		std::getline(line, val, '');
+
+		m[key] = val;
 	}
 
-	// close file
+	ifs(close);
 }
 
 Config::~Config() {}

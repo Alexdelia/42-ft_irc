@@ -6,12 +6,15 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 19:44:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/20 20:04:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIG_HPP
 # define CONFIG_HPP
+
+#include <fstream>
+#include <sstream>
 
 # include "utils/utils.hpp"
 
