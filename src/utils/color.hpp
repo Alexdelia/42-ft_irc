@@ -6,12 +6,14 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:01:01 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 19:27:22 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/20 19:29:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLOR_HPP
 # define COLOR_HPP
+
+void	ft_prgb(const std::string &str, const int r, const int g, const int b) const
 
 # define C_RESET		"\033[0m"
 
