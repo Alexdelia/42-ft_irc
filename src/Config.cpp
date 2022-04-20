@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 20:03:03 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/20 20:22:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,33 @@ Config::Config()
 	if (!ifs.good())
 		exit(error("ifstream config file", 1));
 
-	std::stringstream	line;
+	std::string	line;
 
 	while (!ifs.eof())
 	{
 		std::getline(ifs, line);
 
-		std::string	key;
-		std::string	val;
+		std::stringstream	ss(line);
+		std::string			key;
+		std::string			val;
 
-		std::getline(line, key, SEP);
-		std::getline(line, val, '');
+		std::getline(ss, key, SEP);
+		std::getline(ss, val, '\n');
 
-		m[key] = val;
+		this->_m[key] = val;
 	}
 
-	ifs(close);
+	ifs.close();
 }
 
 Config::~Config() {}
 
 void	Config::set(const std::string &key, const std::string &val)
 {
-	m[key] = val;
+	this->_m[key] = val;
 }
 
-const std::string	&Config::get(const std::string &key) const
+const std::string	&Config::get(const std::string &key)
 {
-	return (m[key]);
+	return (this->_m[key]);
 }

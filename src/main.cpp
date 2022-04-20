@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 16:44:13 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/20 20:32:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	
-	Server	server(;
+	std::cout << av[1] << std::endl;	// debug
+
+	//Server	server(av[1], av[2]);
 	// possibly handle SIGINT
 	
 	// init

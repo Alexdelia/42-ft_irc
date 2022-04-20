@@ -6,12 +6,13 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/04/20 16:21:34 by adelille         ###   ########.fr        #
+#    Updated: 2022/04/20 20:18:38 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	ircserv
-CC = 	c++
+CC =	clang++
+#CC = 	c++
 RM = 	rm -rf
 
 CFLAGS =	-Wall -Werror -Wextra
