@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Config.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 16:44:13 by adelille         ###   ########.fr       */
+/*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
+/*   Updated: 2022/04/20 19:50:03 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "Server.hpp"
-#include <iostream>
-// signal
+#include "Config.hpp"
 
-#ifndef DEBUG
-# define DEBUG	0
-#endif
-
-int	main(int ac, char **av)
+Config::Config()
 {
-	if (DEBUG)
-		std::cout << "[DEBUG]" << std::endl;
+	// open config file
 
-	if (ac != 3)
+	std::string	line;
+
+	while (/*file*/)
 	{
-		std::cout << "./ircserv <port> <poassword>" << std::endl;
-		return (1);
-	}
-	
-	Server	server(;
-	// possibly handle SIGINT
-	
-	// init
-	
-	// do things
-	
+		std::string	key;
 
-	return (0);
+		std::getline(line, key, SEP);
+	}
+
+	// close file
+}
+
+Config::~Config() {}
+
+void	Config::set(const std::string &key, const std::string &val)
+{
+	m[key] = val;
+}
+
+const std::string	&Config::get(const std::string &key) const
+{
+	return (m[key]);
 }

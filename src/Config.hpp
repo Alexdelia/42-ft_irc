@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Config.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 16:44:13 by adelille         ###   ########.fr       */
+/*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
+/*   Updated: 2022/04/20 19:44:01 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "Server.hpp"
-#include <iostream>
-// signal
+#ifndef CONFIG_HPP
+# define CONFIG_HPP
 
-#ifndef DEBUG
-# define DEBUG	0
-#endif
+# include "utils/utils.hpp"
 
-int	main(int ac, char **av)
+# define SEP	'='
+# define FILE	"config/default.conf"
+
+class Config
 {
-	if (DEBUG)
-		std::cout << "[DEBUG]" << std::endl;
+	public:
+		Config();
+		~Config();
+	
+		Config	&operator=(const Config &src);
 
-	if (ac != 3)
-	{
-		std::cout << "./ircserv <port> <poassword>" << std::endl;
-		return (1);
-	}
-	
-	Server	server(;
-	// possibly handle SIGINT
-	
-	// init
-	
-	// do things
-	
+		void				set(const std::string &key, const std::string &val);
+		const std::string	&get(const std::string &key) const;
 
-	return (0);
-}
+	private:
+		std::map<std::string, std::string>	m;
+};
+
+#endif
