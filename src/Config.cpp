@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 20:22:05 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:59:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,32 @@ Config::Config()
 
 Config::~Config() {}
 
-void	Config::set(const std::string &key, const std::string &val)
+Config	&Config::operator=(const Config &src)
 {
-	this->_m[key] = val;
+	this->_m = src._m;
+
+	return (*this);
 }
 
+const std::map<std::string, std::string>	&Config::get_map(void) const
+{ return (this->_m); }
+
+void	Config::set(const std::string &key, const std::string &val)
+{ this->_m[key] = val; }
+
 const std::string	&Config::get(const std::string &key)
+{ return (this->_m[key]); }
+
+std::ostream	&operator<<(std::ostream &o, const Config &src)
 {
-	return (this->_m[key]);
+	std::map<std::string, std::string>::const_iterator	i = src.get_map().begin();
+
+	while (i != src.get_map().end())
+	{
+		o << i->first << "=" << i->second << std::endl;
+		++i;
+	}
+
+	return (o);
 }
+

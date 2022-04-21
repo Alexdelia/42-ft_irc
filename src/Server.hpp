@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 15:43:20 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:53:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define SERVER_HPP
 
 // config	// map(string key, string val)
+# include "Config.hpp"
 // user
 
-#include <map>
+# include <map>
 //#include <string>
 //#include <vector>
 
@@ -33,8 +34,8 @@ class Server
 		// user
 		
 		// channel
-		
-		// get config
+	
+		const Config	&get_config(void) const;
 		// get uptime
 	
 	private:
