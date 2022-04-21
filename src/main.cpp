@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/21 18:02:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:07:26 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 int	main(int ac, char **av)
 {
 	if (DEBUG)
-		std::cout << "[DEBUG]" << std::endl;
+		std::cerr << C_RED << "[DEBUG]" << C_RESET << std::endl;
 
 	if (ac != 3)
 	{
@@ -33,7 +33,8 @@ int	main(int ac, char **av)
 	//Server	server(av[1], av[2]);
 	Server	server;
 	if (DEBUG)
-		std::cout << server.get_config();
+		std::cerr << C_RED << "[CONFIG]:" << std::endl
+			<< server.get_config() << C_RESET << std::endl;
 
 	// possibly handle SIGINT
 	
