@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/21 17:53:19 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:13:31 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ class Server
 {
 	public:
 		Server();
+		Server(const std::string &port, const std::string &password);
 		~Server();
 	
 		Server	&operator=(const Server &src);
@@ -35,7 +36,7 @@ class Server
 		
 		// channel
 	
-		const Config	&get_config(void) const;
+		Config	&get_config(void);
 		// get uptime
 	
 	private:
