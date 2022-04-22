@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/21 18:08:49 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:14:55 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 
-	//(void)av;
 	Server	server(av[1], av[2]);
-	//Server	server;
 	if (DEBUG)
 		std::cerr << C_RED << "[CONFIG]:" << std::endl
 			<< server.get_config() << C_RESET << std::endl;

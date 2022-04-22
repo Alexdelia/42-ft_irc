@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/21 18:13:31 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/22 11:30:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 // user
 
 # include <map>
-//#include <string>
-//#include <vector>
+# include <string>
+//# include <vector>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <netinet/ip.h>
+# include <fcntl.h>
 
 class User;
 
 class Server
 {
 	public:
-		Server();
 		Server(const std::string &port, const std::string &password);
 		~Server();
 	
@@ -40,12 +43,14 @@ class Server
 		// get uptime
 	
 	private:
-		Config						config;
-		std::map<size_t, User *>	users;	// list of users with index
+		Config						_config;
+		std::map<size_t, User *>	_users;	// list of users with index
+		int							_fd;
 		// channel
 		// uptime
 		// last_ping
-		// fd
+		
+		Server();
 
 		// ping
 
