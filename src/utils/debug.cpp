@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   debug.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 19:34:12 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 13:58:33 by adelille         ###   ########.fr       */
+/*   Created: 2022/04/20 19:30:51 by adelille          #+#    #+#             */
+/*   Updated: 2022/04/22 14:01:20 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#include "utils.hpp"
 
-# include "color.hpp"
+void	debug(const std::string &str)
+{
+	std::cerr << C_RED << C_BOLD << "[ DEBUG ]:\t" << C_RESET << C_RED
+		<< str << C_RESET << std::endl;
+}
 
-# include <string>
-# include <iostream>
-# include <sstream>
+std::string	s_debug(const std::string &str)
+{
+	std::stringstream	o;
 
-int			error(const std::string &str, const int ret);
-void		debug(const std::string &str);
-std::string	s_debug(const std::string &str);
+	o << C_RED << C_BOLD << "[ DEBUG ]:\t" << C_RESET << C_RED << str;
 
-#endif
+	return (o.str());
+}
