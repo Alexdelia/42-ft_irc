@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 13:55:49 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:04:48 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 	Server	server(av[1], av[2]);
 	if (DEBUG)
 		std::cerr << s_debug("[CONFIG]:") << std::endl
-			<< server.get_config() << C_RESET << std::endl;
+			<< server.get_config() << C_RESET;
 
 	// possibly handle SIGINT
 	

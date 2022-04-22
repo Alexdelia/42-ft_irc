@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:01:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:06:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ std::ostream	&operator<<(std::ostream &o, const Config &src)
 	std::map<std::string, std::string>::const_iterator	i = src.get_map().begin();
 
 	while (++i != src.get_map().end())
-		o << i->first << "=" << i->second << std::endl;
+		o << "\t\t\t" << i->first << "=" << i->second << std::endl;
 
 	return (o);
 }

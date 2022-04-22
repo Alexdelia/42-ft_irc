@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 13:49:50 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:07:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ Server::Server() {}
 Server::Server(const std::string &port, const std::string &password)
 {
 	if (DEBUG)
-		debug("server start");
+		debug("[SERVER]:\tstart");
 	this->get_config().set("port", port);
 	this->get_config().set("password", password);
 
@@ -39,9 +39,16 @@ Server::Server(const std::string &port, const std::string &password)
 		exit(error("bind", 1));
 	if (listen(this->_fd, addr.sin_port) < 0)
 		exit(error("listen", 1));
+
+	if (DEBUG)
+		debug("[SERVER]:\tcreated");
 }
 
-Server::~Server() {}
+Server::~Server()
+{
+	if (DEBUG)
+		debug("[SERVER]:\tdeleted");
+}
 
 Config	&Server::get_config(void)
 { return (this->_config); }
