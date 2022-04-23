@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 15:54:05 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 16:14:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <fcntl.h>
 # include <poll.h>
 
+# include <unistd.h> //
+
 class User;
 
 class Server
@@ -44,16 +46,16 @@ class Server
 		// channel
 	
 		Config	&get_config(void);
-		// get uptime
+		int		get_start_time(void) const;
 	
 	private:
 		Config						_config;
 		std::map<size_t, User *>	_users;	// list of users with index
 		int							_fd;
 		std::vector<pollfd>			_pfds;
+		int							_start_time;
 		int							_last_ping;
 		// channel
-		// uptime
 		
 		Server();
 

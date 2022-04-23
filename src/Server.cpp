@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 15:54:29 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 16:14:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Server::Server() {}
 
 Server::Server(const std::string &port, const std::string &password):
-	_last_ping(std::time(NULL))
+	_start_time(std::time(NULL)), _last_ping(std::time(NULL))
 {
 	if (DEBUG)
 		debug("[SERVER]:\tstart");
@@ -59,20 +59,32 @@ void	Server::process(void)
 {
 	// load user
 
-	if (poll(&this->_pfds[0], this->_pfds.size(),
-				atoi(get_config().get("timeout").c_str())) == -1)
-		return ;	// timeout
+	if (DEBUG) // debug
+		sleep(5);
+	else
+	{
+		if (poll(&this->_pfds[0], this->_pfds.size(),
+					atoi(get_config().get("timeout").c_str())) == -1)
+			return ;	// timeout
+	}
 
+	if (DEBUG)
+		std::cerr << s_debug("") << "time - _last_ping >= ping" << std::endl
+			<< "\t\t" << std::time(NULL) - this->_start_time
+			<< " - " << this->_last_ping - this->_start_time << " >= "
+			<< atoi(get_config().get("ping").c_str()) << C_RESET << std::endl;
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
 		if (DEBUG)
-			debug("PING");
+			std::cerr << s_debug("[PING]:\t")
+				<< C_ITALIC << std::time(NULL) << C_RESET << std::endl;
 		
 		// send ping
 		this->_last_ping = std::time(NULL);
 		
 		if (DEBUG)
-			debug("PONG");
+			std::cerr << s_debug("[PONG]:\t")
+				<< C_ITALIC << this->_last_ping << C_RESET << std::endl;
 	}
 	//
 	
@@ -82,7 +94,13 @@ void	Server::process(void)
 	// send message to rest of user
 
 	// might display user on server
+
+	if (DEBUG)
+		debug("[SERVER]:\tprocessed");
 }
 
 Config	&Server::get_config(void)
 { return (this->_config); }
+
+int		Server::get_start_time(void) const
+{ return (this->_start_time); }

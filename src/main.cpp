@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 15:40:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 16:18:37 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	main(int ac, char **av)
 	{
 		server.process();
 		if (DEBUG)
-			debug("loop");
+			std::cerr << s_debug("")
+				<< C_ITALIC << "< " << std::time(NULL) - server.get_start_time() << "\t>"
+				<< C_RESET << C_RED << "\tloop" << C_RESET << std::endl;
 	}
 	
 	std::cout << std::endl << C_BOLD << "shutdown" << C_RESET << std::endl;
