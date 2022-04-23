@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:01:01 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/20 20:31:40 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 17:02:51 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <iostream>
 # include <string>
-
-void	ft_prgb(const std::string &str, const int r, const int g, const int b);
 
 # define C_RESET		"\033[0m"
 
@@ -58,5 +56,7 @@ void	ft_prgb(const std::string &str, const int r, const int g, const int b);
 # define GRN	"\033[1;32m"
 # define SBLU	"\033[5;3;34m"
 # define DEF	"\033[0m"
+
+# define C_TIME		"\033[38;2;255;0;120m"
 
 #endif
