@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:49:19 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:40:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		std::cout << "./ircserv <port> <poassword>" << std::endl;
+		std::cout << "./ircserv <port> <password>" << std::endl;
 		return (1);
 	}
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av)
 
 	while (!g_shutdown)
 	{
-		sleep(5); // tmp
+		server.process();
 		if (DEBUG)
 			debug("loop");
 	}

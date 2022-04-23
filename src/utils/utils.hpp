@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:34:12 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:44:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:53:28 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string>
 # include <iostream>
 # include <sstream>
+# include <ctime>
 
 int			error(const std::string &str, const int ret);
 void		debug(const std::string &str);

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/21 17:59:26 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:39:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define SEP	'='
 # define FILE	"config/default.conf"
+//# define FILE	"config/faulty.conf"
 
 class Config
 {

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:07:14 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:54:29 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 Server::Server() {}
 
-Server::Server(const std::string &port, const std::string &password)
+Server::Server(const std::string &port, const std::string &password):
+	_last_ping(std::time(NULL))
 {
 	if (DEBUG)
 		debug("[SERVER]:\tstart");
@@ -40,6 +41,10 @@ Server::Server(const std::string &port, const std::string &password)
 	if (listen(this->_fd, addr.sin_port) < 0)
 		exit(error("listen", 1));
 
+	this->_pfds.push_back(pollfd());
+	this->_pfds.back().fd = this->_fd;
+	this->_pfds.back().events = POLLIN;
+
 	if (DEBUG)
 		debug("[SERVER]:\tcreated");
 }
@@ -48,6 +53,35 @@ Server::~Server()
 {
 	if (DEBUG)
 		debug("[SERVER]:\tdeleted");
+}
+
+void	Server::process(void)
+{
+	// load user
+
+	if (poll(&this->_pfds[0], this->_pfds.size(),
+				atoi(get_config().get("timeout").c_str())) == -1)
+		return ;	// timeout
+
+	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
+	{
+		if (DEBUG)
+			debug("PING");
+		
+		// send ping
+		this->_last_ping = std::time(NULL);
+		
+		if (DEBUG)
+			debug("PONG");
+	}
+	//
+	
+	// delete users that need to be deleted
+	
+	// update user
+	// send message to rest of user
+
+	// might display user on server
 }
 
 Config	&Server::get_config(void)

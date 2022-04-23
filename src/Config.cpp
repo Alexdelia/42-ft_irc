@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:06:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:46:48 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ Config::Config()
 	}
 
 	ifs.close();
+
+	if (atoi(this->_m["timeout"].c_str()) <= 0)
+		this->_m["timeout"] = "5000";
+	if (atoi(this->_m["ping"].c_str()) <= 0)
+		this->_m["ping"] = "100";
 }
 
 Config::~Config() {}

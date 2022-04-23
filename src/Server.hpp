@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/22 14:44:14 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/23 15:54:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 
 # include <map>
 # include <string>
-//# include <vector>
+# include <vector>
 # include <sys/socket.h>
 # include <netinet/in.h>
 # include <netinet/ip.h>
 # include <fcntl.h>
+# include <poll.h>
 
 class User;
 
@@ -35,6 +36,8 @@ class Server
 		~Server();
 	
 		Server	&operator=(const Server &src);
+
+		void	process(void);
 
 		// user
 		
@@ -47,9 +50,10 @@ class Server
 		Config						_config;
 		std::map<size_t, User *>	_users;	// list of users with index
 		int							_fd;
+		std::vector<pollfd>			_pfds;
+		int							_last_ping;
 		// channel
 		// uptime
-		// last_ping
 		
 		Server();
 
