@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/24 11:59:28 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/24 12:00:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ class User
 		User	&operator=(const User &src);
 
 		// send
-	
-		// set
 
-		// get
+		void	set_status(const int status);
+
+		int		get_fd(void) const;
+		int		get_status(void) const;
 	
 	private:
 		int		_fd;
