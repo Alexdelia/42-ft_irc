@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 16:42:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/24 11:52:40 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Server::Server(const std::string &port, const std::string &password):
 		exit(error("setsockopt", 1));
 	if (fcntl(this->_fd, F_SETFL, O_NONBLOCK) < 0)
 		exit(error("fcntl", 1));
-	
+
 	struct sockaddr_in	addr;
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = INADDR_ANY;
@@ -59,32 +59,27 @@ void	Server::process(void)
 {
 	// load user
 
-	if (DEBUG) // debug
-		sleep(5);
-	else
-	{
-		if (poll(&this->_pfds[0], this->_pfds.size(),
-					atoi(get_config().get("timeout").c_str())) == -1)
-			return ;	// timeout
-	}
+	if (poll(&this->_pfds[0], this->_pfds.size(),
+				atoi(get_config().get("timeout").c_str())) == -1)
+		return ;	// timeout
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
 		if (DEBUG)
 			std::cerr << s_debug("[PING]:\t")
 				<< s_time(std::time(NULL) - this->_start_time) << std::endl;
-		
+
 		// send ping
 		this->_last_ping = std::time(NULL);
-		
+
 		if (DEBUG)
 			std::cerr << s_debug("[PONG]:\t")
 				<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 	}
 	//
-	
+
 	// delete users that need to be deleted
-	
+
 	// update user
 	// send message to rest of user
 
