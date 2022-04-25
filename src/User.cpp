@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/24 12:30:25 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/25 10:54:39 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ User::User(const int fd, struct sockaddr_in addr):
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
+	(void)addr; //
 	// host addr = addr.sin_addr; //
 	// host name
 	// getnameinfo

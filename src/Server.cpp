@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/24 11:52:40 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/25 11:55:17 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ Server::Server(const std::string &port, const std::string &password):
 
 Server::~Server()
 {
+	{
+		if (DEBUG)
+			std::cerr << s_debug("[SERVER]:\tdelete all user ");
+
+		std::vector<User *>				users = get_users();
+		std::vector<User *>::iterator	i = users.begin();
+
+		while (i != users.end())
+		{
+			if (DEBUG)
+				std::cerr << '.';
+			delete_user(*(*i));
+			i++;
+		}
+		if (DEBUG)
+			std::cerr << "\tdone" << C_RESET << std::endl;
+	}
+
 	if (DEBUG)
 		debug("[SERVER]:\tdeleted");
 }
@@ -89,8 +107,57 @@ void	Server::process(void)
 		debug("[SERVER]:\tprocessed");
 }
 
+void	Server::accept_user(void)
+{
+	// protection if max user
+
+	struct sockaddr_in	addr;
+	socklen_t			addr_len;
+	int					fd;
+
+	addr_len = sizeof(addr);
+	fd = accept(this->_fd, (struct sockaddr *)&addr, &addr_len);
+	if (fd == -1)
+	{
+		error("accept", 0);
+		return ;
+	}
+
+	this->_users[fd] = new User(fd, addr);
+
+	this->_pfds.push_back(pollfd());
+	this->_pfds.back().fd = fd;
+	this->_pfds.back().events = POLLIN;
+
+	if (DEBUG)
+		std::cerr << s_debug("[SERVER]:\tnew user:\t|") << fd << "|\t"
+			<< inet_ntoa(addr.sin_addr) << ":" << ntohs(addr.sin_port)
+			<< C_RESET << std::endl;
+}
+
+void	Server::delete_user(User &user)
+{
+	(void)user;
+	// will need to delete users
+}
+
 Config	&Server::get_config(void)
 { return (this->_config); }
 
 int		Server::get_start_time(void) const
 { return (this->_start_time); }
+
+std::vector<User *>	Server::get_users(void)
+{
+	std::vector<User *>	users;
+
+	std::map<size_t, User *>::iterator i = this->_users.begin();
+
+	while (i != this->_users.end())
+	{
+		users.push_back(i->second);
+		i++;
+	}
+
+	return (users);
+}
