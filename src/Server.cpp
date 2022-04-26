@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/25 11:55:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:58:45 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ Server::~Server()
 			if (DEBUG)
 				std::cerr << '.';
 			delete_user(*(*i));
-			i++;
+			++i;
 		}
 		if (DEBUG)
 			std::cerr << "\tdone" << C_RESET << std::endl;
