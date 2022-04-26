@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 20:45:49 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 23:10:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Server::Server(const std::string &port, const std::string &password):
 	_start_time(std::time(NULL)), _last_ping(std::time(NULL))
 {
 	if (DEBUG)
-		debug("[SERVER]:\tstart");
+		debug("SERVER", "start");
 	this->get_config().set("port", port);
 	this->get_config().set("password", password);
 
@@ -46,14 +46,14 @@ Server::Server(const std::string &port, const std::string &password):
 	this->_pfds.back().events = POLLIN;
 
 	if (DEBUG)
-		debug("[SERVER]:\tcreated");
+		debug("SERVER", "created");
 }
 
 Server::~Server()
 {
 	{
 		if (DEBUG)
-			debug("[SERVER]:\tdelete all user:");
+			debug("SERVER", "delete all user:");
 
 		std::vector<User *>				users = get_users();
 		std::vector<User *>::iterator	i = users.begin();
@@ -66,7 +66,7 @@ Server::~Server()
 	}
 
 	if (DEBUG)
-		debug("[SERVER]:\tdeleted");
+		debug("SERVER", "deleted");
 }
 
 void	Server::process(void)
@@ -98,7 +98,7 @@ void	Server::process(void)
 	// might display user on server
 
 	if (DEBUG)
-		debug("[SERVER]:\tprocessed");
+		debug("SERVER", "processed");
 }
 
 void	Server::accept_user(void)
@@ -113,7 +113,7 @@ void	Server::accept_user(void)
 	fd = accept(this->_fd, (struct sockaddr *)&addr, &addr_len);
 	if (fd == -1)
 	{
-		error("accept", 0);
+		error("accept");
 		return ;
 	}
 
@@ -124,7 +124,7 @@ void	Server::accept_user(void)
 	this->_pfds.back().events = POLLIN;
 
 	if (DEBUG)
-		std::cerr << s_debug("[SERVER]:\tnew user:\t| ") << fd << "\t| "
+		std::cerr << s_debug("SERVER", "new user:\t| ") << fd << "\t| "
 			<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
 			<< C_RESET << std::endl;
 }
@@ -146,7 +146,7 @@ void	Server::delete_user(User &user)
 		{
 			this->_pfds.erase(i);
 			if (DEBUG)
-				std::cerr << s_debug("[SERVER]:\tpfds |") << (*i).fd << "| erased"
+				std::cerr << s_debug("SERVER", "pfds |") << (*i).fd << "| erased"
 					<< C_RESET << std::endl;
 		}
 	}
