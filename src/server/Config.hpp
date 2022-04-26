@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/25 11:35:38 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 19:13:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <cstdlib>
 #include <ostream>
 
-# include "utils/utils.hpp"
+# include "../utils/utils.hpp"
 
 # define SEP	'='
 # define FILE	"config/default.conf"
