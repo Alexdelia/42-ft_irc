@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:34:12 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 16:40:11 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:48:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #  define DEBUG	0
 # endif
 
-# define INDENT	7
+# define INDENT_TIME	7
 
 # include "color.hpp"
 

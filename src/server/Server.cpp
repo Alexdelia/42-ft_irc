@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 20:01:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:45:49 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,8 @@ void	Server::process(void)
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
-		if (DEBUG)
-			std::cerr << s_debug("[PING]:\t")
-				<< s_time(std::time(NULL) - this->_start_time) << std::endl;
-
 		// send ping
 		this->_last_ping = std::time(NULL);
-
-		if (DEBUG)
-			std::cerr << s_debug("[PONG]:\t")
-				<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 	}
 	else
 	{
@@ -165,6 +157,38 @@ void	Server::delete_user(User &user)
 	// quit message to remaining user
 }
 
+void	Server::ping(void)
+{
+	if (DEBUG)
+		std::cerr << s_debug("PING", "")
+			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
+
+	const int							time = std::time(NULL);
+	const int							timeout = atoi(_config.get("ping").c_str());
+	std::map<size_t, User *>::iterator	i = this->_users.begin();
+
+	while (i != this->_users.end())
+	{
+		if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
+		{
+			// set reason of delete // to do later
+			(*i).second->set_status(DELETE);
+		}
+		else if ((*i).second->get_status() == ONLINE)
+		{
+			// send ping
+			if (DEBUG)
+				std::cerr << s_debug("\t\t\t| ") << (*i).second->get_fd() << "\t|"
+					<< C_RESET << std::endl;
+		}
+		++i;
+	}
+
+	if (DEBUG)
+		std::cerr << s_debug("PONG", "")
+			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
+}
+
 Config	&Server::get_config(void)
 { return (this->_config); }
 
@@ -180,7 +204,7 @@ std::vector<User *>	Server::get_users(void)
 	while (i != this->_users.end())
 	{
 		users.push_back(i->second);
-		i++;
+		++i;
 	}
 
 	return (users);

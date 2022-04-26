@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 19:13:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:38:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 
+# define INIT		-1
 # define DELETE		0
+# define ONLINE		1
 
 class Server;
 

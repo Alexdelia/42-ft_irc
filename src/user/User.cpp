@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 20:05:52 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:29:23 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 User::User() {}
 
 User::User(const int fd, struct sockaddr_in addr):
-	_fd(fd)
+	_fd(fd), _status(INIT)
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
