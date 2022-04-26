@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 19:13:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 19:16:11 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../utils/utils.hpp"
 // config	// map(string key, string val)
 # include "Config.hpp"
-# include "User.hpp"
+# include "../user/User.hpp"
 
 # include <map>
 # include <string>

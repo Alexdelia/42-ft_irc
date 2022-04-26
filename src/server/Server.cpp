@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/25 16:58:45 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 19:41:16 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,30 @@ void	Server::accept_user(void)
 
 void	Server::delete_user(User &user)
 {
-	(void)user;
-	// will need to delete users
+	// channel handle
+
+	// might update fd that is writen on
+	// still don't know which way to do that
+	// and if will do it at all
+
+	{
+		std::vector<pollfd>::iterator	i = this->_pfds.begin();
+
+		while (i != this->_pfds.end() && (*i).fd != user.get_fd())
+			++i;
+		if ((*i).fd == user.get_fd())
+		{
+			this->_pfds.erase(i);
+			if (DEBUG)
+				std::cerr << s_debug("[SERVER]:\tpfds |") << (*i).fd << "| erased"
+					<< C_RESET << std::endl;
+		}
+	}
+
+	this->_users.erase(user.get_fd());
+	delete	&user;
+
+	// quit message to remaining user
 }
 
 Config	&Server::get_config(void)
