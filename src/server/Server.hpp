@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 19:16:11 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 00:06:28 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <fcntl.h>
 # include <poll.h>
 
-# include <unistd.h> //
+# include <unistd.h> // (debug) for sleep()
 
 class User;
 
@@ -62,8 +62,7 @@ class Server
 		Server	&operator=(const Server &src);
 
 		void	accept_user(void);
-
-		// ping
+		void	ping(void);
 
 		// display (user/channel)
 };

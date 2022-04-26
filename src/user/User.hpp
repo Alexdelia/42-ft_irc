@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 20:38:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 00:08:23 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,12 @@ class User
 
 		int		get_fd(void) const;
 		int		get_status(void) const;
+		int		get_last_ping(void) const;
 	
 	private:
 		int			_fd;
 		int			_status;
+		int			_last_ping;
 
 		std::string	_buffer_send;
 

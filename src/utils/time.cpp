@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:30:51 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 17:03:14 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 00:09:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	time(const int time)
 	int	size;
 
 	size = ft_nbrlen(time);
-	indent = (INDENT - size) / 2;
+	indent = (INDENT_TIME - size) / 2;
 	if (indent < 0)
 		indent = 0;
 
@@ -58,7 +58,7 @@ std::string	s_time(const int time)
 	int					size;
 
 	size = ft_nbrlen(time);
-	indent = (INDENT - size) / 2;
+	indent = (INDENT_TIME - size) / 2;
 	if (indent < 0)
 		indent = 0;
 

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 23:12:06 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 00:08:50 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 User::User() {}
 
 User::User(const int fd, struct sockaddr_in addr):
-	_fd(fd), _status(INIT)
+	_fd(fd), _status(INIT), _last_ping(std::time(NULL))
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
@@ -69,3 +69,6 @@ int		User::get_fd(void) const
 
 int		User::get_status(void) const
 { return (this->_status); }
+
+int		User::get_last_ping(void) const
+{ return (this->_last_ping); }
