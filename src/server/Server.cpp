@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 19:41:16 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:01:01 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,16 @@ Server::~Server()
 {
 	{
 		if (DEBUG)
-			std::cerr << s_debug("[SERVER]:\tdelete all user ");
+			debug("[SERVER]:\tdelete all user:");
 
 		std::vector<User *>				users = get_users();
 		std::vector<User *>::iterator	i = users.begin();
 
 		while (i != users.end())
 		{
-			if (DEBUG)
-				std::cerr << '.';
 			delete_user(*(*i));
 			++i;
 		}
-		if (DEBUG)
-			std::cerr << "\tdone" << C_RESET << std::endl;
 	}
 
 	if (DEBUG)
@@ -94,7 +90,13 @@ void	Server::process(void)
 			std::cerr << s_debug("[PONG]:\t")
 				<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 	}
-	//
+	else
+	{
+		if (this->_pfds[0].revents == POLLIN)
+			accept_user();
+		else
+			sleep(2); //
+	}
 
 	// delete users that need to be deleted
 
@@ -130,8 +132,8 @@ void	Server::accept_user(void)
 	this->_pfds.back().events = POLLIN;
 
 	if (DEBUG)
-		std::cerr << s_debug("[SERVER]:\tnew user:\t|") << fd << "|\t"
-			<< inet_ntoa(addr.sin_addr) << ":" << ntohs(addr.sin_port)
+		std::cerr << s_debug("[SERVER]:\tnew user:\t| ") << fd << "\t| "
+			<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
 			<< C_RESET << std::endl;
 }
 

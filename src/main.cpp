@@ -6,12 +6,12 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/23 17:03:27 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 19:46:06 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/utils.hpp"
-#include "Server.hpp"
+#include "server/Server.hpp"
 
 #include <iostream>
 #include <csignal>

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/25 10:54:39 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/26 20:05:52 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ User::User(const int fd, struct sockaddr_in addr):
 	// command
 
 	if (DEBUG)
-		debug("[USER]:\tcreated");
+		debug("[USER]:  \tcreated");
 }
 
 User::~User()
@@ -35,7 +35,7 @@ User::~User()
 	close(this->_fd);
 
 	if (DEBUG)
-		debug("[USER]:\tdeleted");
+		debug("[USER]:  \tdeleted");
 }
 
 void	User::write_buffer(const std::string &str)
@@ -43,20 +43,20 @@ void	User::write_buffer(const std::string &str)
 	this->_buffer_send += str + "\r\n";
 	
 	if (DEBUG)
-		std::cerr << s_debug("[USER]:\tadd to _buffer_send:\t")
+		std::cerr << s_debug("[USER]:  \tadd to _buffer_send:\t")
 			<< C_ITALIC << "\"" << str << "\"" << C_RESET << std::endl;
 }
 
 void	User::send_buffer(void)
 {
 	if (DEBUG)
-		std::cerr << s_debug("[USER]:\tsending ...\t") << C_RESET;
+		std::cerr << s_debug("[USER]:  \tsending ...\t") << C_RESET;
 	if (!this->_buffer_send.length())
 		return ;
 
 	if (send(this->_fd, this->_buffer_send.c_str(),
 				this->_buffer_send.length(), 0))
-		error("[USER]:\tsend failed", 0);
+		error("[USER]:  \tsend failed", 0);
 	else if (DEBUG)
 		std::cerr << C_RED << "sent" << C_RESET << std::endl;
 }
