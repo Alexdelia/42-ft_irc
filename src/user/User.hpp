@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 14:47:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:16:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class User
 		int			_status;
 		int			_last_ping;
 
-		std::string	_buffer_send;
+		std::string	_buffer_to_send;
 
 		// name
 		// addr

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 12:33:00 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:17:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ User::~User()
 
 void	User::write_buffer(const std::string &str)
 {
-	this->_buffer_send += str + "\r\n";
+	this->_buffer_to_send += str + "\r\n";
 	
 	if (DEBUG)
 		std::cerr << s_debug("USER", "add to _buffer_send:\t")
@@ -55,14 +55,14 @@ ssize_t	User::send_buffer(void)
 {
 	ssize_t	res;
 
-	if (!this->_buffer_send.length())
+	if (!this->_buffer_to_send.length())
 		return (0);
 	
 	if (DEBUG)
 		std::cerr << s_debug("USER", "sending ...\t") << C_RESET;
 
-	res = send(this->_fd, this->_buffer_send.c_str(),
-				this->_buffer_send.length(), 0);
+	res = send(this->_fd, this->_buffer_to_send.c_str(),
+				this->_buffer_to_send.length(), 0);
 	if (res == -1)
 	{
 		if (DEBUG)
@@ -73,7 +73,7 @@ ssize_t	User::send_buffer(void)
 	if (DEBUG)
 		std::cerr << C_RED << "sent" << C_RESET << std::endl;
 
-	this->_buffer_send.clear();
+	this->_buffer_to_send.clear();
 	this->_last_ping = std::time(NULL);
 
 	return (res);

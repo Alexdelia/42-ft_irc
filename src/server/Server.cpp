@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 13:30:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:15:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ Server::~Server()
 
 		while (i != users.end())
 		{
-			delete_user(*(*i));
+			_delete_user(*(*i));
 			++i;
 		}
 	}
@@ -77,13 +77,13 @@ void	Server::process(void)
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
-		ping();
+		_ping();
 		this->_last_ping = std::time(NULL);
 	}
 	else
 	{
 		if (this->_pfds[0].revents == POLLIN)
-			accept_user();
+			_accept_user();
 		else
 			sleep(2); //
 	}
@@ -97,7 +97,7 @@ void	Server::process(void)
 		while (i != users.end())
 		{
 			if ((*i)->get_status() == DELETE)
-				delete_user(*(*i));
+				_delete_user(*(*i));
 			i++;
 		}
 
@@ -119,7 +119,7 @@ void	Server::process(void)
 		debug("SERVER", "processed");
 }
 
-void	Server::accept_user(void)
+void	Server::_accept_user(void)
 {
 	// protection if max user
 
@@ -147,7 +147,7 @@ void	Server::accept_user(void)
 		<< C_RESET << std::endl;
 }
 
-void	Server::delete_user(User &user)
+void	Server::_delete_user(User &user)
 {
 	// channel handle
 
@@ -175,7 +175,7 @@ void	Server::delete_user(User &user)
 	// quit message to remaining user
 }
 
-void	Server::ping(void)
+void	Server::_ping(void)
 {
 	if (DEBUG)
 		std::cerr << s_debug("PING", "")

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 14:46:51 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 15:14:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ class Server
 
 		void	process(void);
 
-		void	delete_user(User &user);
-
 		// channel
 	
 		Config				&get_config(void);
@@ -62,8 +60,10 @@ class Server
 		Server(const Server &src);
 		Server	&operator=(const Server &src);
 
-		void	accept_user(void);
-		void	ping(void);
+		void	_accept_user(void);
+		void	_ping(void);
+		void	_delete_user(User &user);
+
 
 		// display (user/channel)
 };
