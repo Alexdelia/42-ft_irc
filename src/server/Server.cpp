@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 12:55:38 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 13:30:35 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,15 +199,31 @@ void	Server::ping(void)
 		// else if
 		if ((*i).second->get_status() == ONLINE)
 		{
-			if (send((*i).second->get_fd(), "\r\n", 2, 0) != -1)
-				(*i).second->set_last_ping(std::time(NULL));
+			int			err = 0;
+			socklen_t	len = sizeof(err);
+
+			if (getsockopt((*i).second->get_fd(), SOL_SOCKET, SO_ERROR,
+						&err, &len) != 0)
+				exit(error("getsockopt in ping", 1));
+			else if (err != 0)
+			{
+				if (DEBUG)
+					std::cerr << " failed";
+			}
 			else
+			{
+				(*i).second->set_last_ping(std::time(NULL));
+				if (DEBUG)
+					std::cerr << ' ' << err;
+			}
+
+			/*else
 			{
 				// set reason of delete // to do later // maybe
 				(*i).second->set_status(DELETE);
 				if (DEBUG)
 					std::cerr << C_BOLD << " timeout";
-			}
+			}*/
 		}
 		if (DEBUG)
 			std::cerr << C_RESET << std::endl;
