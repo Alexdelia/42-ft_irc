@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/04/20 20:18:38 by adelille         ###   ########.fr        #
+#    Updated: 2022/04/27 14:32:24 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ all:		launch $(NAME)
 	@printf "\n$(B)$(MAG)$(NAME) compiled$(D)\n"
 
 test:		all
-	@./$(NAME)
+	@./$(NAME) 6667 password
 
 cfdebug:
 	$(eval CFLAGS += -DDEBUG=1)
