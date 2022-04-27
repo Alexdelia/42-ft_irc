@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 14:31:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:46:51 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ class Server
 		int							_last_ping;
 		// channel
 		
-		Server();	
+		Server();
+		Server(const Server &src);
 		Server	&operator=(const Server &src);
 
 		void	accept_user(void);

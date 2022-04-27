@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 14:30:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:47:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ class User
 		// command
 		
 		User();	
+		User(const User &src);	
 		User	&operator=(const User &src);
 };
 

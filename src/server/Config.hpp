@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 19:13:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 14:46:26 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ class Config
 		std::map<std::string, std::string>	_m;
 	
 		Config	&operator=(const Config &src);
+		Config(const Config &src);
 };
 
 std::ostream	&operator<<(std::ostream &o, const Config &src);
