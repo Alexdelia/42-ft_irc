@@ -6,20 +6,20 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/04/27 14:32:24 by adelille         ###   ########.fr        #
+#    Updated: 2022/04/27 14:49:32 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =	ircserv
-CC =	clang++
-#CC = 	c++
+CXX =	clang++
+#CXX = 	c++
 RM = 	rm -rf
 
-CFLAGS =	-Wall -Werror -Wextra
-CFLAGS +=	-std=c++98
+CXXFLAGS =	-Wall -Werror -Wextra
+CXXFLAGS +=	-std=c++98
 
-CFLAGS +=	-g3
-# CFLAGS +=	-fsanitize=address
+CXXFLAGS +=	-g3
+# CXXFLAGS +=	-fsanitize=address
 
 LKFLAGS =	-MMD -MP
 
@@ -73,7 +73,7 @@ endef
 
 $(OBJSPATH)%.o: $(SRCSPATH)%.cpp
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(LKFLAGS) -I$(INC) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(LKFLAGS) -I$(INC) -c $< -o $@
 	@printf "$(B)$(GRE)█$(D)"
 
 
@@ -84,7 +84,7 @@ test:		all
 	@./$(NAME) 6667 password
 
 cfdebug:
-	$(eval CFLAGS += -DDEBUG=1)
+	$(eval CXXFLAGS += -DDEBUG=1)
 
 debug: fclean cfdebug all
 
@@ -96,7 +96,7 @@ launch:
 	$(call progress_bar)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 	
 clean:
 	@$(RM) $(OBJSPATH)
