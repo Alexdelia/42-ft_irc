@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 23:10:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 11:57:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,13 @@ Server::~Server()
 
 void	Server::process(void)
 {
-	// load user
-
 	if (poll(&this->_pfds[0], this->_pfds.size(),
 				atoi(get_config().get("timeout").c_str())) == -1)
-		return ;	// timeout
+		return ;
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
-		// send ping
+		ping();
 		this->_last_ping = std::time(NULL);
 	}
 	else
@@ -90,10 +88,21 @@ void	Server::process(void)
 			sleep(2); //
 	}
 
-	// delete users that need to be deleted
+	{	// delete users that need to be deleted
+		std::vector<User *>	users = get_users();
 
-	// update user
-	// send message to rest of user
+		std::vector<User *>::iterator	i = users.begin();
+
+		while (i != users.end())
+		{
+			if ((*i)->get_status() == DELETE)
+				delete_user(*(*i));
+			i++;
+		}
+
+		// update user
+		// send message to rest of user
+	}
 
 	// might display user on server
 
@@ -123,10 +132,10 @@ void	Server::accept_user(void)
 	this->_pfds.back().fd = fd;
 	this->_pfds.back().events = POLLIN;
 
-	if (DEBUG)
-		std::cerr << s_debug("SERVER", "new user:\t| ") << fd << "\t| "
-			<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
-			<< C_RESET << std::endl;
+	std::cout << s_time(std::time(NULL) - this->_start_time)
+		<< C_BOLD << "\tnew user:\t| " << fd << "\t| "
+		<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
+		<< C_RESET << std::endl;
 }
 
 void	Server::delete_user(User &user)
@@ -146,7 +155,7 @@ void	Server::delete_user(User &user)
 		{
 			this->_pfds.erase(i);
 			if (DEBUG)
-				std::cerr << s_debug("SERVER", "pfds |") << (*i).fd << "| erased"
+				std::cerr << s_debug("SERVER", "pfds\t| ") << (*i).fd << "\t| erased"
 					<< C_RESET << std::endl;
 		}
 	}
@@ -169,18 +178,21 @@ void	Server::ping(void)
 
 	while (i != this->_users.end())
 	{
+		if (DEBUG)
+			std::cerr << s_debug("\t\t\t| ") << (*i).second->get_fd() << "\t|";
 		if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
 		{
 			// set reason of delete // to do later
 			(*i).second->set_status(DELETE);
+			if (DEBUG)
+				std::cerr << C_BOLD << " timeout";
 		}
-		else if ((*i).second->get_status() == ONLINE)
+		/*else if ((*i).second->get_status() == ONLINE)
 		{
 			// send ping
-			if (DEBUG)
-				std::cerr << s_debug("\t\t\t| ") << (*i).second->get_fd() << "\t|"
-					<< C_RESET << std::endl;
-		}
+		}*/
+		if (DEBUG)
+			std::cerr << C_RESET << std::endl;
 		++i;
 	}
 

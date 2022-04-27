@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 00:08:50 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 11:56:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ User::~User()
 	close(this->_fd);
 
 	if (DEBUG)
-		debug("USER", "deleted");
+		std::cerr << s_debug("USER", "\t| ") << this->_fd << "\t| deleted"
+			<< C_RESET << std::endl;
 }
 
 void	User::write_buffer(const std::string &str)
