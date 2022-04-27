@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 00:08:23 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:32:12 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ class User
 		User(const int fd, struct sockaddr_in addr);
 		~User();
 
+		void	write_buffer(const std::string &str);
+		ssize_t	send_buffer(void);
+
 		void	set_status(const int status);
+		void	set_last_ping(const int last_ping);
 
 		int		get_fd(void) const;
 		int		get_status(void) const;
@@ -54,9 +58,6 @@ class User
 		
 		User();	
 		User	&operator=(const User &src);
-
-		void	write_buffer(const std::string &str);
-		void	send_buffer(void);
 };
 
 #endif

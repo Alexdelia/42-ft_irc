@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 11:57:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:55:38 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ void	Server::process(void)
 	}
 
 	{	// delete users that need to be deleted
-		std::vector<User *>	users = get_users();
+		// and send buffer to all remaining users
 
+		std::vector<User *>				users = get_users();
 		std::vector<User *>::iterator	i = users.begin();
 
 		while (i != users.end())
@@ -100,8 +101,16 @@ void	Server::process(void)
 			i++;
 		}
 
-		// update user
-		// send message to rest of user
+		users = get_users();
+		i = users.begin();
+
+		while (i != users.end())
+		{
+			//(*i)->write_buffer("[DEBUG]:\they"); //
+			if ((*i)->send_buffer() == -1)
+				(*i)->set_status(DELETE);	// not sure of that approach
+			i++;
+		}
 	}
 
 	// might display user on server
@@ -172,25 +181,34 @@ void	Server::ping(void)
 		std::cerr << s_debug("PING", "")
 			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 
-	const int							time = std::time(NULL);
-	const int							timeout = atoi(_config.get("ping").c_str());
+	//const int							time = std::time(NULL);
+	//const int							timeout = atoi(_config.get("ping").c_str());
 	std::map<size_t, User *>::iterator	i = this->_users.begin();
 
 	while (i != this->_users.end())
 	{
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t| ") << (*i).second->get_fd() << "\t|";
-		if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
-		{
-			// set reason of delete // to do later
-			(*i).second->set_status(DELETE);
-			if (DEBUG)
-				std::cerr << C_BOLD << " timeout";
-		}
-		/*else if ((*i).second->get_status() == ONLINE)
-		{
-			// send ping
+		/*if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
+		  {
+		// set reason of delete // to do later
+		(*i).second->set_status(DELETE);
+		if (DEBUG)
+		std::cerr << C_BOLD << " timeout";
 		}*/
+		// else if
+		if ((*i).second->get_status() == ONLINE)
+		{
+			if (send((*i).second->get_fd(), "\r\n", 2, 0) != -1)
+				(*i).second->set_last_ping(std::time(NULL));
+			else
+			{
+				// set reason of delete // to do later // maybe
+				(*i).second->set_status(DELETE);
+				if (DEBUG)
+					std::cerr << C_BOLD << " timeout";
+			}
+		}
 		if (DEBUG)
 			std::cerr << C_RESET << std::endl;
 		++i;

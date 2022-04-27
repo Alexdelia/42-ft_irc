@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 11:56:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/27 12:33:00 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ User::User(const int fd, struct sockaddr_in addr):
 	// getnameinfo
 
 	// command
+
+	// put right status
+	this->_status = ONLINE;
 
 	if (DEBUG)
 		debug("USER", "created");
@@ -48,22 +51,39 @@ void	User::write_buffer(const std::string &str)
 			<< C_ITALIC << "\"" << str << "\"" << C_RESET << std::endl;
 }
 
-void	User::send_buffer(void)
+ssize_t	User::send_buffer(void)
 {
+	ssize_t	res;
+
+	if (!this->_buffer_send.length())
+		return (0);
+	
 	if (DEBUG)
 		std::cerr << s_debug("USER", "sending ...\t") << C_RESET;
-	if (!this->_buffer_send.length())
-		return ;
 
-	if (send(this->_fd, this->_buffer_send.c_str(),
-				this->_buffer_send.length(), 0))
-		error("[USER]:  \tsend failed");
-	else if (DEBUG)
+	res = send(this->_fd, this->_buffer_send.c_str(),
+				this->_buffer_send.length(), 0);
+	if (res == -1)
+	{
+		if (DEBUG)
+			std::cerr << C_RED << "failed" << C_RESET << std::endl;
+		return (res);
+	}
+	
+	if (DEBUG)
 		std::cerr << C_RED << "sent" << C_RESET << std::endl;
+
+	this->_buffer_send.clear();
+	this->_last_ping = std::time(NULL);
+
+	return (res);
 }
 
 void	User::set_status(const int status)
 { this->_status = status; }
+
+void	User::set_last_ping(const int last_ping)
+{ this->_last_ping = last_ping; }
 
 int		User::get_fd(void) const
 { return (this->_fd); }
