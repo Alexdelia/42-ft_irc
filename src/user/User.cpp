@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 12:33:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:48:35 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	User::write_buffer(const std::string &str)
 	this->_buffer_to_send += str + "\r\n";
 	
 	if (DEBUG)
-		std::cerr << s_debug("USER", "add to _buffer_send:\t")
+		std::cerr << s_debug("USER", "_buffer_to_send += ")
 			<< C_ITALIC << "\"" << str << "\"" << C_RESET << std::endl;
 }
 
@@ -100,7 +100,7 @@ void	User::receive(void)
 
 	buffer[res] = '\0';
 
-	std::vector<std::string>			lines = _recv_split(std::string(buffer));
+	std::vector<std::string>			lines = ft_split(buffer, "\r\n");
 
 	std::vector<std::string>::iterator	i = lines.begin();
 
@@ -114,22 +114,6 @@ void	User::receive(void)
 		// launch command / message
 		++i;
 	}
-}
-
-std::vector<std::string>	User::_recv_split(std::string buffer)
-{
-	std::vector<std::string>	lines;
-	size_t						pos;
-
-	pos = buffer.find("\r\n");
-	while (pos != std::string::npos)
-	{
-		lines.push_back(buffer.substr(0, pos));
-		buffer.erase(0, pos + 2);
-		pos = buffer.find("\r\n");
-	}
-
-	return (lines);
 }
 
 void	User::set_status(const int status)

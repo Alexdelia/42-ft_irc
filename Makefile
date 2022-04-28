@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/04/27 14:49:32 by adelille         ###   ########.fr        #
+#    Updated: 2022/04/28 13:40:26 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,10 @@ SRCSPATH =	./src/
 OBJSPATH =	./obj/
 INC =		./inc/
 
-SRCS =		$(wildcard $(SRCSPATH)*.cpp) $(wildcard $(SRCSPATH)**/*.cpp)
+rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
+
+//SRCS =		$(wildcard $(SRCSPATH)*.cpp) $(wildcard $(SRCSPATH)**/*.cpp)
+SRCS =		$(call rwildcard,$(SRCSPATH),*cpp)
 SRCSNAME =	$(subst $(SRCSPATH), , $(SRCS))
 
 OBJSNAME =	$(SRCSNAME:.cpp=.o)

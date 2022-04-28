@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:34:12 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 23:06:58 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 13:46:37 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 
 # include "color.hpp"
 
-# include <string>
 # include <iostream>
 # include <sstream>
+# include <string>
+# include <vector>
 # include <ctime>
+
+std::vector<std::string>	ft_split(const std::string &str, const std::string &sep);
 
 int			error(const std::string &str, const int ret);
 void		error(const std::string &str);
