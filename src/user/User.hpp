@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 11:44:40 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 12:26:21 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ class User
 		User();	
 		User(const User &src);	
 		User	&operator=(const User &src);
+
+		std::vector<std::string>	_recv_split(std::string buffer);
 };
 
 #endif

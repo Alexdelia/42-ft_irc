@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 11:49:11 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 12:33:01 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,48 @@ void	User::receive(void)
 
 	if (res == -1)
 	{
-		debug("USER", "receive returned -1");
+		debug("USER", "receive == -1");
 		return ;
 	}
 	else if (res == 0)
 	{
+		debug("USER", "receive == 0, status = DELETE");
 		this->_status = DELETE;
 		return ;
 	}
 
 	buffer[res] = '\0';
 
+	std::vector<std::string>			lines = _recv_split(std::string(buffer));
+
+	std::vector<std::string>::iterator	i = lines.begin();
+
 	if (DEBUG)
-		std::cerr << s_debug("USER", "| ") << this->_fd
-			<< "\t| receive: \"" << buffer << "\"" << C_RESET << std::endl;
+		std::cerr << s_debug("USER", "| ") << this->_fd << "\t| receive:" << std::endl;
+	
+	while (i != lines.end())
+	{
+		if (DEBUG)
+			std::cerr << s_debug("\t\t\t") << *i << std::endl;
+		// launch command / message
+		++i;
+	}
+}
+
+std::vector<std::string>	User::_recv_split(std::string buffer)
+{
+	std::vector<std::string>	lines;
+	size_t						pos;
+
+	pos = buffer.find("\r\n");
+	while (pos != std::string::npos)
+	{
+		lines.push_back(buffer.substr(0, pos));
+		buffer.erase(0, pos + 2);
+		pos = buffer.find("\r\n");
+	}
+
+	return (lines);
 }
 
 void	User::set_status(const int status)
