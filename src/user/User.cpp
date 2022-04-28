@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 14:39:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 16:15:46 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,13 @@ void	User::receive(void)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
-		Cmd	c(*i);
+		const Cmd	c(*i, this);
+		if (g_m_cmd.count(c.cmd))
+			g_m_cmd[c.cmd](c);
+		else
+			std::cerr << C_BOLD << C_YELLOW << "[WARNING]:\t" << C_RESET
+				<< C_YELLOW << "command \"" << c.cmd
+				<< "\" isn't supported" << C_RESET << std::endl;
 		++i;
 	}
 }

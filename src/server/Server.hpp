@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 15:14:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 16:09:16 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // config	// map(string key, string val)
 # include "Config.hpp"
 # include "../user/User.hpp"
+# include "../user/cmd/map_cmd.hpp"
 
 # include <map>
 # include <string>
@@ -63,7 +64,7 @@ class Server
 		void	_accept_user(void);
 		void	_ping(void);
 		void	_delete_user(User &user);
-
+		void	_init_m_cmd(void);
 
 		// display (user/channel)
 };

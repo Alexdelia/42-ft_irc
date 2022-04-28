@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 13:51:58 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 16:03:57 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,27 @@
 # define CMD_HPP
 
 # include "../../utils/utils.hpp"
-// user
-// server
+//# include "../User.hpp"
 
 # include <string>
 # include <vector>
 
+class User;
 
 class Cmd
 {
 	public:
-		Cmd(const std::string &line);
+		Cmd(const std::string &line, User *user);
 		~Cmd();
 		
 		std::string					cmd;
 		std::vector<std::string>	arg;
 		std::string					prefix;
+
+		User	&get_user(void) const;
 	
 	private:
+		User	*_user;
 
 		Cmd();	
 		Cmd(const Cmd &src);	

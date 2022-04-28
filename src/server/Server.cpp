@@ -6,11 +6,13 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 14:40:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 15:51:46 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+
+std::map<std::string, f_cmd>	g_m_cmd;
 
 Server::Server() {}
 
@@ -43,6 +45,8 @@ Server::Server(const std::string &port, const std::string &password):
 	this->_pfds.push_back(pollfd());
 	this->_pfds.back().fd = this->_fd;
 	this->_pfds.back().events = POLLIN;
+
+	_init_m_cmd();
 
 	debug("SERVER", "created");
 }
@@ -258,4 +262,9 @@ std::vector<User *>	Server::get_users(void)
 	}
 
 	return (users);
+}
+
+void	Server::_init_m_cmd(void)
+{
+	g_m_cmd["QUIT"] = QUIT;
 }
