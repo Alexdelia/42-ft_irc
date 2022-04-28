@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 13:48:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 14:39:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ User::User(const int fd, struct sockaddr_in addr):
 	// put right status
 	this->_status = ONLINE;
 
-	if (DEBUG)
-		debug("USER", "created");
+	debug("USER", "created");
 }
 
 User::~User()
@@ -111,7 +110,7 @@ void	User::receive(void)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
-		// launch command / message
+		Cmd	c(*i);
 		++i;
 	}
 }

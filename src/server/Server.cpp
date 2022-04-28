@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 11:51:57 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 14:40:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ Server::Server() {}
 Server::Server(const std::string &port, const std::string &password):
 	_start_time(std::time(NULL)), _last_ping(std::time(NULL))
 {
-	if (DEBUG)
-		debug("SERVER", "start");
+	debug("SERVER", "start");
 	this->get_config().set("port", port);
 	this->get_config().set("password", password);
 
@@ -45,15 +44,13 @@ Server::Server(const std::string &port, const std::string &password):
 	this->_pfds.back().fd = this->_fd;
 	this->_pfds.back().events = POLLIN;
 
-	if (DEBUG)
-		debug("SERVER", "created");
+	debug("SERVER", "created");
 }
 
 Server::~Server()
 {
 	{
-		if (DEBUG)
-			debug("SERVER", "delete all user:");
+		debug("SERVER", "delete all user:");
 
 		std::vector<User *>				users = get_users();
 		std::vector<User *>::iterator	i = users.begin();
@@ -65,8 +62,7 @@ Server::~Server()
 		}
 	}
 
-	if (DEBUG)
-		debug("SERVER", "deleted");
+	debug("SERVER", "deleted");
 }
 
 void	Server::process(void)
@@ -124,8 +120,7 @@ void	Server::process(void)
 
 	// might display user on server
 
-	if (DEBUG)
-		debug("SERVER", "processed");
+	debug("SERVER", "processed");
 }
 
 void	Server::_accept_user(void)

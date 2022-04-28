@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:30:51 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 23:05:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 14:38:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	debug(const std::string &str)
 {
+	if (!DEBUG)
+		return ;
+
 	std::cerr << C_RED << C_BOLD << "[ DEBUG ]:\t" << C_RESET << C_RED
 		<< str << C_RESET << std::endl;
 }
 
 void	debug(const std::string &src, const std::string &str)
 {
+	if (!DEBUG)
+		return ;
+	
 	std::cerr << C_RED << C_BOLD << "[ DEBUG ]:\t"
 		<< C_RESET << C_SRC << C_BOLD << '[' << src << "]:"
 		<< std::string((INDENT_SRC - src.length() >= 0 ?

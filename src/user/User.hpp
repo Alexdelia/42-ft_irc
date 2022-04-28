@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 12:26:21 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 14:24:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define USER_HPP
 
 # include "../utils/utils.hpp"
+# include "cmd/Cmd.hpp"
 
 # include <map>
 # include <string>
@@ -62,8 +63,6 @@ class User
 		User();	
 		User(const User &src);	
 		User	&operator=(const User &src);
-
-		std::vector<std::string>	_recv_split(std::string buffer);
 };
 
 #endif
