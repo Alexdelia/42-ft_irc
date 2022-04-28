@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 15:16:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 11:44:40 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define DELETE		0
 # define ONLINE		1
 
+# define BUFFER_SIZE	2048	// apparently, max length is 512
+
 class Server;
 
 class User
@@ -36,6 +38,7 @@ class User
 
 		void	write_buffer(const std::string &str);
 		ssize_t	send_buffer(void);
+		void	receive(void);
 
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);

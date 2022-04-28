@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 15:17:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 11:49:11 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,31 @@ ssize_t	User::send_buffer(void)
 	this->_last_ping = std::time(NULL);
 
 	return (res);
+}
+
+void	User::receive(void)
+{
+	char	buffer[BUFFER_SIZE + 1];
+	ssize_t	res;
+
+	res = recv(this->_fd, &buffer, BUFFER_SIZE, 0);
+
+	if (res == -1)
+	{
+		debug("USER", "receive returned -1");
+		return ;
+	}
+	else if (res == 0)
+	{
+		this->_status = DELETE;
+		return ;
+	}
+
+	buffer[res] = '\0';
+
+	if (DEBUG)
+		std::cerr << s_debug("USER", "| ") << this->_fd
+			<< "\t| receive: \"" << buffer << "\"" << C_RESET << std::endl;
 }
 
 void	User::set_status(const int status)

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 15:15:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 11:51:57 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,16 @@ void	Server::process(void)
 		if (this->_pfds[0].revents == POLLIN)
 			_accept_user();
 		else
-			sleep(2); //
+		{
+			std::vector<pollfd>::iterator	i = this->_pfds.begin();
+
+			while (i != this->_pfds.end())
+			{
+				if ((*i).revents == POLLIN)
+					this->_users[(*i).fd]->receive();
+				++i;
+			}
+		}
 	}
 
 	{	// delete users that need to be deleted
@@ -98,7 +107,7 @@ void	Server::process(void)
 		{
 			if ((*i)->get_status() == DELETE)
 				_delete_user(*(*i));
-			i++;
+			++i;
 		}
 
 		users = get_users();
@@ -109,7 +118,7 @@ void	Server::process(void)
 			//(*i)->write_buffer("[DEBUG]:\they"); //
 			if ((*i)->send_buffer() == -1)
 				(*i)->set_status(DELETE);	// not sure of that approach
-			i++;
+			++i;
 		}
 	}
 
