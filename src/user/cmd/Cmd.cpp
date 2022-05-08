@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 16:06:30 by adelille         ###   ########.fr       */
+/*   Updated: 2022/04/28 16:20:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ Cmd::Cmd(const std::string &line, User *user):
 	}
 
 	// possibly fully wrong
-
-	std::cout << C_RESET << C_BOLD << "[CMD]:\t" << C_RESET << (*this) << std::endl;
+	std::cout << C_RESET << C_BOLD << "[  CMD  ]:\t" << C_RESET << (*this) << std::endl;
 }
 
 Cmd::~Cmd()
