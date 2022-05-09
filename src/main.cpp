@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/26 23:07:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:38:09 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int ac, char **av)
 {
 	if (DEBUG)
 		debug("start");
+
+	std::cout << C_TEST << "hi" << C_RESET << std::endl;
 
 	if (ac != 3)
 	{

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:01:01 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 14:31:29 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:42:30 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,16 @@
 # define SBLU	"\033[5;3;34m"
 # define DEF	"\033[0m"
 
-# define C_TIME		"\033[38;2;255;0;120m"
+# define ANSI	"\033["
+
+//# define C_TIME		"\033[38;2;255;0;120m"
+# define C_TIME		ANSI "38;2;255;0;120m"
 //# define C_SRC		"\033[38;2;255;55;77m"
 # define C_SRC		"\033[38;2;255;229;196m"
 # define C_PREFIX	"\033[1;38;2;0;90;190m"
 # define C_CMD		"\033[1;38;2;255;200;200m"
 # define C_ARG		"\033[1;38;2;120;230;180m"
+
+# define C_TEST		C_CYAN C_BOLD C_ITALIC
 
 #endif
