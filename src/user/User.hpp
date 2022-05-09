@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 11:32:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:02:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define INIT		-1
 # define DELETE		0
 # define ONLINE		1
+# define PASSWORD	2
+# define REGISTER	3
 
 # define BUFFER_SIZE	2048	// apparently, max length is 512
 
@@ -40,7 +42,7 @@ class User
 
 		void	write_buffer(const std::string &str);
 		ssize_t	send_buffer(void);
-		void	receive(void);
+		void	receive(Server *server);
 
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);

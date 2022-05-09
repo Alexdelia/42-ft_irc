@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 12:04:45 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:21:09 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ User::User(const int fd, struct sockaddr_in addr):
 	// command
 
 	// put right status
-	this->_status = ONLINE;
+	this->_status = PASSWORD;
+	//this->_status = ONLINE;
 
 	debug("USER", "created");
 }
@@ -78,7 +79,7 @@ ssize_t	User::send_buffer(void)
 	return (res);
 }
 
-void	User::receive(void)
+void	User::receive(Server *server)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	ssize_t	res;
@@ -110,7 +111,7 @@ void	User::receive(void)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
-		const Cmd	c(*i, this);
+		const Cmd	c(*i, server, this);
 		if (g_m_cmd.count(c.cmd))
 			g_m_cmd[c.cmd](c);
 		else
@@ -122,7 +123,13 @@ void	User::receive(void)
 }
 
 void	User::set_status(const int status)
-{ this->_status = status; }
+{
+	if (DEBUG)
+		std::cerr << s_debug("USER", "set_status\t(")
+			<< this->_status << " -> " << status << ')'
+			<< ANSI::reset << std::endl;
+	this->_status = status;
+}
 
 void	User::set_last_ping(const int last_ping)
 { this->_last_ping = last_ping; }

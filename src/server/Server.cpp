@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 12:02:48 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 14:07:21 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	Server::process(void)
 			while (i != this->_pfds.end())
 			{
 				if ((*i).revents == POLLIN)
-					this->_users[(*i).fd]->receive();
+					this->_users[(*i).fd]->receive(this);
 				++i;
 			}
 		}
@@ -183,6 +183,8 @@ void	Server::_delete_user(User &user)
 	// quit message to remaining user
 }
 
+// ping work the wrong way
+// will recode it by sending a "PING <nick>" to each user
 void	Server::_ping(void)
 {
 	if (DEBUG)
@@ -267,4 +269,5 @@ std::vector<User *>	Server::get_users(void)
 void	Server::_init_m_cmd(void)
 {
 	g_m_cmd["QUIT"] = QUIT;
+	g_m_cmd["PASS"] = PASS;
 }
