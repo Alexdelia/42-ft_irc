@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 17:24:05 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 21:03:00 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,13 @@ void	Server::_delete_user(User &user)
 	{
 		std::vector<pollfd>::iterator	i = this->_pfds.begin();
 
-		while (i != this->_pfds.end() && (*i).fd != user.get_fd())
+		while (i != this->_pfds.end() && i->fd != user.get_fd())
 			++i;
-		if ((*i).fd == user.get_fd())
+		if (i->fd == user.get_fd())
 		{
 			this->_pfds.erase(i);
 			if (DEBUG)
-				std::cerr << s_debug("SERVER", "pfds\t| ") << (*i).fd << "\t| erased"
+				std::cerr << s_debug("SERVER", "pfds\t| ") << i->fd << "\t| erased"
 					<< ANSI::reset << std::endl;
 		}
 	}
@@ -200,7 +200,7 @@ void	Server::_ping(void)
 	while (i != this->_users.end())
 	{
 		if (DEBUG)
-			std::cerr << s_debug("\t\t\t| ") << (*i).second->get_fd() << "\t|";
+			std::cerr << s_debug("\t\t\t| ") << i->second->get_fd() << "\t|";
 		/*if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
 		  {
 		// set reason of delete // to do later
@@ -209,12 +209,12 @@ void	Server::_ping(void)
 		std::cerr << C_BOLD << " timeout";
 		}*/
 		// else if
-		if ((*i).second->get_status() == ONLINE)
+		if (i->second->get_status() == ONLINE)
 		{
 			int			err = 0;
 			socklen_t	len = sizeof(err);
 
-			if (getsockopt((*i).second->get_fd(), SOL_SOCKET, SO_ERROR,
+			if (getsockopt(i->second->get_fd(), SOL_SOCKET, SO_ERROR,
 						&err, &len) != 0)
 				exit(error("getsockopt in ping", 1));
 			else if (err != 0)
@@ -224,7 +224,7 @@ void	Server::_ping(void)
 			}
 			else
 			{
-				(*i).second->set_last_ping(std::time(NULL));
+				i->second->set_last_ping(std::time(NULL));
 				if (DEBUG)
 					std::cerr << ' ' << err;
 			}
