@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 10:38:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:05:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ static void	shutdown(int)
 
 int	main(int ac, char **av)
 {
-	if (DEBUG)
-		debug("start");
-
-	std::cout << C_TEST << "hi" << C_RESET << std::endl;
+	debug("start");
 
 	if (ac != 3)
 	{
@@ -43,9 +40,9 @@ int	main(int ac, char **av)
 	Server	server(av[1], av[2]);
 	if (DEBUG)
 		std::cerr << s_debug("CONFIG", "") << std::endl
-			<< server.get_config() << C_RESET;
+			<< server.get_config() << ANSI::reset;
 
-	std::cout << C_BOLD << "launched" << C_RESET << std::endl;
+	std::cout << ANSI::bold << "launched" << ANSI::reset << std::endl;
 
 	while (!g_shutdown)
 	{
@@ -53,10 +50,10 @@ int	main(int ac, char **av)
 		if (DEBUG)
 			std::cerr << s_debug("")
 				<< s_time(std::time(NULL) - server.get_start_time())
-				<< C_RED << "\tloop" << C_RESET << std::endl;
+				<< ANSI::red << "\tloop" << ANSI::reset << std::endl;
 	}
 	
-	std::cout << std::endl << C_BOLD << "shutdown" << C_RESET << std::endl;
+	std::cout << std::endl << ANSI::bold << "shutdown" << ANSI::reset << std::endl;
 
 	return (0);
 }

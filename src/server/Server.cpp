@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 15:51:46 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:02:48 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,9 @@ void	Server::_accept_user(void)
 	this->_pfds.back().events = POLLIN;
 
 	std::cout << s_time(std::time(NULL) - this->_start_time)
-		<< C_BOLD << "\tnew user:\t| " << fd << "\t| "
+		<< ANSI::bold << "\tnew user:\t| " << fd << "\t| "
 		<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
-		<< C_RESET << std::endl;
+		<< ANSI::reset << std::endl;
 }
 
 void	Server::_delete_user(User &user)
@@ -173,7 +173,7 @@ void	Server::_delete_user(User &user)
 			this->_pfds.erase(i);
 			if (DEBUG)
 				std::cerr << s_debug("SERVER", "pfds\t| ") << (*i).fd << "\t| erased"
-					<< C_RESET << std::endl;
+					<< ANSI::reset << std::endl;
 		}
 	}
 
@@ -234,7 +234,7 @@ void	Server::_ping(void)
 			}*/
 		}
 		if (DEBUG)
-			std::cerr << C_RESET << std::endl;
+			std::cerr << ANSI::reset << std::endl;
 		++i;
 	}
 

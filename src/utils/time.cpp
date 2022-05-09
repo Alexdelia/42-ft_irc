@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 19:30:51 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/27 00:09:14 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:00:46 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	time(const int time)
 	if (indent < 0)
 		indent = 0;
 
-	std::cout << C_TIME << C_BOLD << C_ITALIC <<
+	std::cout << ANSI::time << ANSI::bold << ANSI::italic <<
 		'<' << std::string(indent, ' ') << time
 		<< std::string((size % 2 == 0 ? indent + 1 : indent), ' ') << '>'
-		<< C_RESET << std::endl;
+		<< ANSI::reset << std::endl;
 }
 
 std::string	s_time(const int time)
@@ -62,10 +62,10 @@ std::string	s_time(const int time)
 	if (indent < 0)
 		indent = 0;
 
-	o << C_TIME << C_BOLD << C_ITALIC <<
+	o << ANSI::time << ANSI::bold << ANSI::italic <<
 		'<' << std::string(indent, ' ') << time
 		<< std::string((size % 2 == 0 ? indent + 1 : indent), ' ') << '>'
-		<< C_RESET;
+		<< ANSI::reset;
 
 	return (o.str());
 }

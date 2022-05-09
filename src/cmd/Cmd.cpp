@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 16:20:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:03:31 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ Cmd::Cmd(const std::string &line, User *user):
 	}
 
 	// possibly fully wrong
-	std::cout << C_RESET << C_BOLD << "[  CMD  ]:\t" << C_RESET << (*this) << std::endl;
+	std::cout << ANSI::reset << ANSI::bold << "[  CMD  ]:\t" << ANSI::reset << (*this) << std::endl;
 }
 
 Cmd::~Cmd()
@@ -58,16 +58,16 @@ Cmd::~Cmd()
 std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 {
 	if (src.prefix.length())
-		o << C_PREFIX << ':' << src.prefix << C_RESET << ' ';
+		o << ANSI::prefix << ':' << src.prefix << ANSI::reset << ' ';
 	
-	o << C_CMD << src.cmd << C_RESET;
+	o << ANSI::cmd << src.cmd << ANSI::reset;
 
 	std::vector<std::string>			cpy = src.arg;
 	std::vector<std::string>::iterator	i = cpy.begin();
 
 	while (i != cpy.end())
 	{
-		o << ' ' << C_ARG << *i << C_RESET;
+		o << ' ' << ANSI::arg << *i << ANSI::reset;
 		++i;
 	}
 

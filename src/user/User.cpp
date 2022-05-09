@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 16:15:46 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 12:04:45 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ User::~User()
 
 	if (DEBUG)
 		std::cerr << s_debug("USER", "\t| ") << this->_fd << "\t| deleted"
-			<< C_RESET << std::endl;
+			<< ANSI::reset << std::endl;
 }
 
 void	User::write_buffer(const std::string &str)
@@ -47,7 +47,7 @@ void	User::write_buffer(const std::string &str)
 	
 	if (DEBUG)
 		std::cerr << s_debug("USER", "_buffer_to_send += ")
-			<< C_ITALIC << "\"" << str << "\"" << C_RESET << std::endl;
+			<< ANSI::italic << "\"" << str << "\"" << ANSI::reset << std::endl;
 }
 
 ssize_t	User::send_buffer(void)
@@ -58,19 +58,19 @@ ssize_t	User::send_buffer(void)
 		return (0);
 	
 	if (DEBUG)
-		std::cerr << s_debug("USER", "sending ...\t") << C_RESET;
+		std::cerr << s_debug("USER", "sending ...\t") << ANSI::reset;
 
 	res = send(this->_fd, this->_buffer_to_send.c_str(),
 				this->_buffer_to_send.length(), 0);
 	if (res == -1)
 	{
 		if (DEBUG)
-			std::cerr << C_RED << "failed" << C_RESET << std::endl;
+			std::cerr << ANSI::red << "failed" << ANSI::reset << std::endl;
 		return (res);
 	}
 	
 	if (DEBUG)
-		std::cerr << C_RED << "sent" << C_RESET << std::endl;
+		std::cerr << ANSI::red << "sent" << ANSI::reset << std::endl;
 
 	this->_buffer_to_send.clear();
 	this->_last_ping = std::time(NULL);
@@ -114,9 +114,9 @@ void	User::receive(void)
 		if (g_m_cmd.count(c.cmd))
 			g_m_cmd[c.cmd](c);
 		else
-			std::cerr << C_BOLD << C_YELLOW << "[WARNING]:\t" << C_RESET
-				<< C_YELLOW << "command \"" << c.cmd
-				<< "\" isn't supported" << C_RESET << std::endl;
+			std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
+				<< ANSI::yellow << "command \"" << c.cmd
+				<< "\" isn't supported" << ANSI::reset << std::endl;
 		++i;
 	}
 }
