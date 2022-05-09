@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 14:07:21 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:32:40 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	Server::process(void)
 
 			while (i != this->_pfds.end())
 			{
-				if ((*i).revents == POLLIN)
-					this->_users[(*i).fd]->receive(this);
+				if (i->revents == POLLIN)
+					this->_users[i->fd]->receive(this);
 				++i;
 			}
 		}
@@ -193,7 +193,7 @@ void	Server::_ping(void)
 
 	//const int							time = std::time(NULL);
 	//const int							timeout = atoi(_config.get("ping").c_str());
-	std::map<size_t, User *>::iterator	i = this->_users.begin();
+	std::map<int, User *>::iterator	i = this->_users.begin();
 
 	while (i != this->_users.end())
 	{
@@ -255,7 +255,7 @@ std::vector<User *>	Server::get_users(void)
 {
 	std::vector<User *>	users;
 
-	std::map<size_t, User *>::iterator i = this->_users.begin();
+	std::map<int, User *>::iterator i = this->_users.begin();
 
 	while (i != this->_users.end())
 	{

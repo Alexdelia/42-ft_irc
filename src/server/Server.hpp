@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 11:32:59 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 15:31:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class Server
 	
 	private:
 		Config						_config;
-		std::map<size_t, User *>	_users;	// list of users with index
+		std::map<int, User *>		_users;	// list of users with index
 											// don't use vector because might have hole in index
 		int							_fd;
 		std::vector<pollfd>			_pfds;
