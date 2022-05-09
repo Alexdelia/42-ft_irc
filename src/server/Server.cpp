@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 15:32:40 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:24:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ Server::Server(const std::string &port, const std::string &password):
 	this->get_config().set("port", port);
 	this->get_config().set("password", password);
 
-	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (this->_fd == 0)
+	int	fd;
+
+	fd = socket(AF_INET, SOCK_STREAM, 0);
+	if (fd == 0)
 		exit(error("socket", 1));
 	int	enable = 1;
-	if (setsockopt(this->_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &enable, sizeof(enable)))
+	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &enable, sizeof(enable)))
 		exit(error("setsockopt", 1));
-	if (fcntl(this->_fd, F_SETFL, O_NONBLOCK) < 0)
+	if (fcntl(fd, F_SETFL, O_NONBLOCK) < 0)
 		exit(error("fcntl", 1));
 
 	struct sockaddr_in	addr;
@@ -37,13 +39,13 @@ Server::Server(const std::string &port, const std::string &password):
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_port = htons(atoi(this->get_config().get("port").c_str()));
 
-	if (bind(this->_fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 		exit(error("bind", 1));
-	if (listen(this->_fd, addr.sin_port) < 0)
+	if (listen(fd, addr.sin_port) < 0)
 		exit(error("listen", 1));
 
 	this->_pfds.push_back(pollfd());
-	this->_pfds.back().fd = this->_fd;
+	this->_pfds.back().fd = fd;
 	this->_pfds.back().events = POLLIN;
 
 	_init_m_cmd();
@@ -73,7 +75,7 @@ void	Server::process(void)
 {
 	if (poll(&this->_pfds[0], this->_pfds.size(),
 				atoi(get_config().get("timeout").c_str())) == -1)
-		return ;
+		return (debug("poll"));
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
 	{
@@ -136,7 +138,7 @@ void	Server::_accept_user(void)
 	int					fd;
 
 	addr_len = sizeof(addr);
-	fd = accept(this->_fd, (struct sockaddr *)&addr, &addr_len);
+	fd = accept(this->_pfds[0].fd, (struct sockaddr *)&addr, &addr_len);
 	if (fd == -1)
 	{
 		error("accept");
