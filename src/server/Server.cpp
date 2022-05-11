@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 21:03:00 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:07:09 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,4 +272,5 @@ void	Server::_init_m_cmd(void)
 {
 	g_m_cmd["QUIT"] = QUIT;
 	g_m_cmd["PASS"] = PASS;
+	g_m_cmd["NICK"] = NICK;
 }

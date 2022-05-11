@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:10:05 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 14:07:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:07:17 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ extern std::map<std::string, f_cmd>	g_m_cmd;
 
 void	QUIT(const Cmd &c);
 void	PASS(const Cmd &c);
+void	NICK(const Cmd &c);
 
 #endif
