@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 13:59:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:54:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,32 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
 
+	if ((*e.begin())[0] == ':')
+	{
+		this->prefix = std::string(&(*e.begin())[1]);
+		e.erase(e.begin());
+	}
+
 	this->cmd = *e.begin();
 	e.erase(e.begin());
 
 	while (!e.empty())
 	{
 		if ((*e.begin())[0] == ':')	// need to check if take everything behind : , or only first word, or something else
+		{
 			this->prefix = std::string(&(*e.begin())[1]);
+			e.erase(e.begin());
+			while (!e.empty())
+			{
+				this->prefix += " " + std::string(&(*e.begin())[0]);
+				e.erase(e.begin());
+			}
+		}	
 		else
+		{
 			this->arg.push_back((*e.begin()));
-		e.erase(e.begin());
+			e.erase(e.begin());
+		}
 	}
 
 	// possibly fully wrong
