@@ -6,13 +6,11 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 14:39:55 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:09:52 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-
-std::map<std::string, f_cmd>	g_m_cmd;
 
 Server::Server() {}
 
@@ -269,10 +267,10 @@ void	Server::_ping(void)
 			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 }
 
-Config	&Server::get_config(void)
+Config				&Server::get_config(void)
 { return (this->_config); }
 
-int		Server::get_start_time(void) const
+const int					&Server::get_start_time(void) const
 { return (this->_start_time); }
 
 std::vector<Client *>	Server::get_clients(void)
@@ -290,9 +288,12 @@ std::vector<Client *>	Server::get_clients(void)
 	return (clients);
 }
 
+const	std::map<std::string, Server::f_cmd>	&Server::get_cmds(void) const
+{ return (this->_cmds); }
+
 void	Server::_init_m_cmd(void)
 {
-	g_m_cmd["QUIT"] = QUIT;
-	g_m_cmd["PASS"] = PASS;
-	g_m_cmd["NICK"] = NICK;
+	this->_cmds["QUIT"] = Cmd::QUIT;
+	this->_cmds["PASS"] = PASS;
+	this->_cmds["NICK"] = NICK;
 }

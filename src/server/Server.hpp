@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 14:22:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:07:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 # define SERVER_HPP
 
 # include "../utils/utils.hpp"
-// config	// map(string key, string val)
 # include "Config.hpp"
 # include "../client/Client.hpp"
-# include "../cmd/map_cmd.hpp"
+# include "../cmd/Cmd.hpp"
 
 # include <map>
 # include <string>
@@ -29,12 +28,12 @@
 # include <fcntl.h>
 # include <poll.h>
 
-# include <unistd.h> // (debug) for sleep()
-
 class Client;
 
 class Server
 {
+	typedef	void	(*f_cmd)(void);
+	
 	public:
 		Server(const std::string &port, const std::string &password);
 		~Server();
@@ -43,17 +42,19 @@ class Server
 
 		// channel
 	
-		Config					&get_config(void);
-		int						get_start_time(void) const;
-		std::vector<Client *>	get_clients(void);
+		Config								&get_config(void);
+		const int							&get_start_time(void) const;
+		std::vector<Client *>				get_clients(void);
+		const std::map<std::string, f_cmd>	&get_cmds(void) const;
 	
 	private:
-		Config						_config;
-		std::map<int, Client *>		_clients;	// list of clients with index
+		Config							_config;
+		std::map<std::string, f_cmd>	_cmds;
+		std::map<int, Client *>			_clients;	// list of clients with index
 											// don't use vector because might have hole in index
-		std::vector<pollfd>			_pfds;
-		int							_start_time;
-		int							_last_ping;
+		std::vector<pollfd>				_pfds;
+		int								_start_time;
+		int								_last_ping;
 		// channel
 		
 		Server();

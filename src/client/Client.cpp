@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 14:01:53 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 16:41:03 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,6 @@ void	Client::receive(Server *server)
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
 		const Cmd	c(*i, server, this);
-		if (g_m_cmd.count(c.cmd))
-			g_m_cmd[c.cmd](c);
-		else
-			std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
-				<< ANSI::yellow << "command \"" << c.cmd
-				<< "\" isn't supported" << ANSI::reset << std::endl;
 		++i;
 	}
 }
