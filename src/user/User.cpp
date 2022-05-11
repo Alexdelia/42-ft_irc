@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 14:21:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:43:31 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,9 @@ void	User::set_status(const int status)
 void	User::set_last_ping(const int last_ping)
 { this->_last_ping = last_ping; }
 
+void	User::set_nickname(const std::string &nickname)
+{ this->_nickname = nickname; }
+
 int		User::get_fd(void) const
 { return (this->_fd); }
 
@@ -142,3 +145,6 @@ int		User::get_status(void) const
 
 int		User::get_last_ping(void) const
 { return (this->_last_ping); }
+
+const std::string	&User::get_nickname(void) const
+{ return (this->_nickname); }

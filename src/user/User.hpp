@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 14:02:13 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:43:11 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ class User
 
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);
+		void	set_nickname(const std::string &nickname);
 
-		int		get_fd(void) const;
-		int		get_status(void) const;
-		int		get_last_ping(void) const;
+		int					get_fd(void) const;
+		int					get_status(void) const;
+		int					get_last_ping(void) const;
+		const std::string	&get_nickname(void) const;
 	
 	private:
 		int			_fd;
@@ -59,6 +61,7 @@ class User
 		std::string	_buffer_to_send;
 
 		// name
+		std::string	_nickname;
 		// addr
 
 		// command
