@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 # include "Cmd.hpp"
-# include "../user/User.hpp"
+# include "../client/Client.hpp"
 
 void	QUIT(const Cmd &c)
 {
 	// might set delete reason
-	c.get_user().set_status(DELETE);
+	c.get_client().set_status(DELETE);
 }

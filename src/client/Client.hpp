@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.hpp                                           :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 11:43:11 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:04:22 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef USER_HPP
-# define USER_HPP
+#ifndef CLIENT_HPP
+# define CLIENT_HPP
 
 # include "../utils/utils.hpp"
 # include "../cmd/Cmd.hpp"
@@ -34,11 +34,11 @@
 
 class Server;
 
-class User
+class Client
 {
 	public:
-		User(const int fd, struct sockaddr_in addr);
-		~User();
+		Client(const int fd, struct sockaddr_in addr);
+		~Client();
 
 		void	write_buffer(const std::string &str);
 		ssize_t	send_buffer(void);
@@ -66,9 +66,9 @@ class User
 
 		// command
 		
-		User();	
-		User(const User &src);	
-		User	&operator=(const User &src);
+		Client();	
+		Client(const Client &src);	
+		Client	&operator=(const Client &src);
 };
 
 #endif

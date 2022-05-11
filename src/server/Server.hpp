@@ -16,7 +16,7 @@
 # include "../utils/utils.hpp"
 // config	// map(string key, string val)
 # include "Config.hpp"
-# include "../user/User.hpp"
+# include "../client/Client.hpp"
 # include "../cmd/map_cmd.hpp"
 
 # include <map>
@@ -31,7 +31,7 @@
 
 # include <unistd.h> // (debug) for sleep()
 
-class User;
+class Client;
 
 class Server
 {
@@ -45,11 +45,11 @@ class Server
 	
 		Config				&get_config(void);
 		int					get_start_time(void) const;
-		std::vector<User *>	get_users(void);
+		std::vector<Client *>	get_clients(void);
 	
 	private:
 		Config						_config;
-		std::map<int, User *>		_users;	// list of users with index
+		std::map<int, Client *>		_clients;	// list of clients with index
 											// don't use vector because might have hole in index
 		std::vector<pollfd>			_pfds;
 		int							_start_time;
@@ -60,12 +60,12 @@ class Server
 		Server(const Server &src);
 		Server	&operator=(const Server &src);
 
-		void	_accept_user(void);
+		void	_accept_client(void);
 		void	_ping(void);
-		void	_delete_user(User &user);
+		void	_delete_client(Client &client);
 		void	_init_m_cmd(void);
 
-		// display (user/channel)
+		// display (client/channel)
 };
 
 #endif

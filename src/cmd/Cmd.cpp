@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 13:47:57 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:08:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 //
 //	<crlf>     ::= CR LF
 
-Cmd::Cmd(const std::string &line, Server *server, User *user):
-	prefix(""), _server(server), _user(user)
+Cmd::Cmd(const std::string &line, Server *server, Client *client):
+	prefix(""), _server(server), _client(client)
 {
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
@@ -74,7 +74,7 @@ std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 	return (o);
 }
 
-User	&Cmd::get_user(void) const
-{ return (*this->_user); }
+Client	&Cmd::get_client(void) const
+{ return (*this->_client); }
 Server	&Cmd::get_server(void) const
 { return (*this->_server); }

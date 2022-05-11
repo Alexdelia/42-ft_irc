@@ -14,7 +14,7 @@
 # define CMD_HPP
 
 # include "../utils/utils.hpp"
-//# include "../user/User.hpp"
+//# include "../client/Client.hpp"
 //# include "../server/Server.hpp"
 
 # include <string>
@@ -22,12 +22,12 @@
 
 class Server;
 
-class User;
+class Client;
 
 class Cmd
 {
 	public:
-		Cmd(const std::string &line, Server *server, User *user);
+		Cmd(const std::string &line, Server *server, Client *client);
 		~Cmd();
 		
 		std::string					cmd;
@@ -35,11 +35,11 @@ class Cmd
 		std::string					prefix;
 
 		Server	&get_server(void) const;
-		User	&get_user(void) const;
+		Client	&get_client(void) const;
 	
 	private:
 		Server	*_server;
-		User	*_user;
+		Client	*_client;
 
 		Cmd();	
 		Cmd(const Cmd &src);	
