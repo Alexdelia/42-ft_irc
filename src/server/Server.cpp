@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 12:07:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:39:55 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	Server::process(void)
 			++i;
 		}
 
+		_handle_client_status();	// need to take care if that function change the status
+
 		clients = get_clients();
 		i = clients.begin();
 
@@ -127,6 +129,26 @@ void	Server::process(void)
 	// might display client on server
 
 	debug("SERVER", "processed");
+}
+
+void	Server::_handle_client_status(void)
+{
+	std::vector<Client *>			clients = this->get_clients();
+	std::vector<Client *>::iterator	i = clients.begin();
+
+	while (i != clients.end())
+	{
+		/*if ((*i)->get_status() == PASSWORD)
+			(*i)->write_buffer("PASS " + this->_config.get("password"));
+		else */if ((*i)->get_status() == REGISTER)
+		{
+			if (DEBUG)
+				std::cerr << s_debug("SERVER", "| ") << (*i)->get_fd()
+					<< "\t|" << (*i)->get_nickname() << "\t| REGISTER ("
+					<< REGISTER << ')' << ANSI::reset << std::endl;
+		}
+		++i;
+	}
 }
 
 void	Server::_accept_client(void)

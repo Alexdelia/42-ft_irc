@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/10 16:08:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 13:59:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 
 	while (!e.empty())
 	{
-		if ((*e.begin())[0] == ':')
+		if ((*e.begin())[0] == ':')	// need to check if take everything behind : , or only first word, or something else
 			this->prefix = std::string(&(*e.begin())[1]);
 		else
 			this->arg.push_back((*e.begin()));

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 17:25:12 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:22:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ class Server
 
 		// channel
 	
-		Config				&get_config(void);
-		int					get_start_time(void) const;
+		Config					&get_config(void);
+		int						get_start_time(void) const;
 		std::vector<Client *>	get_clients(void);
 	
 	private:
@@ -64,6 +64,8 @@ class Server
 		void	_ping(void);
 		void	_delete_client(Client &client);
 		void	_init_m_cmd(void);
+		void	_handle_client_status(void);
+
 
 		// display (client/channel)
 };
