@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   User.cpp                                           :+:      :+:    :+:   */
+/*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "User.hpp"
+#include "Client.hpp"
 
-User::User() {}
+Client::Client() {}
 
-User::User(const int fd, struct sockaddr_in addr):
+Client::Client(const int fd, struct sockaddr_in addr):
 	_fd(fd), _status(INIT), _last_ping(std::time(NULL))
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
@@ -30,28 +30,28 @@ User::User(const int fd, struct sockaddr_in addr):
 	this->_status = PASSWORD;
 	//this->_status = ONLINE;
 
-	debug("USER", "created");
+	debug("CLIENT", "created");
 }
 
-User::~User()
+Client::~Client()
 {
 	close(this->_fd);
 
 	if (DEBUG)
-		std::cerr << s_debug("USER", "\t| ") << this->_fd << "\t| deleted"
+		std::cerr << s_debug("CLIENT", "\t| ") << this->_fd << "\t| deleted"
 			<< ANSI::reset << std::endl;
 }
 
-void	User::write_buffer(const std::string &str)
+void	Client::write_buffer(const std::string &str)
 {
 	this->_buffer_to_send += str + "\r\n";
 	
 	if (DEBUG)
-		std::cerr << s_debug("USER", "_buffer_to_send += ")
+		std::cerr << s_debug("CLIENT", "_buffer_to_send += ")
 			<< ANSI::italic << "\"" << str << "\"" << ANSI::reset << std::endl;
 }
 
-ssize_t	User::send_buffer(void)
+ssize_t	Client::send_buffer(void)
 {
 	ssize_t	res;
 
@@ -59,7 +59,7 @@ ssize_t	User::send_buffer(void)
 		return (0);
 	
 	if (DEBUG)
-		std::cerr << s_debug("USER", "sending ...\t") << ANSI::reset;
+		std::cerr << s_debug("CLIENT", "sending ...\t") << ANSI::reset;
 
 	res = send(this->_fd, this->_buffer_to_send.c_str(),
 				this->_buffer_to_send.length(), 0);
@@ -79,7 +79,7 @@ ssize_t	User::send_buffer(void)
 	return (res);
 }
 
-void	User::receive(Server *server)
+void	Client::receive(Server *server)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	ssize_t	res;
@@ -88,12 +88,12 @@ void	User::receive(Server *server)
 
 	if (res == -1)
 	{
-		debug("USER", "receive == -1");
+		debug("CLIENT", "receive == -1");
 		return ;
 	}
 	else if (res == 0)
 	{
-		debug("USER", "receive == 0, status = DELETE");
+		debug("CLIENT", "receive == 0, status = DELETE");
 		this->_status = DELETE;
 		return ;
 	}
@@ -105,7 +105,7 @@ void	User::receive(Server *server)
 	std::vector<std::string>::iterator	i = lines.begin();
 
 	if (DEBUG)
-		std::cerr << s_debug("USER", "| ") << this->_fd << "\t| receive:" << std::endl;
+		std::cerr << s_debug("CLIENT", "| ") << this->_fd << "\t| receive:" << std::endl;
 	
 	while (i != lines.end())
 	{
@@ -122,23 +122,23 @@ void	User::receive(Server *server)
 	}
 }
 
-void	User::set_status(const int status)
+void	Client::set_status(const int status)
 {
 	if (DEBUG)
-		std::cerr << s_debug("USER", "set_status\t(")
+		std::cerr << s_debug("CLIENT", "set_status\t(")
 			<< this->_status << " -> " << status << ')'
 			<< ANSI::reset << std::endl;
 	this->_status = status;
 }
 
-void	User::set_last_ping(const int last_ping)
+void	Client::set_last_ping(const int last_ping)
 { this->_last_ping = last_ping; }
 
-int		User::get_fd(void) const
+int		Client::get_fd(void) const
 { return (this->_fd); }
 
-int		User::get_status(void) const
+int		Client::get_status(void) const
 { return (this->_status); }
 
-int		User::get_last_ping(void) const
+int		Client::get_last_ping(void) const
 { return (this->_last_ping); }

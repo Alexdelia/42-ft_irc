@@ -56,14 +56,14 @@ Server::Server(const std::string &port, const std::string &password):
 Server::~Server()
 {
 	{
-		debug("SERVER", "delete all user:");
+		debug("SERVER", "delete all client:");
 
-		std::vector<User *>				users = get_users();
-		std::vector<User *>::iterator	i = users.begin();
+		std::vector<Client *>				clients = get_clients();
+		std::vector<Client *>::iterator	i = clients.begin();
 
-		while (i != users.end())
+		while (i != clients.end())
 		{
-			_delete_user(*(*i));
+			_delete_client(*(*i));
 			++i;
 		}
 	}
@@ -85,7 +85,7 @@ void	Server::process(void)
 	else
 	{
 		if (this->_pfds[0].revents == POLLIN)
-			_accept_user();
+			_accept_client();
 		else
 		{
 			std::vector<pollfd>::iterator	i = this->_pfds.begin();
@@ -93,29 +93,29 @@ void	Server::process(void)
 			while (i != this->_pfds.end())
 			{
 				if (i->revents == POLLIN)
-					this->_users[i->fd]->receive(this);
+					this->_clients[i->fd]->receive(this);
 				++i;
 			}
 		}
 	}
 
-	{	// delete users that need to be deleted
-		// and send buffer to all remaining users
+	{	// delete clients that need to be deleted
+		// and send buffer to all remaining clients
 
-		std::vector<User *>				users = get_users();
-		std::vector<User *>::iterator	i = users.begin();
+		std::vector<Client *>				clients = get_clients();
+		std::vector<Client *>::iterator	i = clients.begin();
 
-		while (i != users.end())
+		while (i != clients.end())
 		{
 			if ((*i)->get_status() == DELETE)
-				_delete_user(*(*i));
+				_delete_client(*(*i));
 			++i;
 		}
 
-		users = get_users();
-		i = users.begin();
+		clients = get_clients();
+		i = clients.begin();
 
-		while (i != users.end())
+		while (i != clients.end())
 		{
 			//(*i)->write_buffer("[DEBUG]:\they"); //
 			if ((*i)->send_buffer() == -1)
@@ -124,14 +124,14 @@ void	Server::process(void)
 		}
 	}
 
-	// might display user on server
+	// might display client on server
 
 	debug("SERVER", "processed");
 }
 
-void	Server::_accept_user(void)
+void	Server::_accept_client(void)
 {
-	// protection if max user
+	// protection if max client
 
 	struct sockaddr_in	addr;
 	socklen_t			addr_len;
@@ -145,19 +145,19 @@ void	Server::_accept_user(void)
 		return ;
 	}
 
-	this->_users[fd] = new User(fd, addr);
+	this->_clients[fd] = new Client(fd, addr);
 
 	this->_pfds.push_back(pollfd());
 	this->_pfds.back().fd = fd;
 	this->_pfds.back().events = POLLIN;
 
 	std::cout << s_time(std::time(NULL) - this->_start_time)
-		<< ANSI::bold << "\tnew user:\t| " << fd << "\t| "
+		<< ANSI::bold << "\tnew client:\t| " << fd << "\t| "
 		<< inet_ntoa(addr.sin_addr) << "\t| " << ntohs(addr.sin_port)
 		<< ANSI::reset << std::endl;
 }
 
-void	Server::_delete_user(User &user)
+void	Server::_delete_client(Client &client)
 {
 	// channel handle
 
@@ -168,9 +168,9 @@ void	Server::_delete_user(User &user)
 	{
 		std::vector<pollfd>::iterator	i = this->_pfds.begin();
 
-		while (i != this->_pfds.end() && i->fd != user.get_fd())
+		while (i != this->_pfds.end() && i->fd != client.get_fd())
 			++i;
-		if (i->fd == user.get_fd())
+		if (i->fd == client.get_fd())
 		{
 			this->_pfds.erase(i);
 			if (DEBUG)
@@ -179,14 +179,14 @@ void	Server::_delete_user(User &user)
 		}
 	}
 
-	this->_users.erase(user.get_fd());
-	delete	&user;
+	this->_clients.erase(client.get_fd());
+	delete	&client;
 
-	// quit message to remaining user
+	// quit message to remaining client
 }
 
 // ping work the wrong way
-// will recode it by sending a "PING <nick>" to each user
+// will recode it by sending a "PING <nick>" to each client
 void	Server::_ping(void)
 {
 	if (DEBUG)
@@ -195,9 +195,9 @@ void	Server::_ping(void)
 
 	//const int							time = std::time(NULL);
 	//const int							timeout = atoi(_config.get("ping").c_str());
-	std::map<int, User *>::iterator	i = this->_users.begin();
+	std::map<int, Client *>::iterator	i = this->_clients.begin();
 
-	while (i != this->_users.end())
+	while (i != this->_clients.end())
 	{
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t| ") << i->second->get_fd() << "\t|";
@@ -253,19 +253,19 @@ Config	&Server::get_config(void)
 int		Server::get_start_time(void) const
 { return (this->_start_time); }
 
-std::vector<User *>	Server::get_users(void)
+std::vector<Client *>	Server::get_clients(void)
 {
-	std::vector<User *>	users;
+	std::vector<Client *>	clients;
 
-	std::map<int, User *>::iterator i = this->_users.begin();
+	std::map<int, Client *>::iterator i = this->_clients.begin();
 
-	while (i != this->_users.end())
+	while (i != this->_clients.end())
 	{
-		users.push_back(i->second);
+		clients.push_back(i->second);
 		++i;
 	}
 
-	return (users);
+	return (clients);
 }
 
 void	Server::_init_m_cmd(void)

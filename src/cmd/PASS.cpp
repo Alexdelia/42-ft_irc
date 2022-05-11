@@ -11,25 +11,25 @@
 /* ************************************************************************** */
 
 # include "Cmd.hpp"
-# include "../user/User.hpp"
+# include "../client/Client.hpp"
 # include "../server/Server.hpp"
 
 void	PASS(const Cmd &c)
 {
 	if (!c.arg.size())
 		return (debug("CMD", "PASS:\tno arg")); // need to send an error to client
-	if (c.get_user().get_status() != PASSWORD)
+	if (c.get_client().get_status() != PASSWORD)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("CMD", "PASS:\twrong status\t(")
-				<< c.get_user().get_status() << ")" << ANSI::reset << std::endl;
+				<< c.get_client().get_status() << ")" << ANSI::reset << std::endl;
 		return ; // need to send an error to client
 	}
 	
 	if (c.get_server().get_config().get("password") == c.arg[0])
 	{
 		debug("CMD", "PASS:\tcorrect");
-		c.get_user().set_status(REGISTER);
+		c.get_client().set_status(REGISTER);
 	}
 	else
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
