@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 12:12:13 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 15:04:21 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 void	Cmd::PASS(const Cmd &c)
 {
 	if (!c.get_arg().size())
-		return (debug("CMD", "PASS:\tno arg")); // need to send an error to client
+		return (Server::reply(ERR_NEEDMOREPARAMS, c.get_client()));
 	if (c.get_client().get_status() != PASSWORD)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("CMD", "PASS:\twrong status\t(")
 				<< c.get_client().get_status() << ")" << ANSI::reset << std::endl;
-		return ; // need to send an error to client
+		return (Server::reply(ERR_ALREADYREGISTRED, c.get_client()));
 	}
 	
 	if (c.get_server().get_config().get("password") == c.get_arg()[0])

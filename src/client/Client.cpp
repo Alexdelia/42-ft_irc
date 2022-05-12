@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 16:41:03 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,16 @@ void	Client::receive(Server *server)
 		const Cmd	c(*i, server, this);
 		++i;
 	}
+}
+
+std::ostream	&operator<<(std::ostream &o, const Client &src)
+{
+	o << "| " << src.get_fd() << "\t|";
+
+	if (src.get_nickname().size())
+		o << ' ' << src.get_nickname() << "\t|";
+
+	return (o);
 }
 
 void	Client::set_status(const int status)
