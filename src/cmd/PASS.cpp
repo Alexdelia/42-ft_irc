@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/09 14:17:53 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:52:51 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # include "../client/Client.hpp"
 # include "../server/Server.hpp"
 
-void	PASS(const Cmd &c)
+void	Cmd::PASS(void)
 {
 	if (!c.arg.size())
 		return (debug("CMD", "PASS:\tno arg")); // need to send an error to client

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 17:07:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:55:41 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 //	<crlf>     ::= CR LF
 
 Cmd::Cmd(const std::string &line, Server *server, Client *client):
-	_server(server), _client(client), _cmd(""), _prefix("")
+	_server(server), _client(client), _cmd_name(""), _prefix("")
 {
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
@@ -40,7 +40,7 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 		e.erase(e.begin());
 	}
 
-	this->_cmd = *e.begin();
+	this->_cmd_name = *e.begin();
 	e.erase(e.begin());
 
 	while (!e.empty())
@@ -65,11 +65,11 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 	// possibly fully wrong
 	std::cout << ANSI::reset << ANSI::bold << "[  CMD  ]:\t" << ANSI::reset << (*this) << std::endl;
 
-	if (this->get_server().cmds.count(this->_cmd))
-		this->_server->cmds.m_cmd[this->_cmd]();
+	if (this->_cmds.count(this->_cmd_name))
+		this->_cmds[this->_cmd_name]();
 	else
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
-			<< ANSI::yellow << "command \"" << c.cmd
+			<< ANSI::yellow << "command \"" << this->_cmd_name
 			<< "\" isn't supported" << ANSI::reset << std::endl;
 }
 
@@ -83,7 +83,7 @@ std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 	if (src.get_prefix().length())
 		o << ANSI::prefix << ':' << src.get_prefix() << ANSI::reset << ' ';
 	
-	o << ANSI::cmd << src.get_cmd() << ANSI::reset;
+	o << ANSI::cmd << src.get_cmd_name() << ANSI::reset;
 
 	std::vector<std::string>			cpy = src.get_arg();
 	std::vector<std::string>::iterator	i = cpy.begin();
@@ -101,8 +101,8 @@ Client	&Cmd::get_client(void) const
 { return (*this->_client); }
 Server	&Cmd::get_server(void) const
 { return (*this->_server); }
-const std::string				&Cmd::get_cmd(void) const
-{ return (this->_cmd); }
+const std::string				&Cmd::get_cmd_name(void) const
+{ return (this->_cmd_name); }
 const std::vector<std::string>	&Cmd::get_arg(void) const
 { return (this->_arg); }
 const std::string				&Cmd::get_prefix(void) const

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 17:06:47 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <string>
 # include <vector>
+# include <map>
 
 class Server;
 
@@ -26,34 +27,39 @@ class Client;
 
 class Cmd
 {
+	typedef	void	(*f_cmd)(void);
+	
 	public:
 		Cmd(const std::string &line, Server *server, Client *client);
 		~Cmd();
+		
+		static std::map<std::string, f_cmd>	_cmds;
 
 		Server	&get_server(void) const;
 		Client	&get_client(void) const;
 
-		const std::string				&get_cmd(void) const;
+		const std::string				&get_cmd_name(void) const;
 		const std::vector<std::string>	&get_arg(void) const;
 		const std::string				&get_prefix(void) const;
-	
+
 	private:
 		Server	*_server;
 		Client	*_client;
-		
-		std::string					_cmd;
+
+		std::string					_cmd_name;
 		std::vector<std::string>	_arg;
 		std::string					_prefix;
 
 		Cmd();	
 		Cmd(const Cmd &src);	
 		Cmd	&operator=(const Cmd &src);
+
+	public:
+		static void	QUIT(void);
+		static void	PASS(void);
+		static void	NICK(void);
 };
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src);
-
-void	QUIT(void);
-void	PASS(void);
-void	NICK(void);
 
 #endif

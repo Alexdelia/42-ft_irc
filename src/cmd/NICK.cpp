@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 17:01:40 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 
-void Cmd::_NICK(void)
+void	Cmd::NICK(void)
 {
 	if (this->_arg[0].size())
 		return ;	// error, no nickname in arg

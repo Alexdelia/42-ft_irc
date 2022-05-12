@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 17:09:52 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,12 +288,9 @@ std::vector<Client *>	Server::get_clients(void)
 	return (clients);
 }
 
-const	std::map<std::string, Server::f_cmd>	&Server::get_cmds(void) const
-{ return (this->_cmds); }
-
 void	Server::_init_m_cmd(void)
 {
-	this->_cmds["QUIT"] = Cmd::QUIT;
-	this->_cmds["PASS"] = PASS;
-	this->_cmds["NICK"] = NICK;
+	Cmd::_cmds["QUIT"] = Cmd::QUIT;
+	Cmd::_cmds["PASS"] = Cmd::PASS;
+	Cmd::_cmds["NICK"] = Cmd::NICK;
 }
