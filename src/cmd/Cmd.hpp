@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:29:06 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ class Client;
 
 class Cmd
 {
-	typedef	void	(*f_cmd)(void);
+	typedef	void	(*f_cmd)(const Cmd &c);
 	
 	public:
 		Cmd(const std::string &line, Server *server, Client *client);
 		~Cmd();
 		
-		static std::map<std::string, f_cmd>	_cmds;
+		static std::map<std::string, f_cmd>	cmds;
 
 		Server	&get_server(void) const;
 		Client	&get_client(void) const;
@@ -55,9 +55,9 @@ class Cmd
 		Cmd	&operator=(const Cmd &src);
 
 	public:
-		static void	QUIT(void);
-		static void	PASS(void);
-		static void	NICK(void);
+		static void	QUIT(const Cmd &c);
+		static void	PASS(const Cmd &c);
+		static void	NICK(const Cmd &c);
 };
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src);

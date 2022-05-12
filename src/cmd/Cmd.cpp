@@ -6,11 +6,14 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 11:55:41 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:43:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cmd.hpp"
+
+std::map<std::string, Cmd::f_cmd>	Cmd::cmds
+	= std::map<std::string, Cmd::f_cmd>();
 
 // https://datatracker.ietf.org/doc/html/rfc1459#section-2.3
 //
@@ -65,8 +68,8 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 	// possibly fully wrong
 	std::cout << ANSI::reset << ANSI::bold << "[  CMD  ]:\t" << ANSI::reset << (*this) << std::endl;
 
-	if (this->_cmds.count(this->_cmd_name))
-		this->_cmds[this->_cmd_name]();
+	if (this->cmds.count(this->_cmd_name))
+		this->cmds[this->_cmd_name](*this);
 	else
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
 			<< ANSI::yellow << "command \"" << this->_cmd_name

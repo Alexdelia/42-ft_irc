@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 12:13:27 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,7 +290,7 @@ std::vector<Client *>	Server::get_clients(void)
 
 void	Server::_init_m_cmd(void)
 {
-	Cmd::_cmds["QUIT"] = Cmd::QUIT;
-	Cmd::_cmds["PASS"] = Cmd::PASS;
-	Cmd::_cmds["NICK"] = Cmd::NICK;
+	Cmd::cmds["QUIT"] = Cmd::QUIT;
+	Cmd::cmds["PASS"] = Cmd::PASS;
+	Cmd::cmds["NICK"] = Cmd::NICK;
 }
