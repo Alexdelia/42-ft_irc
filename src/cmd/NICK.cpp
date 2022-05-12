@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 12:12:31 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:20:41 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	Cmd::NICK(const Cmd &c)
 		while (i != u.end())
 		{
 			if (c.get_arg()[0] == (*i)->get_nickname())
-				return (debug("CMD", "nickname taken"));	// error, nickname taken
+				return (debug("CMD", "nickname taken"), Server::reply(ERR_NICKCOLLISION, c.get_client()));	// error, nickname taken
 			++i;
 		}
 	}

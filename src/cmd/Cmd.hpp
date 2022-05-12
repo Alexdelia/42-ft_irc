@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 13:29:06 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:13:21 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../utils/utils.hpp"
 //# include "../client/Client.hpp"
 //# include "../server/Server.hpp"
+# include "../utils/reply.hpp"
 
 # include <string>
 # include <vector>

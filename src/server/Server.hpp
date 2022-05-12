@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 11:55:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:28:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ class Server
 		Server(const std::string &port, const std::string &password);
 		~Server();
 
-		void	process(void);
+		void		process(void);
+		static void	reply(const int n, Client &c);
+		static void	reply(const std::string &n, Client &c);
 
 		// channel
 	
