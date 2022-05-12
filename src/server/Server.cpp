@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:32:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,23 +150,21 @@ void	Server::_handle_client_status(void)
 	}
 }
 
-void	Server::reply(const int n, Client &c)
-{
-	if (n <= 0 || n > 502)
-		return (debug("SERVER", "you dumbass, you use an illegal reply number"));
-
-	std::stringstream	ss;
-	ss << n;
-	c.write_buffer(ss.str());
-}
-
 void	Server::reply(const std::string &n, Client &c)
 {
 	int	tmp = atoi(n.c_str());
 	if (tmp <= 0 || tmp > 502)
 		return (debug("SERVER", "you dumbass, you use an illegal reply number"));
 
+	if (DEBUG)
+		std::cerr << s_debug("REPLY", "(") << n << ") " << c << ANSI::reset << std::endl;
 	c.write_buffer(n);
+}
+
+void	Server::reply(const std::string &n, const std::string &msg, Client &c)
+{
+	Server::reply(n, c);
+	c.write_buffer(msg);
 }
 
 void	Server::_accept_client(void)

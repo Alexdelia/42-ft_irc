@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 16:42:52 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ class Client
 		Client(const Client &src);	
 		Client	&operator=(const Client &src);
 };
+
+std::ostream	&operator<<(std::ostream &o, const Client &src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:28:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:36:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "Config.hpp"
 # include "../client/Client.hpp"
 # include "../cmd/Cmd.hpp"
+# include "../utils/reply.hpp"
 
 # include <map>
 # include <string>
@@ -37,8 +38,8 @@ class Server
 		~Server();
 
 		void		process(void);
-		static void	reply(const int n, Client &c);
 		static void	reply(const std::string &n, Client &c);
+		static void	reply(const std::string &n, const std::string &msg, Client &c);
 
 		// channel
 	
