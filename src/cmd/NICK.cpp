@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:42:37 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:21:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	Cmd::NICK(const Cmd &c)
 {
-	if (c.get_arg()[0].size())
+	if (!c.get_arg()[0].size())
 		return (Server::reply(ERR_NONICKNAMEGIVEN, c.get_client()));	// error, no nickname in arg
 
 	{

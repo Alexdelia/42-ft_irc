@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:22:35 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,9 @@ void	Server::_handle_client_status(void)
 	while (i != clients.end())
 	{
 		/*if ((*i)->get_status() == PASSWORD)
-			(*i)->write_buffer("PASS " + this->_config.get("password"));
+			(*i)->write_buffer("PASS " + this->_config.get("password"));*/
+		/*if ((*i)->get_status() == PASSWORD)
+			Server::reply(ERR_PASSWDMISMATCH, *(*i));
 		else */if ((*i)->get_status() == REGISTER)
 		{
 			if (DEBUG)
@@ -157,7 +159,8 @@ void	Server::reply(const std::string &n, Client &c)
 		return (debug("SERVER", "you dumbass, you use an illegal reply number"));
 
 	if (DEBUG)
-		std::cerr << s_debug("REPLY", "(") << n << ") " << c << ANSI::reset << std::endl;
+		std::cerr << s_debug("REPLY", "") << ANSI::reply << '(' << n << ") "
+			<< ANSI::reset << ANSI::red << c << ANSI::reset << std::endl;
 	c.write_buffer(n);
 }
 
