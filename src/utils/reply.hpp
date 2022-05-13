@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_cmd.hpp                                        :+:      :+:    :+:   */
+/*   reply.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 15:10:05 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 12:07:17 by adelille         ###   ########.fr       */
+/*   Created: 2022/05/12 14:11:30 by adelille          #+#    #+#             */
+/*   Updated: 2022/05/12 15:23:52 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_CMD_HPP
-# define MAP_CMD_HPP
+#ifndef REPLY_HPP
+# define REPLY_HPP
 
-# include "Cmd.hpp"
-
-# include <map>
-# include <string>
-
-typedef	void	(*f_cmd)(const Cmd &c);
-extern std::map<std::string, f_cmd>	g_m_cmd;
-
-void	QUIT(const Cmd &c);
-void	PASS(const Cmd &c);
-void	NICK(const Cmd &c);
+# define RPL_WELCOME            "001"
+# define ERR_NONICKNAMEGIVEN    "431"
+# define ERR_NICKCOLLISION      "436"
+# define ERR_NOTREGISTERED      "451"
+# define ERR_NEEDMOREPARAMS     "461"
+# define ERR_ALREADYREGISTRED   "462"
+# define ERR_PASSWDMISMATCH     "464"
 
 #endif

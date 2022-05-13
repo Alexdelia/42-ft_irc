@@ -6,11 +6,14 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/10 16:08:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 13:43:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cmd.hpp"
+
+std::map<std::string, Cmd::f_cmd>	Cmd::cmds
+	= std::map<std::string, Cmd::f_cmd>();
 
 // https://datatracker.ietf.org/doc/html/rfc1459#section-2.3
 //
@@ -29,25 +32,48 @@
 //	<crlf>     ::= CR LF
 
 Cmd::Cmd(const std::string &line, Server *server, Client *client):
-	prefix(""), _server(server), _client(client)
+	_server(server), _client(client), _cmd_name(""), _prefix("")
 {
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
 
-	this->cmd = *e.begin();
+	if ((*e.begin())[0] == ':')
+	{
+		this->_prefix = std::string(&(*e.begin())[1]);
+		e.erase(e.begin());
+	}
+
+	this->_cmd_name = *e.begin();
 	e.erase(e.begin());
 
 	while (!e.empty())
 	{
-		if ((*e.begin())[0] == ':')
-			this->prefix = std::string(&(*e.begin())[1]);
+		if ((*e.begin())[0] == ':')	// need to check if take everything behind : , or only first word, or something else
+		{
+			this->_prefix = std::string(&(*e.begin())[1]);
+			e.erase(e.begin());
+			while (!e.empty())
+			{
+				this->_prefix += " " + std::string(&(*e.begin())[0]);
+				e.erase(e.begin());
+			}
+		}	
 		else
-			this->arg.push_back((*e.begin()));
-		e.erase(e.begin());
+		{
+			this->_arg.push_back((*e.begin()));
+			e.erase(e.begin());
+		}
 	}
 
 	// possibly fully wrong
 	std::cout << ANSI::reset << ANSI::bold << "[  CMD  ]:\t" << ANSI::reset << (*this) << std::endl;
+
+	if (this->cmds.count(this->_cmd_name))
+		this->cmds[this->_cmd_name](*this);
+	else
+		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
+			<< ANSI::yellow << "command \"" << this->_cmd_name
+			<< "\" isn't supported" << ANSI::reset << std::endl;
 }
 
 Cmd::~Cmd()
@@ -57,12 +83,12 @@ Cmd::~Cmd()
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 {
-	if (src.prefix.length())
-		o << ANSI::prefix << ':' << src.prefix << ANSI::reset << ' ';
+	if (src.get_prefix().length())
+		o << ANSI::prefix << ':' << src.get_prefix() << ANSI::reset << ' ';
 	
-	o << ANSI::cmd << src.cmd << ANSI::reset;
+	o << ANSI::cmd << src.get_cmd_name() << ANSI::reset;
 
-	std::vector<std::string>			cpy = src.arg;
+	std::vector<std::string>			cpy = src.get_arg();
 	std::vector<std::string>::iterator	i = cpy.begin();
 
 	while (i != cpy.end())
@@ -78,3 +104,9 @@ Client	&Cmd::get_client(void) const
 { return (*this->_client); }
 Server	&Cmd::get_server(void) const
 { return (*this->_server); }
+const std::string				&Cmd::get_cmd_name(void) const
+{ return (this->_cmd_name); }
+const std::vector<std::string>	&Cmd::get_arg(void) const
+{ return (this->_arg); }
+const std::string				&Cmd::get_prefix(void) const
+{ return (this->_prefix); }

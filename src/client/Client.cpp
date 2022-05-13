@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 12:04:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ Client::Client(const int fd, struct sockaddr_in addr):
 	// host name
 	// getnameinfo
 
-	// command
-
 	// put right status
 	this->_status = PASSWORD;
 	//this->_status = ONLINE;
+
+	this->_nickname = "";
 
 	debug("CLIENT", "created");
 }
@@ -112,14 +112,18 @@ void	Client::receive(Server *server)
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
 		const Cmd	c(*i, server, this);
-		if (g_m_cmd.count(c.cmd))
-			g_m_cmd[c.cmd](c);
-		else
-			std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
-				<< ANSI::yellow << "command \"" << c.cmd
-				<< "\" isn't supported" << ANSI::reset << std::endl;
 		++i;
 	}
+}
+
+std::ostream	&operator<<(std::ostream &o, const Client &src)
+{
+	o << "| " << src.get_fd() << "\t|";
+
+	if (src.get_nickname().size())
+		o << ' ' << src.get_nickname() << "\t|";
+
+	return (o);
 }
 
 void	Client::set_status(const int status)

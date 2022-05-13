@@ -6,13 +6,11 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 12:07:09 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/12 20:22:35 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
-
-std::map<std::string, f_cmd>	g_m_cmd;
 
 Server::Server() {}
 
@@ -112,6 +110,8 @@ void	Server::process(void)
 			++i;
 		}
 
+		_handle_client_status();	// need to take care if that function change the status
+
 		clients = get_clients();
 		i = clients.begin();
 
@@ -127,6 +127,47 @@ void	Server::process(void)
 	// might display client on server
 
 	debug("SERVER", "processed");
+}
+
+void	Server::_handle_client_status(void)
+{
+	std::vector<Client *>			clients = this->get_clients();
+	std::vector<Client *>::iterator	i = clients.begin();
+
+	while (i != clients.end())
+	{
+		/*if ((*i)->get_status() == PASSWORD)
+			(*i)->write_buffer("PASS " + this->_config.get("password"));*/
+		/*if ((*i)->get_status() == PASSWORD)
+			Server::reply(ERR_PASSWDMISMATCH, *(*i));
+		else */if ((*i)->get_status() == REGISTER)
+		{
+			if (DEBUG)
+				std::cerr << s_debug("SERVER", "| ") << (*i)->get_fd()
+					<< "\t|" << (*i)->get_nickname() << "\t| REGISTER ("
+					<< REGISTER << ')' << ANSI::reset << std::endl;
+		}
+		//reply(RPL_WELCOME, *(*i));
+		++i;
+	}
+}
+
+void	Server::reply(const std::string &n, Client &c)
+{
+	int	tmp = atoi(n.c_str());
+	if (tmp <= 0 || tmp > 502)
+		return (debug("SERVER", "you dumbass, you use an illegal reply number"));
+
+	if (DEBUG)
+		std::cerr << s_debug("REPLY", "") << ANSI::reply << '(' << n << ") "
+			<< ANSI::reset << ANSI::red << c << ANSI::reset << std::endl;
+	c.write_buffer(n);
+}
+
+void	Server::reply(const std::string &n, const std::string &msg, Client &c)
+{
+	Server::reply(n, c);
+	c.write_buffer(msg);
 }
 
 void	Server::_accept_client(void)
@@ -247,10 +288,10 @@ void	Server::_ping(void)
 			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 }
 
-Config	&Server::get_config(void)
+Config				&Server::get_config(void)
 { return (this->_config); }
 
-int		Server::get_start_time(void) const
+const int					&Server::get_start_time(void) const
 { return (this->_start_time); }
 
 std::vector<Client *>	Server::get_clients(void)
@@ -270,7 +311,7 @@ std::vector<Client *>	Server::get_clients(void)
 
 void	Server::_init_m_cmd(void)
 {
-	g_m_cmd["QUIT"] = QUIT;
-	g_m_cmd["PASS"] = PASS;
-	g_m_cmd["NICK"] = NICK;
+	Cmd::cmds["QUIT"] = Cmd::QUIT;
+	Cmd::cmds["PASS"] = Cmd::PASS;
+	Cmd::cmds["NICK"] = Cmd::NICK;
 }
