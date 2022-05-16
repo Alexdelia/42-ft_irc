@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 20:22:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/16 19:01:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ void	Server::process(void)
 		return (debug("poll"));
 
 	if (std::time(NULL) - this->_last_ping >= atoi(get_config().get("ping").c_str()))
-	{
 		_ping();
-		this->_last_ping = std::time(NULL);
-	}
 	else
 	{
 		if (this->_pfds[0].revents == POLLIN)
@@ -146,6 +143,9 @@ void	Server::_handle_client_status(void)
 				std::cerr << s_debug("SERVER", "| ") << (*i)->get_fd()
 					<< "\t|" << (*i)->get_nickname() << "\t| REGISTER ("
 					<< REGISTER << ')' << ANSI::reset << std::endl;
+			debug("tmp register user");
+			(*i)->set_status(ONLINE);
+			reply(RPL_WELCOME, *(*i));
 		}
 		//reply(RPL_WELCOME, *(*i));
 		++i;
@@ -234,50 +234,25 @@ void	Server::_ping(void)
 		std::cerr << s_debug("PING", "")
 			<< s_time(std::time(NULL) - this->_start_time) << std::endl;
 
-	//const int							time = std::time(NULL);
-	//const int							timeout = atoi(_config.get("ping").c_str());
+	const int							time = std::time(NULL);
+	const int							timeout = atoi(_config.get("ping").c_str());
 	std::map<int, Client *>::iterator	i = this->_clients.begin();
 
 	while (i != this->_clients.end())
 	{
 		if (DEBUG)
-			std::cerr << s_debug("\t\t\t| ") << i->second->get_fd() << "\t|";
-		/*if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
-		  {
-		// set reason of delete // to do later
-		(*i).second->set_status(DELETE);
-		if (DEBUG)
-		std::cerr << C_BOLD << " timeout";
-		}*/
-		// else if
-		if (i->second->get_status() == ONLINE)
+			std::cerr << s_debug("") << i->second << ANSI::reset << std::endl;
+
+		if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
 		{
-			int			err = 0;
-			socklen_t	len = sizeof(err);
-
-			if (getsockopt(i->second->get_fd(), SOL_SOCKET, SO_ERROR,
-						&err, &len) != 0)
-				exit(error("getsockopt in ping", 1));
-			else if (err != 0)
-			{
-				if (DEBUG)
-					std::cerr << " failed";
-			}
-			else
-			{
-				i->second->set_last_ping(std::time(NULL));
-				if (DEBUG)
-					std::cerr << ' ' << err;
-			}
-
-			/*else
-			{
-				// set reason of delete // to do later // maybe
-				(*i).second->set_status(DELETE);
-				if (DEBUG)
-					std::cerr << C_BOLD << " timeout";
-			}*/
+			// set reason of delete // to do later
+			(*i).second->set_status(DELETE);
+			if (DEBUG)
+			std::cerr << ANSI::bold << " timeout";
 		}
+		else if (i->second->get_status() == ONLINE)
+			i->second->write_buffer("PING " + i->second->get_nickname());
+		
 		if (DEBUG)
 			std::cerr << ANSI::reset << std::endl;
 		++i;
