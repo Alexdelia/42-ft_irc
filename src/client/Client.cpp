@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:29:22 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@ Client::Client(const int fd, struct sockaddr_in addr):
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
-	(void)addr; //
-	// host addr = addr.sin_addr; //
-	// host name
-	// getnameinfo
+	this->_hostaddr = inet_ntoa(addr.sin_addr);
+
+	{	
+		char	tmp[NI_MAXHOST];
+		if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST,
+				NULL, 0, NI_NUMERICSERV))
+			error("getnameinfo");
+		else
+			this->_hostname = tmp;
+	}
 
 	// put right status
 	this->_status = PASSWORD;
 	//this->_status = ONLINE;
-
-	this->_nickname = "";
 
 	debug("CLIENT", "created");
 }
@@ -49,6 +53,11 @@ void	Client::write_buffer(const std::string &str)
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "_buffer_to_send += ")
 			<< ANSI::italic << "\"" << str << "\"" << ANSI::reset << std::endl;
+}
+
+void	Client::write_to(Client &c, const std::string &msg)
+{
+	c.write_buffer(":" + this->get_prefix() + " " + msg);
 }
 
 ssize_t	Client::send_buffer(void)
@@ -152,3 +161,25 @@ int		Client::get_last_ping(void) const
 
 const std::string	&Client::get_nickname(void) const
 { return (this->_nickname); }
+
+const std::string	&Client::get_host(void) const
+{
+	if (!this->_hostname.size())
+		return (this->_hostaddr);
+	return (this->_hostname);
+}
+
+std::string	Client::get_prefix(void) const
+{
+	if (this->_status != ONLINE
+			|| !this->get_host().length())
+		return (std::string(""));
+
+	std::string	prefix = this->_nickname;
+	
+	if (this->_username.length())
+		prefix += "!" + this->_username;
+	prefix += "@" + this->get_host();
+
+	return (prefix);
+}

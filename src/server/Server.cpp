@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/16 19:01:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/17 19:47:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,23 +240,19 @@ void	Server::_ping(void)
 
 	while (i != this->_clients.end())
 	{
-		if (DEBUG)
-			std::cerr << s_debug("") << i->second << ANSI::reset << std::endl;
-
-		if (time - (*i).second->get_last_ping() >= timeout * 2 + 1)
+		if (time - i->second->get_last_ping() >= timeout * 2 + 1)
 		{
 			// set reason of delete // to do later
-			(*i).second->set_status(DELETE);
+			i->second->set_status(DELETE);
 			if (DEBUG)
 			std::cerr << ANSI::bold << " timeout";
 		}
 		else if (i->second->get_status() == ONLINE)
 			i->second->write_buffer("PING " + i->second->get_nickname());
-		
-		if (DEBUG)
-			std::cerr << ANSI::reset << std::endl;
 		++i;
 	}
+
+	this->_last_ping = std::time(NULL);
 
 	if (DEBUG)
 		std::cerr << s_debug("PONG", "")
@@ -289,4 +285,6 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["QUIT"] = Cmd::QUIT;
 	Cmd::cmds["PASS"] = Cmd::PASS;
 	Cmd::cmds["NICK"] = Cmd::NICK;
+	Cmd::cmds["PING"] = Cmd::PING;
+	Cmd::cmds["PONG"] = Cmd::PONG;
 }

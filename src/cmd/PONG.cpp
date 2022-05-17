@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reply.hpp                                          :+:      :+:    :+:   */
+/*   PONG.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 14:11:30 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/17 18:53:41 by adelille         ###   ########.fr       */
+/*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
+/*   Updated: 2022/05/17 19:43:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REPLY_HPP
-# define REPLY_HPP
+# include "Cmd.hpp"
+# include "../client/Client.hpp"
+# include "../server/Server.hpp"
 
-# define RPL_WELCOME            "001"
-# define ERR_NOORIGIN			"409"
-# define ERR_NONICKNAMEGIVEN    "431"
-# define ERR_NICKCOLLISION      "436"
-# define ERR_NOTREGISTERED      "451"
-# define ERR_NEEDMOREPARAMS     "461"
-# define ERR_ALREADYREGISTRED   "462"
-# define ERR_PASSWDMISMATCH     "464"
+void	Cmd::PONG(const Cmd &c)
+{
+	if (!c.get_prefix().size())
+		return (Server::reply(ERR_NOORIGIN, c.get_client()));
 
-#endif
+	c.get_client().set_last_ping(std::time(NULL));
+}
