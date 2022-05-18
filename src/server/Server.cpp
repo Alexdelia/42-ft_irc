@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/18 13:53:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:01:38 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,4 +288,5 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["USER"] = Cmd::USER;
 	Cmd::cmds["PING"] = Cmd::PING;
 	Cmd::cmds["PONG"] = Cmd::PONG;
+	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
 }
