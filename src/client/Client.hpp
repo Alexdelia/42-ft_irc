@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/17 19:29:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:47:49 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ class Client
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);
 		void	set_nickname(const std::string &nickname);
+		void	set_username(const std::string &username);
+		void	set_realname(const std::string &realname);
 
 		int					get_fd(void) const;
 		int					get_status(void) const;
@@ -58,6 +60,8 @@ class Client
 		const std::string	&get_nickname(void) const;
 		const std::string	&get_host(void) const;
 		std::string			get_prefix(void) const;
+		const std::string	&get_username(void) const;
+		const std::string	&get_realname(void) const;
 	
 	private:
 		int			_fd;

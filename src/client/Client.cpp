@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/17 19:29:22 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:55:24 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,12 @@ void	Client::set_last_ping(const int last_ping)
 void	Client::set_nickname(const std::string &nickname)
 { this->_nickname = nickname; }
 
+void	Client::set_username(const std::string &username)
+{ this->_username = username; }
+
+void	Client::set_realname(const std::string &realname)
+{ this->_realname = realname; }
+
 int		Client::get_fd(void) const
 { return (this->_fd); }
 
@@ -161,6 +167,12 @@ int		Client::get_last_ping(void) const
 
 const std::string	&Client::get_nickname(void) const
 { return (this->_nickname); }
+
+const std::string	&Client::get_username(void) const
+{ return (this->_username); }
+
+const std::string	&Client::get_realname(void) const
+{ return (this->_realname); }
 
 const std::string	&Client::get_host(void) const
 {

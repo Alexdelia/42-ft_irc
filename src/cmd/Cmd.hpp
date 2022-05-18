@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/17 18:51:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:53:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class Cmd
 		static void	QUIT(const Cmd &c);
 		static void	PASS(const Cmd &c);
 		static void	NICK(const Cmd &c);
+		static void	USER(const Cmd &c);
 		static void	PING(const Cmd &c);
 		static void	PONG(const Cmd &c);
 };
