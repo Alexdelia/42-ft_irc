@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reply.hpp                                          :+:      :+:    :+:   */
+/*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 14:11:30 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/17 18:53:41 by adelille         ###   ########.fr       */
+/*   Created: 2022/05/18 18:56:05 by adelille          #+#    #+#             */
+/*   Updated: 2022/05/18 18:58:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REPLY_HPP
-# define REPLY_HPP
+#include "Channel.hpp"
 
-# define RPL_WELCOME            "001"
-# define ERR_NOORIGIN			"409"
-# define ERR_NONICKNAMEGIVEN    "431"
-# define ERR_NICKCOLLISION      "436"
-# define ERR_NOTREGISTERED      "451"
-# define ERR_NEEDMOREPARAMS     "461"
-# define ERR_ALREADYREGISTRED   "462"
-# define ERR_PASSWDMISMATCH     "464"
+Channel::Channel()
+{}
 
-#endif
+Channel::~Channel()
+{}
+
+

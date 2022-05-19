@@ -6,11 +6,14 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/18 15:01:38 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:49:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+
+std::map<std::string, Server::f_reply>	Server::replies
+	= std::map<std::string, Server::f_reply>();
 
 Server::Server() {}
 
@@ -47,6 +50,7 @@ Server::Server(const std::string &port, const std::string &password):
 	this->_pfds.back().events = POLLIN;
 
 	_init_m_cmd();
+	_init_m_reply();
 
 	debug("SERVER", "created");
 }
@@ -145,29 +149,11 @@ void	Server::_handle_client_status(void)
 					<< REGISTER << ')' << ANSI::reset << std::endl;
 			debug("tmp register user");
 			(*i)->set_status(ONLINE);
-			reply(RPL_WELCOME, *(*i));
+			reply(RPL_WELCOME, *(*i), std::vector<std::string>(1, (*i)->get_prefix()));
 		}
 		//reply(RPL_WELCOME, *(*i));
 		++i;
 	}
-}
-
-void	Server::reply(const std::string &n, Client &c)
-{
-	int	tmp = atoi(n.c_str());
-	if (tmp <= 0 || tmp > 502)
-		return (debug("SERVER", "you dumbass, you use an illegal reply number"));
-
-	if (DEBUG)
-		std::cerr << s_debug("REPLY", "") << ANSI::reply << '(' << n << ") "
-			<< ANSI::reset << ANSI::red << c << ANSI::reset << std::endl;
-	c.write_buffer(n);
-}
-
-void	Server::reply(const std::string &n, const std::string &msg, Client &c)
-{
-	Server::reply(n, c);
-	c.write_buffer(msg);
 }
 
 void	Server::_accept_client(void)
@@ -289,4 +275,11 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PING"] = Cmd::PING;
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
+}
+
+void	Server::_init_m_reply(void)
+{
+	Server::replies[RPL_WELCOME] = Reply::r_RPL_WELCOME;
+
+	Server::replies[ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
 }
