@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   QUIT.cpp                                           :+:      :+:    :+:   */
+/*   USER.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 12:09:46 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/21 16:11:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Cmd.hpp"
-# include "../client/Client.hpp"
+#include "../Cmd.hpp"
+#include "../../client/Client.hpp"
+#include "../../server/Server.hpp"
 
-void	Cmd::QUIT(const Cmd &c)
+void	Cmd::USER(const Cmd &c)
 {
-	// might set delete reason
-	c.get_client().set_status(DELETE);
+	if (c.get_arg().size() < 3)
+		return (Server::reply(ERR_NEEDMOREPARAMS, c.get_client(),
+			std::vector<std::string>(1, c.get_cmd_name())));
+	if (c.get_client().get_status() != REGISTER)
+		return (Server::reply(ERR_ALREADYREGISTRED, c.get_client()));
+
+	c.get_client().set_username(c.get_arg()[0]);
+	c.get_client().set_realname(c.get_prefix());
 }

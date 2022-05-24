@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/05/09 11:23:52 by adelille         ###   ########.fr        #
+#    Updated: 2022/05/19 12:46:30 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ CXXFLAGS +=	-std=c++98
 
 CXXFLAGS +=	-g3
 # CXXFLAGS +=	-fsanitize=address
+
+# debug
+CXXFLAGS +=	-DDEBUG=1
 
 LKFLAGS =	-MMD -MP
 

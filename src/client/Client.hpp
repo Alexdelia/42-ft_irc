@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 14:59:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:47:49 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <netinet/in.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
+# include <netdb.h>
 
 # define INIT		-1
 # define DELETE		0
@@ -40,17 +44,24 @@ class Client
 		~Client();
 
 		void	write_buffer(const std::string &str);
+		void	write_to(Client &c, const std::string &msg);
 		ssize_t	send_buffer(void);
 		void	receive(Server *server);
 
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);
 		void	set_nickname(const std::string &nickname);
+		void	set_username(const std::string &username);
+		void	set_realname(const std::string &realname);
 
 		int					get_fd(void) const;
 		int					get_status(void) const;
 		int					get_last_ping(void) const;
 		const std::string	&get_nickname(void) const;
+		const std::string	&get_host(void) const;
+		std::string			get_prefix(void) const;
+		const std::string	&get_username(void) const;
+		const std::string	&get_realname(void) const;
 	
 	private:
 		int			_fd;
@@ -59,9 +70,11 @@ class Client
 
 		std::string	_buffer_to_send;
 
-		// name
 		std::string	_nickname;
-		// addr
+		std::string	_username;
+		std::string	_realname;
+		std::string	_hostaddr;
+		std::string	_hostname;
 
 		// command
 		
