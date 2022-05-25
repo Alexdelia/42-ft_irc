@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 13:04:46 by adelille         ###   ########.fr       */
+/*   Updated: 2022/05/25 02:48:54 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,28 @@ void	Server::_init_m_reply(void)
 	Server::replies[RPL_WELCOME] = Reply::r_RPL_WELCOME;
 
 	Server::replies[ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+}
+
+Channel*					Server::channel(const std::string& chan_name)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return NULL;
+	return &it->second;
+}
+
+void						Server::join_channel(const std::string& chan_name, Client& client)
+{
+	Channel&	chan = _channels[chan_name];
+	chan.add(client, !chan.get_count());
+}
+
+void						Server::leave_channel(const std::string& chan_name , Client& client)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return;
+	it->second.del(client);
+	if (!it->second.get_count())
+		_channels.erase(it);
 }
