@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/05/25 02:50:08 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 19:11:28 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	Channel::del(Client& member)
 
 void	Channel::send_msg(const std::string& msg) const
 {
-	(void)msg;
-	/*	WIP	*/
+	for (std::set<Client*>::iterator it = _operators.begin(); it != _operators.end(); ++it)
+		(*it)->write_buffer("");
+	for (std::set<Client*>::iterator it = _members.begin(); it != _members.end(); ++it)
+		(*it)->write_buffer("");
 }
 
 void	Channel::promote(Client& member)

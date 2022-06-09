@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:21:44 by jraffin           #+#    #+#             */
-/*   Updated: 2022/05/25 02:10:06 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 18:42:55 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ public:
 
 	const std::string&		get_topic() const;
 	void					set_topic(const std::string& topic);
-
 
 	const std::string		get_names() const;	// space separated names of the channel members, operators first (and prefixed with a @).
 	size_t					get_count() const;	// number of members in this channel.
