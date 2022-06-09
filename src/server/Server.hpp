@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:02:37 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:27:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,18 @@ class Server
 		void						join_channel(const std::string& chan_name, Client& client);
 		void						leave_channel(const std::string& chan_name, Client& client);
 
+		void						insert_nickname(const std::string &nickname, Client *client);
+		bool						is_nickname_taken(const std::string &nickname);
+
 		Config						&get_config(void);
 		const int					&get_start_time(void) const;
 		std::vector<Client *>		get_clients(void);
+		Client						*get_client(const std::string &nickname);
 
 	private:
 		Config							_config;
 		std::map<int, Client *>			_clients;	// list of clients with index
-		//std::map<std::string, Client *>	_clients_by_nickname;
+		std::map<std::string, Client *>	_clients_by_nick;
 											// don't use vector because might have hole in index
 		std::vector<pollfd>				_pfds;
 		int								_start_time;

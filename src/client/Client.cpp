@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/18 13:55:24 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:14:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Client::Client() {}
 
 Client::Client(const int fd, struct sockaddr_in addr):
-	_fd(fd), _status(INIT), _last_ping(std::time(NULL))
+	_fd(fd), _status(INIT), _last_ping(std::time(NULL)), _nickname("")
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 

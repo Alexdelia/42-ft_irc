@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:41:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:28:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,13 @@ std::vector<Client *>	Server::get_clients(void)
 	return (clients);
 }
 
+Client	*Server::get_client(const std::string &nickname)
+{
+	if (is_nickname_taken(nickname) == false)
+		return (NULL);
+	return (this->_clients_by_nick[nickname]);
+}
+
 void	Server::_init_m_cmd(void)
 {
 	Cmd::cmds["QUIT"] = Cmd::QUIT;
@@ -192,3 +199,12 @@ void						Server::leave_channel(const std::string& chan_name , Client& client)
 	if (!it->second.get_count())
 		_channels.erase(it);
 }
+
+void	Server::insert_nickname(const std::string &nickname, Client *client)
+{
+	if (nickname.size() > 0)
+		this->_clients_by_nick[nickname] = client;
+}
+
+bool	Server::is_nickname_taken(const std::string &nickname)
+{ return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end()); }

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:41:03 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:21:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void	Cmd::NICK(const Cmd &c)
 	}
 
 	c.get_client().set_nickname(c.get_arg()[0]);
+	c.get_server().insert_nickname(c.get_arg()[0], &c.get_client());
 }
