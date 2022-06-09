@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
+#    By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/09 09:21:59 by adelille         ###   ########.fr        #
+#    Updated: 2022/06/09 19:55:51 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,7 +103,7 @@ launch:
 
 $(NAME):	$(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
-	
+
 clean:
 	@$(RM) $(OBJSPATH)
 

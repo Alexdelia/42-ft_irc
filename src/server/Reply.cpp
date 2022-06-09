@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 12:59:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:09:16 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,3 +58,12 @@ const std::string	Reply::r_RPL_WELCOME(const std::vector<std::string> &av)
 
 const std::string	Reply::r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :Not enough parameters")); }
+
+const std::string	Reply::r_ERR_NOSUCHNICK(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :No such nick/channel")); }
+
+const std::string	Reply::r_ERR_NORECIPIENT(const std::vector<std::string> &av)
+{ return (":No recipient given (" + std::string(av[0]) + ')'); }
+
+const std::string	Reply::r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av)
+{ return (":No text to send"); (void)av; }

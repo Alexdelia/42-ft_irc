@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 12:26:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:27:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../utils/utils.hpp"
 # include "Config.hpp"
 # include "../client/Client.hpp"
+# include "../channel/Channel.hpp"
 # include "../cmd/Cmd.hpp"
 # include "Reply.hpp"
 
@@ -49,25 +50,33 @@ class Server
 		static const std::string	get_custom_reply(const std::string &code,
 										const std::vector<std::string> &av);
 
-		// channel
-	
-		Config								&get_config(void);
-		const int							&get_start_time(void) const;
-		std::vector<Client *>				get_clients(void);
-	
+		Channel*					channel(const std::string& chan_name);
+		void						join_channel(const std::string& chan_name, Client& client);
+		void						leave_channel(const std::string& chan_name, Client& client);
+
+		void						insert_nickname(const std::string &nickname, Client *client);
+		bool						is_nickname_taken(const std::string &nickname);
+
+		Config						&get_config(void);
+		const int					&get_start_time(void) const;
+		std::vector<Client *>		get_clients(void);
+		Client						*get_client(const std::string &nickname);
+
 	private:
 		Config							_config;
 		std::map<int, Client *>			_clients;	// list of clients with index
+		std::map<std::string, Client *>	_clients_by_nick;
 											// don't use vector because might have hole in index
 		std::vector<pollfd>				_pfds;
 		int								_start_time;
 		int								_last_ping;
-		// channel
-		
+
+		std::map<std::string, Channel>	_channels;
+
 		Server();
 		Server(const Server &src);
 		Server	&operator=(const Server &src);
-		
+
 		void	_init_m_cmd(void);
 		void	_init_m_reply(void);
 

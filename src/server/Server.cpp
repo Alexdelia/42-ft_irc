@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 13:04:46 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:27:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,13 @@ std::vector<Client *>	Server::get_clients(void)
 	return (clients);
 }
 
+Client	*Server::get_client(const std::string &nickname)
+{
+	if (is_nickname_taken(nickname) == false)
+		return (NULL);
+	return (this->_clients_by_nick[nickname]);
+}
+
 void	Server::_init_m_cmd(void)
 {
 	Cmd::cmds["QUIT"] = Cmd::QUIT;
@@ -160,11 +167,49 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PING"] = Cmd::PING;
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
+	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
+	Cmd::cmds["JOIN"] = Cmd::JOIN;
 }
 
 void	Server::_init_m_reply(void)
 {
-	Server::replies[RPL_WELCOME] = Reply::r_RPL_WELCOME;
+	Server::replies[Reply::RPL_WELCOME] = Reply::r_RPL_WELCOME;
 
-	Server::replies[ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;
+	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
+	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 }
+
+Channel*					Server::channel(const std::string& chan_name)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return NULL;
+	return &it->second;
+}
+
+void						Server::join_channel(const std::string& chan_name, Client& client)
+{
+	Channel&	chan = _channels[chan_name];
+	chan.add(client, !chan.get_count());
+}
+
+void						Server::leave_channel(const std::string& chan_name , Client& client)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return;
+	it->second.del(client);
+	if (!it->second.get_count())
+		_channels.erase(it);
+}
+
+void	Server::insert_nickname(const std::string &nickname, Client *client)
+{
+	if (nickname.size() > 0)
+		this->_clients_by_nick[nickname] = client;
+}
+
+bool	Server::is_nickname_taken(const std::string &nickname)
+{ return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end()); }

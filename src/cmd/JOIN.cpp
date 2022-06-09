@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WHOIS.cpp                                          :+:      :+:    :+:   */
+/*   JOIN.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:41:01 by adelille         ###   ########.fr       */
+/*   Created: 2022/06/09 19:19:09 by adelille          #+#    #+#             */
+/*   Updated: 2022/06/09 19:28:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "Cmd.hpp"
 #include "../client/Client.hpp"
 #include "../server/Server.hpp"
 
-void	Cmd::WHOIS(const Cmd &c)
+void	Cmd::JOIN(const Cmd &c)
 {
-	if (!c.get_arg().size())
-		return (Server::reply(Reply::ERR_NONICKNAMEGIVEN, c.get_client()));
+	// channel is full
 
-	// need channel
+	if (c.get_arg().size() < 1)
+		return (Server::reply(Reply::ERR_NEEDMOREPARAMS, c.get_client(),
+			std::vector<std::string>(1, c.get_cmd_name())));
+	
+	std::vector<std::string>			cpy = ft_split(c.get_arg()[0], ",");
+	std::vector<std::string>::iterator	i = cpy.begin();
+
+	while (i != cpy.end())
+	{
+		c.get_server().join_channel(&(*i)[1], c.get_client());
+		++i;
+	}
 }
