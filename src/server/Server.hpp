@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 18:27:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:17:46 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ class Server
 
 		typedef	const std::string	(*f_reply)(const std::vector<std::string> &av);
 		static std::map<std::string, f_reply>	replies;
-		static void					reply(const std::string &n, Client &c);
-		static void					reply(const std::string &n, Client &c,
-										const std::vector<std::string> &av);
-		static void					reply(const std::string &n, Client &c, Client &dst,
-										const std::vector<std::string> &av);
-		static const std::string	get_custom_reply(const std::string &code,
-										const std::vector<std::string> &av);
+		static void		reply(const std::string &code, Client &c);
+		static void		reply(const std::string &code, Client &c, const std::string &av);
+		static void		reply(const std::string &code, Client &c, const std::vector<std::string> &av);
+		static void		reply(const std::string &code, Client &c, Client &dst, const std::vector<std::string> &av);
+		static const std::string	get_custom_reply(const std::string &code, const std::vector<std::string> &av);
 
-		Channel*					channel(const std::string& chan_name);
+		Channel*					get_channel(const std::string& chan_name);
 		void						join_channel(const std::string& chan_name, Client& client);
 		void						leave_channel(const std::string& chan_name, Client& client);
 

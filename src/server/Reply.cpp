@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 19:09:16 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:05:17 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,15 @@ void	Server::reply(const std::string &code, Client &c, const std::vector<std::st
 	Server::reply(code, c, c, av);
 }
 
+void	Server::reply(const std::string &code, Client &c, const std::string &av)
+{
+	Server::reply(code, c, c, std::vector<std::string>(1, av));
+}
+
 void	Server::reply(const std::string &code, Client &c)
 {
 	std::vector<std::string>	empty;
-	Server::reply(code, c, empty);
+	Server::reply(code, c, c, empty);
 }
 
 const std::string	Server::get_custom_reply(const std::string &code, const std::vector<std::string> &av)

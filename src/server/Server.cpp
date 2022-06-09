@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 19:27:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:19:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 }
 
-Channel*					Server::channel(const std::string& chan_name)
+Channel*					Server::get_channel(const std::string& chan_name)
 {
 	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
 	if (it == _channels.end())
