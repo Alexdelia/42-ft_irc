@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 20:19:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:31:56 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ void	Server::_init_m_cmd(void)
 void	Server::_init_m_reply(void)
 {
 	Server::replies[Reply::RPL_WELCOME] = Reply::r_RPL_WELCOME;
+	Server::replies[Reply::RPL_NOTOPIC] = Reply::r_RPL_NOTOPIC;
+	Server::replies[Reply::RPL_TOPIC] = Reply::r_RPL_TOPIC;
 
 	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
 	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;

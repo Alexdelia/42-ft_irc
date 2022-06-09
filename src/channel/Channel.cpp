@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/09 19:27:49 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 20:47:20 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	Channel::add(Client& member, bool as_operator)
 		if(_members.insert(&member).second)
 			_operators.erase(&member);
 	}
+	
+	if (DEBUG)
+		std::cerr << s_debug("CHANNEL", "") << ANSI::red << "add: " << member
+			<< ANSI::reset << std::endl;
 }
 
 void	Channel::del(Client& member)
@@ -55,6 +59,10 @@ void	Channel::del(Client& member)
 		return;
 	}
 	_members.erase(&member);
+	
+	if (DEBUG)
+		std::cerr << s_debug("CHANNEL", "") << ANSI::red << "del: " << member
+			<< ANSI::reset << std::endl;
 }
 
 void	Channel::send_msg(const std::string& msg) const

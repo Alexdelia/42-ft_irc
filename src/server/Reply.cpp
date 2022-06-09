@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 20:05:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:38:20 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,18 @@ const std::string	Server::get_custom_reply(const std::string &code, const std::v
 
 const std::string	Reply::r_RPL_WELCOME(const std::vector<std::string> &av)
 { return (std::string(":Welcome to the Internet Relay Network " + av[0])); }
+
+const std::string	Reply::r_RPL_NOTOPIC(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :No topic is set")); }
+
+const std::string	Reply::r_RPL_TOPIC(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :" + av[1])); }
+
+const std::string	Reply::r_RPL_NAMREPLY(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :" + av[1])); }
+
+const std::string	Reply::r_RPL_ENDOFNAMES(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :End of /NAMES list")); }
 
 const std::string	Reply::r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :Not enough parameters")); }
