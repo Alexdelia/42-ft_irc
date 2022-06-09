@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/25 02:26:18 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:02:37 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ class Server
 	private:
 		Config							_config;
 		std::map<int, Client *>			_clients;	// list of clients with index
+		//std::map<std::string, Client *>	_clients_by_nickname;
 											// don't use vector because might have hole in index
 		std::vector<pollfd>				_pfds;
 		int								_start_time;
