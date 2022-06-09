@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 19:14:30 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:27:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
 	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
+	Cmd::cmds["JOIN"] = Cmd::JOIN;
 }
 
 void	Server::_init_m_reply(void)
