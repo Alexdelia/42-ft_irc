@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/25 02:48:54 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:41:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,9 +164,9 @@ void	Server::_init_m_cmd(void)
 
 void	Server::_init_m_reply(void)
 {
-	Server::replies[RPL_WELCOME] = Reply::r_RPL_WELCOME;
+	Server::replies[Reply::RPL_WELCOME] = Reply::r_RPL_WELCOME;
 
-	Server::replies[ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
 }
 
 Channel*					Server::channel(const std::string& chan_name)

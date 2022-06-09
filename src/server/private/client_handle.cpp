@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:04:36 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 13:05:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:50:45 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	Server::_handle_client_status(void)
 					<< REGISTER << ')' << ANSI::reset << std::endl;
 			debug("tmp register user");
 			(*i)->set_status(ONLINE);
-			reply(RPL_WELCOME, *(*i), std::vector<std::string>(1, (*i)->get_prefix()));
+			reply(Reply::RPL_WELCOME, *(*i), std::vector<std::string>(1, (*i)->get_prefix()));
 		}
 		//reply(RPL_WELCOME, *(*i));
 		++i;
