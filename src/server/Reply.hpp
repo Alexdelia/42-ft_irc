@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:50:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:07:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,16 @@ namespace Reply
 {
 	const std::string	r_RPL_WELCOME(const std::vector<std::string> &av);
 
+	const std::string	r_ERR_NOSUCHNICK(const std::vector<std::string> &av);
 	const std::string	r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av);
+	const std::string	r_ERR_NORECIPIENT(const std::vector<std::string> &av);
+	const std::string	r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av);
 	
 	static const std::string	RPL_WELCOME(			"001");
+	static const std::string	ERR_NOSUCHNICK(			"401");
 	static const std::string	ERR_NOORIGIN(			"409");
+	static const std::string	ERR_NORECIPIENT(		"411");
+	static const std::string	ERR_NOTEXTTOSEND(		"412");
 	static const std::string	ERR_NONICKNAMEGIVEN(	"431");
 	static const std::string	ERR_NICKCOLLISION(		"436");
 	static const std::string	ERR_NOTREGISTERED(		"451");

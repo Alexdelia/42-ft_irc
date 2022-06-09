@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 18:28:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:14:30 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PING"] = Cmd::PING;
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
+	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
 }
 
 void	Server::_init_m_reply(void)
@@ -174,6 +175,9 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::RPL_WELCOME] = Reply::r_RPL_WELCOME;
 
 	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;
+	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
+	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 }
 
 Channel*					Server::channel(const std::string& chan_name)
