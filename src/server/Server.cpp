@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 15:46:32 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:06:16 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ void						Server::leave_channel(const std::string& chan_name , Client& client)
 	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
 	if (it == _channels.end())
 		return;
-	std::cerr << "tmp" << std::endl;
 	it->second.del(client);
 	if (!it->second.get_count())
 		_channels.erase(it);
