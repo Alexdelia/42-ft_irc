@@ -4,7 +4,7 @@
             "type": "cppbuild",
             "label": "build ircserv",
             "command": "/usr/bin/make",
-            "args": ["debug"],
+            "args": ["-j", "debug"],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
