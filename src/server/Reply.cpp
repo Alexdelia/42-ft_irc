@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 15:11:00 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:43:55 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,14 @@ const std::string	Reply::r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av
 const std::string	Reply::r_ERR_NOSUCHNICK(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :No such nick/channel")); }
 
+const std::string	Reply::r_ERR_NOSUCHCHANNEL(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :No such channel")); }
+
 const std::string	Reply::r_ERR_NOORIGIN(const std::vector<std::string> &av)
 { return (std::string(":No origin specified")); (void)av; }
+
+const std::string	Reply::r_ERR_NOTONCHANNEL(const std::vector<std::string> &av)
+{ return (std::string(av[0] + " :You're not on that channel")); }
 
 const std::string	Reply::r_ERR_NORECIPIENT(const std::vector<std::string> &av)
 { return (":No recipient given (" + std::string(av[0]) + ')'); }

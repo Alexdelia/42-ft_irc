@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 15:10:21 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:46:32 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
 	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
 	Cmd::cmds["JOIN"] = Cmd::JOIN;
+	Cmd::cmds["PART"] = Cmd::PART;
 }
 
 void	Server::_init_m_reply(void)
@@ -181,7 +182,9 @@ void	Server::_init_m_reply(void)
 
 	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
 	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;
+	Server::replies[Reply::ERR_NOSUCHCHANNEL] = Reply::r_ERR_NOSUCHCHANNEL;
 	Server::replies[Reply::ERR_NOORIGIN] = Reply::r_ERR_NOORIGIN;
+	Server::replies[Reply::ERR_NOTONCHANNEL] = Reply::r_ERR_NOTONCHANNEL;
 	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 }
@@ -205,6 +208,7 @@ void						Server::leave_channel(const std::string& chan_name , Client& client)
 	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
 	if (it == _channels.end())
 		return;
+	std::cerr << "tmp" << std::endl;
 	it->second.del(client);
 	if (!it->second.get_count())
 		_channels.erase(it);

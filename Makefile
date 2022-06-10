@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+         #
+#    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/10 15:09:12 by jraffin          ###   ########.fr        #
+#    Updated: 2022/06/10 15:40:42 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,13 @@ COMMONSRCS			:=	main.cpp							\
 						server/private/client_handle.cpp	\
 						channel/Channel.cpp					\
 						client/Client.cpp					\
+						cmd/Cmd.cpp							\
+						cmd/PING.cpp						\
 						cmd/PONG.cpp						\
 						cmd/WHOIS.cpp						\
 						cmd/PRIVMSG.cpp						\
-						cmd/Cmd.cpp							\
 						cmd/JOIN.cpp						\
-						cmd/PING.cpp						\
+						cmd/PART.cpp						\
 						cmd/client_modification/USER.cpp	\
 						cmd/client_modification/QUIT.cpp	\
 						cmd/client_modification/PASS.cpp	\
