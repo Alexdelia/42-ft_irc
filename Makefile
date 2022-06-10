@@ -5,115 +5,93 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/05/24 13:48:40 by jraffin          ###   ########.fr        #
+#    Created: 2020/12/12 14:25:17 by jraffin           #+#    #+#              #
+#    Updated: 2022/06/10 14:12:27 by jraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =	ircserv
-CXX =	clang++
-#CXX = 	c++
-RM = 	rm -rf
+SHELL				=	/bin/sh
 
-CXXFLAGS =	-Wall -Werror -Wextra
-CXXFLAGS +=	-std=c++98
+PROGNAME			:=	ircserv
 
-CXXFLAGS +=	-g3
-# CXXFLAGS +=	-fsanitize=address
+INCLUDEDIR			:=	src
+SRCDIR				:=	src
 
-# debug
-CXXFLAGS +=	-DDEBUG=1
+OBJDIR				:=	./obj
+DEBUGDIR			:=	./debugobj
 
-LKFLAGS =	-MMD -MP
+COMMONSRCS			:=	main.cpp							\
+						utils/debug.cpp						\
+						utils/ft_split.cpp					\
+						utils/error.cpp						\
+						utils/time.cpp						\
+						server/Config.cpp					\
+						server/Server.cpp					\
+						server/Reply.cpp					\
+						server/private/_ping.cpp			\
+						server/private/client_handle.cpp	\
+						channel/Channel.cpp					\
+						client/Client.cpp					\
+						cmd/PONG.cpp						\
+						cmd/WHOIS.cpp						\
+						cmd/PRIVMSG.cpp						\
+						cmd/Cmd.cpp							\
+						cmd/JOIN.cpp						\
+						cmd/PING.cpp						\
+						cmd/client_modification/USER.cpp	\
+						cmd/client_modification/QUIT.cpp	\
+						cmd/client_modification/PASS.cpp	\
+						cmd/client_modification/NICK.cpp	\
 
+CXX					:=	c++
+RM					:=	rm
 
-# **************************************************************************** #
-#	MAKEFILE	#
+CXXFLAGS			:=	-Wall -Wextra -Werror -std=c++98
+OPTFLAG				:=
+LIBFLAGS			:=
 
-#MAKEFLAGS += --silent
+NAME				:=	$(PROGNAME)
 
-SHELL := bash
+OUTDIR				:=	$(OBJDIR)
 
-B =		$(shell tput bold)
-BLA =	$(shell tput setaf 0)
-RED =	$(shell tput setaf 1)
-GRE =	$(shell tput setaf 2)
-YEL =	$(shell tput setaf 3)
-BLU =	$(shell tput setaf 4)
-MAG =	$(shell tput setaf 5)
-CYA =	$(shell tput setaf 6)
-WHI =	$(shell tput setaf 7)
-D =		$(shell tput sgr0)
-BEL =	$(shell tput bel)
-CLR =	$(shell tput el 1)
+DEBUGNAME			:= $(addsuffix .debug,$(PROGNAME))
 
-# **************************************************************************** #
-#	SRCS	#
+ifdef DEBUG
+	OPTFLAG 		:=	-g
+	NAME			:=	$(DEBUGNAME)
+	OUTDIR			:=	$(DEBUGDIR)
+endif
 
-SRCSPATH =	./src/
-OBJSPATH =	./obj/
-INC =		./inc/
-
-rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
-
-#SRCS =		$(wildcard $(SRCSPATH)*.cpp) $(wildcard $(SRCSPATH)**/*.cpp)
-SRCS =		$(call rwildcard,$(SRCSPATH),*cpp)
-SRCSNAME =	$(subst $(SRCSPATH), , $(SRCS))
-
-OBJSNAME =	$(SRCSNAME:.cpp=.o)
-OBJS =		$(addprefix $(OBJSPATH), $(OBJSNAME))
-
-# *************************************************************************** #
-
-define	progress_bar
-	@i=0
-	@while [[ $$i -le $(words $(SRCS)) ]] ; do \
-		printf " " ; \
-		((i = i + 1)) ; \
-	done
-	@printf "$(B)]\r[$(D)"
-endef
-
-# *************************************************************************** #
-#	RULES	#
-
-$(OBJSPATH)%.o: $(SRCSPATH)%.cpp
+$(OUTDIR)/%.o		:	$(SRCDIR)/%.cpp | $(OUTDIR)
 	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LKFLAGS) -I$(INC) -c $< -o $@
-	@printf "$(B)$(GRE)█$(D)"
+	$(CXX) -c -MMD -MP $(CXXFLAGS) $(OPTFLAG) $< -o $@
 
+$(NAME)				:	$(addprefix $(OUTDIR)/,$(COMMONSRCS:.cpp=.o))
+	$(CXX) $(CXXFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(COMMONSRCS:.cpp=.o)) $(LIBFLAGS)
 
-all:		launch $(NAME)
-	@printf "\n$(B)$(MAG)$(NAME) compiled$(D)\n"
+all					:	$(NAME)
 
-test:		all
-	@./$(NAME) 6667 password
+ifdef DEBUG
+debug				:	all
+else
+$(DEBUGNAME)		:
+	$(MAKE) $(DEBUGNAME) DEBUG=1
+debug				:
+	$(MAKE) DEBUG=1 debug
+endif
 
-cfdebug:
-	$(eval CXXFLAGS += -DDEBUG=1)
+$(OUTDIR)			:
+	mkdir $(OUTDIR)
 
-debug: fclean cfdebug all
+clean				:
+	$(RM) -rf $(OBJDIR) $(DEBUGDIR)
 
-quiet:
-	$(eval MAKEFLAGS += --silent)
-	@$(MAKE)
+fclean				:	clean
+	$(RM) -f $(PROGNAME) $(DEBUGNAME)
 
-launch:
-	$(call progress_bar)
+re					:	fclean
+	$(MAKE)
 
-$(NAME):	$(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+.PHONY				:	all debug clean fclean re
 
-clean:
-	@$(RM) $(OBJSPATH)
-
-fclean:		clean
-	@$(RM) $(NAME)
-
-re:			fclean all
-
--include $(OBJS:.o=.d)
-
-.PHONY: all clean fclean re launch test cfdebug debug quiet
-
-# **************************************************************************** #
+-include	$(addprefix $(OUTDIR)/,$(COMMONSRCS:.cpp=.d))
