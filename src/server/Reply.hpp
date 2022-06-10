@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 20:34:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:09:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ namespace Reply
 	const std::string	r_RPL_ENDOFNAMES(const std::vector<std::string> &av);
 
 	const std::string	r_ERR_NOSUCHNICK(const std::vector<std::string> &av);
+	const std::string	r_ERR_NOORIGIN(const std::vector<std::string> &av);
 	const std::string	r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av);
 	const std::string	r_ERR_NORECIPIENT(const std::vector<std::string> &av);
 	const std::string	r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av);
