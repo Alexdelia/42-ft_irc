@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 18:03:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:19:50 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ class Cmd
 		static void	PONG(const Cmd &c);
 		static void	WHOIS(const Cmd &c);
 		static void	PRIVMSG(const Cmd &c);
+		static void	JOIN(const Cmd &c);
 };
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src);
