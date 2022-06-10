@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:56:14 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:04:37 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ class Server
 		void						join_channel(const std::string& chan_name, Client& client);
 		void						leave_channel(const std::string& chan_name, Client& client);
 
-		void						insert_nickname(const std::string &nickname, Client *client);
-		void						delete_nickname(const std::string &nickname);
-		bool						is_nickname_taken(const std::string &nickname);
+		void						bind_nick(const std::string &nickname, Client *client);
+		void						unbind_nick(const std::string &nickname);
+		bool						nick_exists(const std::string &nickname);
+
+		void						write_all_buffers(const std::string &msg);
 
 		Config						&get_config(void);
 		const int					&get_start_time(void) const;

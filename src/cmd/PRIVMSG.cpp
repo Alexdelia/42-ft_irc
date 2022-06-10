@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:56:47 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:40:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:51:52 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	Cmd::PRIVMSG(const Cmd &c)
 		return (Server::reply(Reply::ERR_NORECIPIENT, c.get_client(), c.get_cmd_name()));
 	if (c.get_prefix().size() == 0)
 		return (Server::reply(Reply::ERR_NOTEXTTOSEND, c.get_client()));
-	
+
 	std::vector<std::string>			cpy = ft_split(c.get_arg()[0], ",");
 	std::vector<std::string>::iterator	i = cpy.begin();
 
@@ -28,7 +28,7 @@ void	Cmd::PRIVMSG(const Cmd &c)
 	{
 		if ((*i)[0] == '#' && c.get_server().get_channel(*i) != NULL)
 			c.get_server().get_channel(*i)->send_msg(c.get_prefix());
-		else if (c.get_server().is_nickname_taken(*i))
+		else if (c.get_server().nick_exists(*i))
 			c.get_client().write_to(*c.get_server().get_client(*i),
 				std::string("PRIVMSG " + c.get_arg()[0] + " :" + c.get_prefix()));
 		else

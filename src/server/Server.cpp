@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 18:45:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:04:38 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	Server::process(void)
 	{	// delete clients that need to be deleted
 		// and send buffer to all remaining clients
 
-		std::map<int, Client *>::iterator	i = _clients.begin(); 
+		std::map<int, Client *>::iterator	i = _clients.begin();
 		while (i != _clients.end())
 		{
 			Client* current = i->second;
@@ -135,7 +135,7 @@ std::map<int, Client *>	&Server::get_clients(void)
 
 Client	*Server::get_client(const std::string &nickname)
 {
-	if (is_nickname_taken(nickname) == false)
+	if (nick_exists(nickname) == false)
 		return (NULL);
 	return (this->_clients_by_nick[nickname]);
 }
@@ -195,17 +195,23 @@ void						Server::leave_channel(const std::string& chan_name , Client& client)
 		_channels.erase(it);
 }
 
-void	Server::insert_nickname(const std::string &nickname, Client *client)
+void	Server::bind_nick(const std::string &nickname, Client *client)
 {
-	if (nickname.size() > 0)
-		this->_clients_by_nick[nickname] = client;
+	this->_clients_by_nick[nickname] = client;
 }
 
-void	Server::delete_nickname(const std::string &nickname)
+void	Server::unbind_nick(const std::string &nickname)
 {
-	if (nickname.size() > 0)
-		this->_clients_by_nick.erase(nickname);
+	this->_clients_by_nick.erase(nickname);
 }
 
-bool	Server::is_nickname_taken(const std::string &nickname)
-{ return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end()); }
+bool	Server::nick_exists(const std::string &nickname)
+{
+	return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end());
+}
+
+void	Server::write_all_buffers(const std::string &msg)
+{
+	for (std::map<std::string, Client*>::iterator i = _clients_by_nick.begin(); i != _clients_by_nick.end(); ++i)
+		i->second->write_buffer(msg);
+}
