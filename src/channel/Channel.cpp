@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/10 14:29:19 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:55:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	Channel::del(Client& member)
 	_members.erase(&member);
 	
 	if (DEBUG)
-		std::cerr << s_debug("CHANNEL", "") << ANSI::red << "del: " << member
+		std::cerr << s_debug("CHAN", "") << ANSI::red << "del: " << member
 			<< ANSI::reset << std::endl;
 }
 
