@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:04:36 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:36:38 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:22:57 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,24 +72,23 @@ void	Server::_delete_client(Client &client)
 
 void	Server::_handle_client_status(void)
 {
-	std::vector<Client *>			clients = this->get_clients();
-	std::vector<Client *>::iterator	i = clients.begin();
+	std::map<int, Client *>::iterator	i = get_clients().begin();
 
-	while (i != clients.end())
+	while (i != get_clients().end())
 	{
 		/*if ((*i)->get_status() == PASSWORD)
 			(*i)->write_buffer("PASS " + this->_config.get("password"));*/
 		/*if ((*i)->get_status() == PASSWORD)
 			Server::reply(ERR_PASSWDMISMATCH, *(*i));
-		else */if ((*i)->get_status() == REGISTER)
+		else */if (i->second->get_status() == REGISTER)
 		{
 			if (DEBUG)
-				std::cerr << s_debug("SERVER", "| ") << (*i)->get_fd()
-					<< "\t|" << (*i)->get_nickname() << "\t| REGISTER ("
+				std::cerr << s_debug("SERVER", "| ") << i->second->get_fd()
+					<< "\t|" << i->second->get_nickname() << "\t| REGISTER ("
 					<< REGISTER << ')' << ANSI::reset << std::endl;
 			debug("tmp register user");
-			(*i)->set_status(ONLINE);
-			reply(Reply::RPL_WELCOME, *(*i), std::vector<std::string>(1, (*i)->get_prefix()));
+			i->second->set_status(ONLINE);
+			reply(Reply::RPL_WELCOME, *i->second, std::vector<std::string>(1, i->second->get_prefix()));
 		}
 		//reply(RPL_WELCOME, *(*i));
 		++i;

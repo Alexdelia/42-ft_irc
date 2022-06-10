@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:09:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:56:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,13 @@ class Server
 
 		Config						&get_config(void);
 		const int					&get_start_time(void) const;
-		std::vector<Client *>		get_clients(void);
+		std::map<int, Client *>		&get_clients(void);
 		Client						*get_client(const std::string &nickname);
 
 	private:
 		Config							_config;
-		std::map<int, Client *>			_clients;	// list of clients with index
+		std::map<int, Client *>			_clients;	// list of clients by fd
 		std::map<std::string, Client *>	_clients_by_nick;
-											// don't use vector because might have hole in index
 		std::vector<pollfd>				_pfds;
 		int								_start_time;
 		int								_last_ping;

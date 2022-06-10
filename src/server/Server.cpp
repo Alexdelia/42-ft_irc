@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:09:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:41:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,11 @@ Server::~Server()
 	{
 		debug("SERVER", "delete all client:");
 
-		std::vector<Client *>				clients = get_clients();
-		std::vector<Client *>::iterator	i = clients.begin();
+		std::map<int, Client *>::iterator	i = get_clients().begin();
 
-		while (i != clients.end())
+		while (i != get_clients().end())
 		{
-			_delete_client(*(*i));
+			_delete_client(*i->second);
 			++i;
 		}
 	}
@@ -101,27 +100,22 @@ void	Server::process(void)
 	{	// delete clients that need to be deleted
 		// and send buffer to all remaining clients
 
-		std::vector<Client *>				clients = get_clients();
-		std::vector<Client *>::iterator	i = clients.begin();
-
-		while (i != clients.end())
+		std::map<int, Client *>::iterator	i = _clients.begin(); 
+		while (i != _clients.end())
 		{
-			if ((*i)->get_status() == DELETE)
-				_delete_client(*(*i));
+			Client* current = i->second;
 			++i;
+			if (current->get_status() == DELETE)
+				_delete_client(*current);
 		}
 
 		_handle_client_status();	// need to take care if that function change the status
 
-		clients = get_clients();
-		i = clients.begin();
-
-		while (i != clients.end())
+		for (i = _clients.begin(); i != _clients.end(); ++i)
 		{
 			//(*i)->write_buffer("[DEBUG]:\they"); //
-			if ((*i)->send_buffer() == -1)
-				(*i)->set_status(DELETE);	// not sure of that approach
-			++i;
+			if (i->second->send_buffer() == -1)
+				i->second->set_status(DELETE);	// not sure of that approach
 		}
 	}
 
@@ -136,20 +130,8 @@ Config				&Server::get_config(void)
 const int					&Server::get_start_time(void) const
 { return (this->_start_time); }
 
-std::vector<Client *>	Server::get_clients(void)
-{
-	std::vector<Client *>	clients;
-
-	std::map<int, Client *>::iterator i = this->_clients.begin();
-
-	while (i != this->_clients.end())
-	{
-		clients.push_back(i->second);
-		++i;
-	}
-
-	return (clients);
-}
+std::map<int, Client *>	&Server::get_clients(void)
+{ return (this->_clients); }
 
 Client	*Server::get_client(const std::string &nickname)
 {
