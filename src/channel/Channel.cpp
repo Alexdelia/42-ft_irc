@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/09 20:47:20 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:37:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	Channel::del(Client& member)
 	if (_operators.erase(&member))
 	{
 		if (!_operators.size() && _members.size())
-			promote(**_members.begin());
+			add(**_members.begin(), true);
 		return;
 	}
 	_members.erase(&member);
@@ -71,18 +71,6 @@ void	Channel::send_msg(const std::string& msg) const
 		(*it)->write_buffer(msg);	// WIP
 	for (std::set<Client*>::iterator it = _members.begin(); it != _members.end(); ++it)
 		(*it)->write_buffer(msg);	// WIP
-}
-
-void	Channel::promote(Client& member)
-{
-	if (_members.erase(&member))
-		_operators.insert(&member);
-}
-
-void	Channel::demote(Client& member)
-{
-	if (_operators.erase(&member))
-		_members.insert(&member);
 }
 
 bool	Channel::is_operator(Client& client) const

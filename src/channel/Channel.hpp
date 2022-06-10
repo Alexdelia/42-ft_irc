@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:21:44 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/09 18:42:55 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/09 19:58:21 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ public:
 
 	void	send_msg(const std::string& msg) const;
 
-	void	promote(Client& member);		// set member as operator.
-	void	demote(Client& member);			// set member as regular member.
 	bool	is_operator(Client& client) const;
 	bool	is_member(Client& client) const;
 
