@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/10 14:55:18 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:57:57 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ Channel&	Channel::operator=(const Channel& rhs)
 
 void	Channel::add(Client& member, bool as_operator)
 {
+	if (!_operators.size())
+		as_operator = true;
 	if (as_operator)
 	{
 		if(_operators.insert(&member).second)
@@ -44,10 +46,6 @@ void	Channel::add(Client& member, bool as_operator)
 		if(_members.insert(&member).second)
 			_operators.erase(&member);
 	}
-	
-	if (DEBUG)
-		std::cerr << s_debug("CHAN", "") << ANSI::red << "add: " << member
-			<< ANSI::reset << std::endl;
 }
 
 void	Channel::del(Client& member)
@@ -59,10 +57,6 @@ void	Channel::del(Client& member)
 		return;
 	}
 	_members.erase(&member);
-	
-	if (DEBUG)
-		std::cerr << s_debug("CHAN", "") << ANSI::red << "del: " << member
-			<< ANSI::reset << std::endl;
 }
 
 void	Channel::send_msg(const std::string& msg) const
@@ -98,7 +92,7 @@ const std::string		Channel::get_names() const
 	std::string		names;
 
 	std::set<Client*>::iterator it = _operators.begin();
-	names += '@' + (*it)->get_nickname();
+	names += "@" + (*it)->get_nickname();
 	for (++it; it != _operators.end(); ++it)
 		names += " @" + (*it)->get_nickname();
 	for (it = _members.begin(); it != _members.begin(); ++it)
