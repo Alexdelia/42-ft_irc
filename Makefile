@@ -6,7 +6,7 @@
 #    By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/10 15:07:52 by jraffin          ###   ########.fr        #
+#    Updated: 2022/06/10 15:09:12 by jraffin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ OUTDIR				:=	$(OBJDIR)
 DEBUGNAME			:= $(addsuffix .debug,$(PROGNAME))
 
 ifdef DEBUG
-	OPTFLAG 		:=	-g
+	OPTFLAG 		+=	-g
 	NAME			:=	$(DEBUGNAME)
 	OUTDIR			:=	$(DEBUGDIR)
 endif
