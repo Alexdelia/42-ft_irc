@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:19:09 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 13:29:26 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:30:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	Cmd::JOIN(const Cmd &c)
 	if (c.get_arg().size() < 1)
 		return (Server::reply(Reply::ERR_NEEDMOREPARAMS, c.get_client(), c.get_cmd_name()));
 
-	std::cerr << ANSI::cyan << c.get_arg()[0] << " : ";	
 	std::vector<std::string>			cpy = ft_split(c.get_arg()[0], ",");
-	std::cerr << cpy[0] << " | " << cpy.size() << ANSI::reset << std::endl;
 	std::vector<std::string>::iterator	i = cpy.begin();
 
 	while (i != cpy.end())

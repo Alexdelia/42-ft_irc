@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/10 13:37:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:29:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	Channel::add(Client& member, bool as_operator)
 	}
 	
 	if (DEBUG)
-		std::cerr << s_debug("CHANNEL", "") << ANSI::red << "add: " << member
+		std::cerr << s_debug("CHAN", "") << ANSI::red << "add: " << member
 			<< ANSI::reset << std::endl;
 }
 
