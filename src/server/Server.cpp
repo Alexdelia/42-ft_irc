@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:06:16 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:13:25 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ Channel*					Server::get_channel(const std::string& chan_name)
 void						Server::join_channel(const std::string& chan_name, Client& client)
 {
 	Channel&	chan = _channels[chan_name];
-	chan.add(client, !chan.get_count());
+	chan.add(client, chan.is_operator(client));
 }
 
 void						Server::leave_channel(const std::string& chan_name , Client& client)
