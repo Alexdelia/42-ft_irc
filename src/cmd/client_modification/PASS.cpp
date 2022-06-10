@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 17:41:05 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:56:53 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	Cmd::PASS(const Cmd &c)
 {
 	if (!c.get_arg().size())
 		return (Server::reply(Reply::ERR_NEEDMOREPARAMS, c.get_client()));
-	if (c.get_client().get_status() != PASSWORD)
+	if (c.get_client().get_status() != INIT)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("CMD", "PASS:\twrong status\t(")
@@ -29,7 +29,7 @@ void	Cmd::PASS(const Cmd &c)
 	if (c.get_server().get_config().get("password") == c.get_arg()[0])
 	{
 		debug("CMD", "PASS:\tcorrect");
-		c.get_client().set_status(REGISTER);
+		c.get_client().set_status(PASSWORD);
 	}
 	else
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset

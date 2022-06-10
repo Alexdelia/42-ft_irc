@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 18:14:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:24:01 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ Client::Client(const int fd, struct sockaddr_in addr):
 			this->_hostname = tmp;
 	}
 
-	// put right status
-	this->_status = PASSWORD;
+	// put right status	// might not
+	//this->_status = PASSWORD;
 	//this->_status = ONLINE;
 
 	debug("CLIENT", "created");

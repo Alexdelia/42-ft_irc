@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:56:47 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 20:20:20 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:40:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	Cmd::PRIVMSG(const Cmd &c)
 		if ((*i)[0] == '#' && c.get_server().get_channel(*i) != NULL)
 			c.get_server().get_channel(*i)->send_msg(c.get_prefix());
 		else if (c.get_server().is_nickname_taken(*i))
-			c.get_client().write_to(*c.get_server().get_client(*i), c.get_prefix());
+			c.get_client().write_to(*c.get_server().get_client(*i),
+				std::string("PRIVMSG " + c.get_arg()[0] + " :" + c.get_prefix()));
 		else
 			Server::reply(Reply::ERR_NOSUCHNICK, c.get_client(), *i);
 		++i;

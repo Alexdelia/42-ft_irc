@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:06:16 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:09:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,12 @@ void	Server::insert_nickname(const std::string &nickname, Client *client)
 {
 	if (nickname.size() > 0)
 		this->_clients_by_nick[nickname] = client;
+}
+
+void	Server::delete_nickname(const std::string &nickname)
+{
+	if (nickname.size() > 0)
+		this->_clients_by_nick.erase(nickname);
 }
 
 bool	Server::is_nickname_taken(const std::string &nickname)

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/09 20:31:27 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:09:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ class Server
 		void						leave_channel(const std::string& chan_name, Client& client);
 
 		void						insert_nickname(const std::string &nickname, Client *client);
+		void						delete_nickname(const std::string &nickname);
 		bool						is_nickname_taken(const std::string &nickname);
 
 		Config						&get_config(void);
