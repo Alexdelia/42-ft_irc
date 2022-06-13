@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2022/06/13 15:22:19 by adelille         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/13 16:19:58 by jraffin          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +58,9 @@ class Client
 		void	set_username(const std::string &username);
 		void	set_realname(const std::string &realname);
 
+		bool	is_operator();
+		void	promote_as_op();
+
 		int					get_fd(void) const;
 		int					get_status(void) const;
 		int					get_last_ping(void) const;
@@ -62,8 +69,9 @@ class Client
 		std::string			get_prefix(void) const;
 		const std::string	&get_username(void) const;
 		const std::string	&get_realname(void) const;
-	
+
 	private:
+		bool		_op;
 		int			_fd;
 		int			_status;
 		int			_last_ping;
@@ -76,9 +84,9 @@ class Client
 		std::string	_realname;
 		std::string	_hostaddr;
 		std::string	_hostname;
-		
-		Client();	
-		Client(const Client &src);	
+
+		Client();
+		Client(const Client &src);
 		Client	&operator=(const Client &src);
 };
 

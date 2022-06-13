@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/13 16:17:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:40:29 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 
-Client::Client() {}
-
-Client::Client(const int fd, struct sockaddr_in addr):
-	_fd(fd), _status(INIT), _last_ping(std::time(NULL)), _nickname("")
+Client::Client(const int fd, struct sockaddr_in addr)
+	: _op(false)
+	, _fd(fd)
+	, _status(INIT)
+	, _last_ping(std::time(NULL))
+	, _nickname()
+	, _username()
+	, _realname()
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
 	this->_hostaddr = inet_ntoa(addr.sin_addr);
 
-	{	
+	{
 		char	tmp[NI_MAXHOST];
 		if (getnameinfo((struct sockaddr *)&addr, sizeof(addr), tmp, NI_MAXHOST,
 				NULL, 0, NI_NUMERICSERV))
@@ -49,7 +53,7 @@ Client::~Client()
 void	Client::write_buffer(const std::string &str)
 {
 	this->_buffer_to_send += str + "\r\n";
-	
+
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "_buffer_to_send += ")
 			<< ANSI::italic << "\"" << str << "\"" << ANSI::reset << std::endl;
@@ -66,7 +70,7 @@ ssize_t	Client::send_buffer(void)
 
 	if (!this->_buffer_to_send.length())
 		return (0);
-	
+
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "sending ...\t") << ANSI::reset;
 
@@ -78,7 +82,7 @@ ssize_t	Client::send_buffer(void)
 			std::cerr << ANSI::red << "failed" << ANSI::reset << std::endl;
 		return (res);
 	}
-	
+
 	if (DEBUG)
 		std::cerr << ANSI::red << "sent" << ANSI::reset << std::endl;
 
@@ -122,11 +126,11 @@ void	Client::receive(Server *server)
 	std::vector<std::string>			lines = ft_split(this->_buffer_receive, "\r\n");
 
 	std::vector<std::string>::iterator	i = lines.begin();
-	
+
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "| ") << this->_fd
 			<< "\t| received:" << std::endl;
-	
+
 	while (i != lines.end())
 	{
 		if (*(i->end() - 1) == '\n')
@@ -203,10 +207,20 @@ std::string	Client::get_prefix(void) const
 		return (std::string(""));
 
 	std::string	prefix = this->_nickname;
-	
+
 	if (this->_username.length())
 		prefix += "!" + this->_username;
 	prefix += "@" + this->get_host();
 
 	return (prefix);
+}
+
+bool	Client::is_operator()
+{
+	return _op;
+}
+
+void	Client::promote_as_op()
+{
+	_op = true;
 }
