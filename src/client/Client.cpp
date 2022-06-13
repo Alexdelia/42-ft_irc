@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/13 14:41:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:12:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ ssize_t	Client::send_buffer(void)
 
 void	Client::receive(Server *server)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	ssize_t	res;
+	char		buffer[BUFFER_SIZE + 1];
+	ssize_t		res;
 
 	res = recv(this->_fd, &buffer, BUFFER_SIZE, 0);
 
@@ -109,12 +109,22 @@ void	Client::receive(Server *server)
 
 	buffer[res] = '\0';
 
-	std::vector<std::string>			lines = ft_split(buffer, "\r\n");
-
-	std::vector<std::string>::iterator	i = lines.begin();
+	this->_buffer_receive += buffer;
 
 	if (DEBUG)
-		std::cerr << s_debug("CLIENT", "| ") << this->_fd << "\t| receive:" << std::endl;
+		std::cerr << s_debug("CLIENT", "| ") << this->_fd
+			<< "\t| receiving: " << buffer;
+
+	if (this->_buffer_receive.find("\n") == std::string::npos)
+		return ;
+
+	std::vector<std::string>			lines = ft_split(this->_buffer_receive, "\r\n");
+
+	std::vector<std::string>::iterator	i = lines.begin();
+	
+	if (DEBUG)
+		std::cerr << s_debug("CLIENT", "| ") << this->_fd
+			<< "\t| received:" << std::endl;
 	
 	while (i != lines.end())
 	{
@@ -125,6 +135,8 @@ void	Client::receive(Server *server)
 		const Cmd	c(*i, server, this);
 		++i;
 	}
+
+	this->_buffer_receive.clear();
 }
 
 std::ostream	&operator<<(std::ostream &o, const Client &src)
