@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:58:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 10:55:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ class Client
 		std::string	_realname;
 		std::string	_hostaddr;
 		std::string	_hostname;
-
-		// command
 		
 		Client();	
 		Client(const Client &src);	

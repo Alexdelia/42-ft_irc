@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 18:56:05 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/10 15:57:57 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/13 12:46:25 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	Channel::del(Client& member)
 	_members.erase(&member);
 }
 
-void	Channel::send_msg(const std::string& msg) const
+void	Channel::write_all_buffers(const std::string& msg) const
 {
 	for (std::set<Client*>::iterator it = _operators.begin(); it != _operators.end(); ++it)
-		(*it)->write_buffer(msg);	// WIP
+		(*it)->write_buffer(msg);
 	for (std::set<Client*>::iterator it = _members.begin(); it != _members.end(); ++it)
-		(*it)->write_buffer(msg);	// WIP
+		(*it)->write_buffer(msg);
 }
 
 bool	Channel::is_operator(Client& client) const

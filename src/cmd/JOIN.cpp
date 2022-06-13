@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:19:09 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:04:02 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 12:57:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	Cmd::JOIN(const Cmd &c)
 		else
 		{
 			c.get_server().join_channel(*i, c.get_client());
+			c.get_server().get_channel(*i)->write_all_buffers(
+				std::string(":" + c.get_client().get_nickname() + " JOIN " + *i));
 			if (c.get_server().get_channel(*i)->get_topic().size() < 1)
 				Server::reply(Reply::RPL_NOTOPIC, c.get_client(), *i);
 			else

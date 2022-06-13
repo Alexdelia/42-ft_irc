@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:56:47 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 18:51:52 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/13 12:51:07 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	Cmd::PRIVMSG(const Cmd &c)
 	while (i != cpy.end())
 	{
 		if ((*i)[0] == '#' && c.get_server().get_channel(*i) != NULL)
-			c.get_server().get_channel(*i)->send_msg(c.get_prefix());
+			c.get_server().get_channel(*i)->write_all_buffers(
+				":" + c.get_client().get_prefix() + " PRIVMSG " + c.get_arg()[0] + " :" + c.get_prefix());
 		else if (c.get_server().nick_exists(*i))
 			c.get_client().write_to(*c.get_server().get_client(*i),
 				std::string("PRIVMSG " + c.get_arg()[0] + " :" + c.get_prefix()));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:21:44 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/09 19:58:21 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/13 12:46:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ public:
 	void	add(Client& member, bool as_operator);
 	void	del(Client& member);
 
-	void	send_msg(const std::string& msg) const;
+	void	write_all_buffers(const std::string& msg) const;
 
 	bool	is_operator(Client& client) const;
 	bool	is_member(Client& client) const;
