@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:24:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:41:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void	Client::receive(Server *server)
 	
 	while (i != lines.end())
 	{
+		if (*(i->end() - 1) == '\n')
+			*i = i->substr(0, i->find("\n"));
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
 		const Cmd	c(*i, server, this);
