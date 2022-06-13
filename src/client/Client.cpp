@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/13 16:12:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:17:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,13 @@ void	Client::receive(Server *server)
 
 	this->_buffer_receive += buffer;
 
-	if (DEBUG)
-		std::cerr << s_debug("CLIENT", "| ") << this->_fd
-			<< "\t| receiving: " << buffer;
-
 	if (this->_buffer_receive.find("\n") == std::string::npos)
+	{
+		if (DEBUG)
+			std::cerr << s_debug("CLIENT", "| ") << this->_fd
+				<< "\t| receiving: " << buffer << std::endl;
 		return ;
+	}
 
 	std::vector<std::string>			lines = ft_split(this->_buffer_receive, "\r\n");
 
