@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:19:09 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 15:44:22 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:53:28 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	Cmd::PART(const Cmd &c)
 			return (Server::reply(Reply::ERR_NOSUCHCHANNEL, c.get_client(), *i));
 		if (!c.get_server().get_channel(*i)->is_member(c.get_client()))
 			return (Server::reply(Reply::ERR_NOTONCHANNEL, c.get_client(), *i));
+		
+		c.get_server().get_channel(*i)->write_all_buffers(
+			std::string(":" + c.get_client().get_nickname() + " " + c.get_cmd_name() + " " + *i));
 
 		c.get_server().leave_channel(*i, c.get_client());
 		

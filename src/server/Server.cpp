@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 19:04:38 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:25:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
 	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
+	Cmd::cmds["NOTICE"] = Cmd::PRIVMSG;
 	Cmd::cmds["JOIN"] = Cmd::JOIN;
 	Cmd::cmds["PART"] = Cmd::PART;
 }
@@ -169,6 +170,7 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::ERR_NOTONCHANNEL] = Reply::r_ERR_NOTONCHANNEL;
 	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
+	Server::replies[Reply::ERR_UNKNOWNCOMMAND] = Reply::r_ERR_UNKNOWNCOMMAND;
 }
 
 Channel*					Server::get_channel(const std::string& chan_name)

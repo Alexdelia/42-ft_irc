@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 17:35:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:24:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ const std::string	Reply::r_RPL_TOPIC(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :" + av[1])); }
 
 const std::string	Reply::r_RPL_NAMREPLY(const std::vector<std::string> &av)
-{ return (std::string(av[0] + " :" + av[1])); }
+{ return (std::string("= " + av[0] + " :" + av[1])); }
 
 const std::string	Reply::r_RPL_ENDOFNAMES(const std::vector<std::string> &av)
-{ return (std::string(av[0] + " :End of /NAMES list")); }
+{ return (std::string(av[0] + " :End of NAMES list")); }
 
 const std::string	Reply::r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :Not enough parameters")); }
@@ -93,3 +93,6 @@ const std::string	Reply::r_ERR_NORECIPIENT(const std::vector<std::string> &av)
 
 const std::string	Reply::r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av)
 { return (":No text to send"); (void)av; }
+
+const std::string	Reply::r_ERR_UNKNOWNCOMMAND(const std::vector<std::string> &av)
+{ return (av[0] + " :Unknown command"); }
