@@ -1,6 +1,10 @@
 *~
 obj
+debugobj
 a.out
 ircserv
-.vscode
+ircserv.debug
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
 null.d

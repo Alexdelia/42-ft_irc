@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/18 13:47:49 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/13 15:22:19 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 
 # define INIT		-1
 # define DELETE		0
-# define ONLINE		1
-# define PASSWORD	2
-# define REGISTER	3
+# define PASSWORD	1
+# define REGISTER	2
+# define ONLINE		3
 
 # define BUFFER_SIZE	2048	// apparently, max length is 512
 
@@ -68,6 +68,7 @@ class Client
 		int			_status;
 		int			_last_ping;
 
+		std::string	_buffer_receive;
 		std::string	_buffer_to_send;
 
 		std::string	_nickname;
@@ -75,8 +76,6 @@ class Client
 		std::string	_realname;
 		std::string	_hostaddr;
 		std::string	_hostname;
-
-		// command
 		
 		Client();	
 		Client(const Client &src);	

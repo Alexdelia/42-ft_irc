@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 13:42:18 by adelille          #+#    #+#             */
-/*   Updated: 2022/04/28 13:47:35 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/09 21:01:15 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ std::vector<std::string>	ft_split(const std::string &str, const std::string &sep
 		cpy.erase(0, pos + sep.length());
 		pos = cpy.find(sep);
 	}
+
+	if (ret.empty() == true && cpy.empty() == false)
+		ret.push_back(str);	// might not be needed
 
 	return (ret);
 }

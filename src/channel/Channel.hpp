@@ -5,38 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/18 18:49:17 by adelille         ###   ########.fr       */
+/*   Created: 2022/05/13 15:21:44 by jraffin           #+#    #+#             */
+/*   Updated: 2022/06/13 12:46:13 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <string>
+#include <set>
+#include <functional>
+
+#include "../client/Client.hpp"
+
 #ifndef CHANNEL_HPP
-# define CHANNEL_HPP
-
-# include "../utils/utils.hpp"
-# include "../client/Client.hpp"
-
-# include <map>
-# include <string>
-# include <vector>
-
-class Client;
+#define CHANNEL_HPP
 
 class Channel
 {
-	public:
-		Channel();
-		~Channel();
+	class MemberCompare : public std::binary_function<Client*, Client*, bool>
+	{
+		bool	operator()(Client* cl1, Client* cl2)
+		{
+			return cl1->get_nickname() < cl2->get_nickname();
+		}
+	};
 
-	private:
-		Channel(const Channel &src);
-		Channel	&operator=(const Channel &src);
+public:
+	Channel();
+	Channel(Channel const &instance);
+	~Channel(void);
+	Channel&	operator=(const Channel& rhs);
 
-		std::string				_name;
-		// mode
-		
-		std::map<int, Client *>	_clients;
+	void	add(Client& member, bool as_operator);
+	void	del(Client& member);
 
+	void	write_all_buffers(const std::string& msg) const;
+
+	bool	is_operator(Client& client) const;
+	bool	is_member(Client& client) const;
+
+	const std::string&		get_topic() const;
+	void					set_topic(const std::string& topic);
+
+	const std::string		get_names() const;	// space separated names of the channel members, operators first (and prefixed with a @).
+	size_t					get_count() const;	// number of members in this channel.
+
+private:
+	std::string				_topic;
+	std::set<Client*>		_operators;
+	std::set<Client*>		_members;
 };
 
 #endif

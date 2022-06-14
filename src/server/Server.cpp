@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/23 12:19:48 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:38:05 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,11 @@ Server::~Server()
 	{
 		debug("SERVER", "delete all client:");
 
-		std::vector<Client *>				clients = get_clients();
-		std::vector<Client *>::iterator	i = clients.begin();
+		std::map<int, Client *>::iterator	i = get_clients().begin();
 
-		while (i != clients.end())
+		while (i != get_clients().end())
 		{
-			_delete_client(*(*i));
+			_delete_client(*i->second);
 			++i;
 		}
 	}
@@ -101,27 +100,22 @@ void	Server::process(void)
 	{	// delete clients that need to be deleted
 		// and send buffer to all remaining clients
 
-		std::vector<Client *>				clients = get_clients();
-		std::vector<Client *>::iterator	i = clients.begin();
-
-		while (i != clients.end())
+		std::map<int, Client *>::iterator	i = _clients.begin();
+		while (i != _clients.end())
 		{
-			if ((*i)->get_status() == DELETE)
-				_delete_client(*(*i));
+			Client* current = i->second;
 			++i;
+			if (current->get_status() == DELETE)
+				_delete_client(*current);
 		}
 
 		_handle_client_status();	// need to take care if that function change the status
 
-		clients = get_clients();
-		i = clients.begin();
-
-		while (i != clients.end())
+		for (i = _clients.begin(); i != _clients.end(); ++i)
 		{
 			//(*i)->write_buffer("[DEBUG]:\they"); //
-			if ((*i)->send_buffer() == -1)
-				(*i)->set_status(DELETE);	// not sure of that approach
-			++i;
+			if (i->second->send_buffer() == -1)
+				i->second->set_status(DELETE);	// not sure of that approach
 		}
 	}
 
@@ -136,19 +130,14 @@ Config				&Server::get_config(void)
 const int					&Server::get_start_time(void) const
 { return (this->_start_time); }
 
-std::vector<Client *>	Server::get_clients(void)
+std::map<int, Client *>	&Server::get_clients(void)
+{ return (this->_clients); }
+
+Client	*Server::get_client(const std::string &nickname)
 {
-	std::vector<Client *>	clients;
-
-	std::map<int, Client *>::iterator i = this->_clients.begin();
-
-	while (i != this->_clients.end())
-	{
-		clients.push_back(i->second);
-		++i;
-	}
-
-	return (clients);
+	if (nick_exists(nickname) == false)
+		return (NULL);
+	return (this->_clients_by_nick[nickname]);
 }
 
 void	Server::_init_m_cmd(void)
@@ -160,11 +149,69 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["PING"] = Cmd::PING;
 	Cmd::cmds["PONG"] = Cmd::PONG;
 	Cmd::cmds["WHOIS"] = Cmd::WHOIS;
+	Cmd::cmds["PRIVMSG"] = Cmd::PRIVMSG;
+	Cmd::cmds["JOIN"] = Cmd::JOIN;
+	Cmd::cmds["PART"] = Cmd::PART;
 }
 
 void	Server::_init_m_reply(void)
 {
-	Server::replies[RPL_WELCOME] = Reply::r_RPL_WELCOME;
+	Server::replies[Reply::RPL_WELCOME] = Reply::r_RPL_WELCOME;
+	Server::replies[Reply::RPL_NOTOPIC] = Reply::r_RPL_NOTOPIC;
+	Server::replies[Reply::RPL_TOPIC] = Reply::r_RPL_TOPIC;
+	Server::replies[Reply::RPL_NAMREPLY] = Reply::r_RPL_NAMREPLY;
+	Server::replies[Reply::RPL_ENDOFNAMES] = Reply::r_RPL_ENDOFNAMES;
 
-	Server::replies[ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
+	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;
+	Server::replies[Reply::ERR_NOSUCHCHANNEL] = Reply::r_ERR_NOSUCHCHANNEL;
+	Server::replies[Reply::ERR_NOORIGIN] = Reply::r_ERR_NOORIGIN;
+	Server::replies[Reply::ERR_NOTONCHANNEL] = Reply::r_ERR_NOTONCHANNEL;
+	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
+	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
+}
+
+Channel*					Server::get_channel(const std::string& chan_name)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return NULL;
+	return &it->second;
+}
+
+void						Server::join_channel(const std::string& chan_name, Client& client)
+{
+	Channel&	chan = _channels[chan_name];
+	chan.add(client, chan.is_operator(client));
+}
+
+void						Server::leave_channel(const std::string& chan_name , Client& client)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return;
+	it->second.del(client);
+	if (!it->second.get_count())
+		_channels.erase(it);
+}
+
+void	Server::bind_nick(const std::string &nickname, Client *client)
+{
+	this->_clients_by_nick[nickname] = client;
+}
+
+void	Server::unbind_nick(const std::string &nickname)
+{
+	this->_clients_by_nick.erase(nickname);
+}
+
+bool	Server::nick_exists(const std::string &nickname)
+{
+	return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end());
+}
+
+void	Server::write_all_buffers(const std::string &msg)
+{
+	for (std::map<std::string, Client*>::iterator i = _clients_by_nick.begin(); i != _clients_by_nick.end(); ++i)
+		i->second->write_buffer(msg);
 }

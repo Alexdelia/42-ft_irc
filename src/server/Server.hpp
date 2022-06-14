@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/19 12:26:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/10 19:04:37 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../utils/utils.hpp"
 # include "Config.hpp"
 # include "../client/Client.hpp"
+# include "../channel/Channel.hpp"
 # include "../cmd/Cmd.hpp"
 # include "Reply.hpp"
 
@@ -41,33 +42,41 @@ class Server
 
 		typedef	const std::string	(*f_reply)(const std::vector<std::string> &av);
 		static std::map<std::string, f_reply>	replies;
-		static void					reply(const std::string &n, Client &c);
-		static void					reply(const std::string &n, Client &c,
-										const std::vector<std::string> &av);
-		static void					reply(const std::string &n, Client &c, Client &dst,
-										const std::vector<std::string> &av);
-		static const std::string	get_custom_reply(const std::string &code,
-										const std::vector<std::string> &av);
+		static void		reply(const std::string &code, Client &c);
+		static void		reply(const std::string &code, Client &c, const std::string &av);
+		static void		reply(const std::string &code, Client &c, const std::vector<std::string> &av);
+		static void		reply(const std::string &code, Client &c, Client &dst, const std::vector<std::string> &av);
+		static const std::string	get_custom_reply(const std::string &code, const std::vector<std::string> &av);
 
-		// channel
-	
-		Config								&get_config(void);
-		const int							&get_start_time(void) const;
-		std::vector<Client *>				get_clients(void);
-	
+		Channel*					get_channel(const std::string& chan_name);
+		void						join_channel(const std::string& chan_name, Client& client);
+		void						leave_channel(const std::string& chan_name, Client& client);
+
+		void						bind_nick(const std::string &nickname, Client *client);
+		void						unbind_nick(const std::string &nickname);
+		bool						nick_exists(const std::string &nickname);
+
+		void						write_all_buffers(const std::string &msg);
+
+		Config						&get_config(void);
+		const int					&get_start_time(void) const;
+		std::map<int, Client *>		&get_clients(void);
+		Client						*get_client(const std::string &nickname);
+
 	private:
 		Config							_config;
-		std::map<int, Client *>			_clients;	// list of clients with index
-											// don't use vector because might have hole in index
+		std::map<int, Client *>			_clients;	// list of clients by fd
+		std::map<std::string, Client *>	_clients_by_nick;
 		std::vector<pollfd>				_pfds;
 		int								_start_time;
 		int								_last_ping;
-		// channel
-		
+
+		std::map<std::string, Channel>	_channels;
+
 		Server();
 		Server(const Server &src);
 		Server	&operator=(const Server &src);
-		
+
 		void	_init_m_cmd(void);
 		void	_init_m_reply(void);
 
