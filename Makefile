@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/10 15:40:42 by adelille         ###   ########.fr        #
+#    Updated: 2022/06/14 19:28:48 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ COMMONSRCS			:=	main.cpp							\
 						cmd/client_modification/QUIT.cpp	\
 						cmd/client_modification/PASS.cpp	\
 						cmd/client_modification/NICK.cpp	\
+						cmd/client_modification/OPER.cpp	\
 
 CXX					:=	c++
 RM					:=	rm

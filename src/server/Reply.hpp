@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 17:23:52 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:19:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ namespace Reply
 	const std::string	r_RPL_NAMREPLY(const std::vector<std::string> &av);
 	static const std::string	RPL_ENDOFNAMES(			"366");
 	const std::string	r_RPL_ENDOFNAMES(const std::vector<std::string> &av);
+	static const std::string	RPL_YOUREOPER(			"381");
+	const std::string	r_RPL_YOUREOPER(const std::vector<std::string> &av);
 	
 	static const std::string	ERR_NOSUCHNICK(			"401");
 	const std::string	r_ERR_NOSUCHNICK(const std::vector<std::string> &av);
@@ -53,6 +55,7 @@ namespace Reply
 	const std::string	r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av);
 	static const std::string	ERR_ALREADYREGISTRED(	"462");
 	static const std::string	ERR_PASSWDMISMATCH(		"464");
+	const std::string	r_ERR_PASSWDMISMATCH(const std::vector<std::string> &av);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 17:24:59 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:36:47 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ const std::string	Reply::r_RPL_NAMREPLY(const std::vector<std::string> &av)
 const std::string	Reply::r_RPL_ENDOFNAMES(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :End of NAMES list")); }
 
+const std::string	Reply::r_RPL_YOUREOPER(const std::vector<std::string> &av)
+{ return (":You are now an IRC operator"); (void)av; }
+
 const std::string	Reply::r_ERR_NEEDMOREPARAMS(const std::vector<std::string> &av)
 { return (std::string(av[0] + " :Not enough parameters")); }
 
@@ -96,3 +99,6 @@ const std::string	Reply::r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av)
 
 const std::string	Reply::r_ERR_UNKNOWNCOMMAND(const std::vector<std::string> &av)
 { return (av[0] + " :Unknown command"); }
+
+const std::string	Reply::r_ERR_PASSWDMISMATCH(const std::vector<std::string> &av)
+{ return (":Password incorrect"); (void)av; }

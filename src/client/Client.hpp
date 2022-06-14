@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2022/06/13 15:22:19 by adelille         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/13 16:19:58 by jraffin          ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2022/06/14 18:41:20 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

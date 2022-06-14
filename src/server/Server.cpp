@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 17:25:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:35:53 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ Server::Server(const std::string &port, const std::string &password):
 
 	_init_m_cmd();
 	_init_m_reply();
+	_init_m_oper();
 
 	debug("SERVER", "created");
 }
@@ -140,6 +141,17 @@ Client	*Server::get_client(const std::string &nickname)
 	return (this->_clients_by_nick[nickname]);
 }
 
+Channel*					Server::get_channel(const std::string& chan_name)
+{
+	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	if (it == _channels.end())
+		return NULL;
+	return &it->second;
+}
+
+std::map<std::string, std::string>	&Server::get_oper_login(void)
+{ return (this->_oper_login); }
+
 void	Server::_init_m_cmd(void)
 {
 	Cmd::cmds["QUIT"] = Cmd::QUIT;
@@ -153,6 +165,7 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["NOTICE"] = Cmd::PRIVMSG;
 	Cmd::cmds["JOIN"] = Cmd::JOIN;
 	Cmd::cmds["PART"] = Cmd::PART;
+	Cmd::cmds["OPER"] = Cmd::OPER;
 }
 
 void	Server::_init_m_reply(void)
@@ -162,6 +175,7 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::RPL_TOPIC] = Reply::r_RPL_TOPIC;
 	Server::replies[Reply::RPL_NAMREPLY] = Reply::r_RPL_NAMREPLY;
 	Server::replies[Reply::RPL_ENDOFNAMES] = Reply::r_RPL_ENDOFNAMES;
+	Server::replies[Reply::RPL_YOUREOPER] = Reply::r_RPL_YOUREOPER;
 
 	Server::replies[Reply::ERR_NEEDMOREPARAMS] = Reply::r_ERR_NEEDMOREPARAMS;
 	Server::replies[Reply::ERR_NOSUCHNICK] = Reply::r_ERR_NOSUCHNICK;
@@ -171,14 +185,33 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 	Server::replies[Reply::ERR_UNKNOWNCOMMAND] = Reply::r_ERR_UNKNOWNCOMMAND;
+	Server::replies[Reply::ERR_PASSWDMISMATCH] = Reply::r_ERR_PASSWDMISMATCH;
 }
 
-Channel*					Server::get_channel(const std::string& chan_name)
+void	Server::_init_m_oper(void)
 {
-	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
-	if (it == _channels.end())
-		return NULL;
-	return &it->second;
+	std::ifstream	ifs("./config/oper.conf", std::ifstream::in);
+	
+	if (!ifs.good())
+		exit(error("ifstream config file\t(oper)", 1));
+
+	std::string	line;
+
+	while (!ifs.eof())
+	{
+		std::getline(ifs, line);
+
+		std::stringstream	ss(line);
+		std::string			key;
+		std::string			val;
+
+		std::getline(ss, key, SEP);
+		std::getline(ss, val, '\n');
+
+		this->_oper_login[key] = val;
+	}
+
+	ifs.close();
 }
 
 void						Server::join_channel(const std::string& chan_name, Client& client)

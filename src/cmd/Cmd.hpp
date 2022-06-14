@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 15:36:56 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 18:43:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ class Cmd
 		static void	PRIVMSG(const Cmd &c);
 		static void	JOIN(const Cmd &c);
 		static void	PART(const Cmd &c);
+		static void	OPER(const Cmd &c);
 };
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src);
