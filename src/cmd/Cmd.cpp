@@ -6,11 +6,12 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 13:43:47 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:30:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cmd.hpp"
+#include <algorithm>
 
 std::map<std::string, Cmd::f_cmd>	Cmd::cmds
 	= std::map<std::string, Cmd::f_cmd>();
@@ -44,6 +45,7 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 	}
 
 	this->_cmd_name = *e.begin();
+	std::transform(this->_cmd_name.begin(), this->_cmd_name.end(), this->_cmd_name.begin(), ::toupper);
 	e.erase(e.begin());
 
 	while (!e.empty())
