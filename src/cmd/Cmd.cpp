@@ -6,11 +6,12 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 15:30:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:26:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cmd.hpp"
+#include "../server/Server.hpp"
 #include <algorithm>
 
 std::map<std::string, Cmd::f_cmd>	Cmd::cmds
@@ -73,9 +74,12 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 	if (this->cmds.count(this->_cmd_name))
 		this->cmds[this->_cmd_name](*this);
 	else
+	{
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
 			<< ANSI::yellow << "command \"" << this->_cmd_name
 			<< "\" isn't supported" << ANSI::reset << std::endl;
+		Server::reply(Reply::ERR_UNKNOWNCOMMAND, this->get_client(), this->get_cmd_name());
+	}
 }
 
 Cmd::~Cmd()
