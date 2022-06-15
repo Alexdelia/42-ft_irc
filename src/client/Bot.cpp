@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:13 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/15 18:35:43 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 19:01:13 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ ssize_t	Bot::send_buffer(void)
 				msg[i] = tolower(msg[i]);
 			if (c.get_trailing() == "rock" || c.get_trailing() == "paper" || c.get_trailing() == "scissor")
 			{
-				switch (rand()%3)
+				switch (rand() % 3)
 				{
 					case 0:
 						msg = "rock";
@@ -91,4 +91,59 @@ ssize_t	Bot::send_buffer(void)
 	ssize_t size = this->_buffer_to_send.size();
 	this->_buffer_to_send.clear();
 	return size;
+}
+
+void	Bot::receive(Server *server)
+{
+	char		buffer[BUFFER_SIZE + 1];
+	ssize_t		res;
+
+	res = read(this->_fd, &buffer, BUFFER_SIZE);
+
+	if (res == -1)
+	{
+		debug("BOT", "read == -1");
+		return ;
+	}
+	else if (res == 0)
+	{
+		debug("BOT", "read == 0, status = DELETE");
+		this->_status = DELETE;
+		return ;
+	}
+
+	buffer[res] = '\0';
+
+	this->_buffer_receive += buffer;
+
+	if (this->_buffer_receive.find("\n") == std::string::npos)
+	{
+		if (DEBUG)
+			std::cerr << s_debug("BOT", "| ") << this->_fd
+				<< "\t| receiving: " << buffer << std::endl;
+		return ;
+	}
+
+	if (DEBUG)
+		std::cerr << s_debug("BOT", "| ") << this->_fd
+			<< "\t| received:" << std::endl;
+
+	std::size_t	pos = this->_buffer_receive.find("\r\n");
+	if (pos == std::string::npos)
+		pos = this->_buffer_receive.find("\n");
+
+	while (pos != std::string::npos)
+	{
+		std::string	line = this->_buffer_receive.substr(0, pos);
+
+		if (DEBUG)
+			std::cerr << s_debug("\t\t\t") << line << std::endl;
+		Cmd	c(line, this);
+		c.exec(server);
+
+		this->_buffer_receive.erase(0, this->_buffer_receive.find("\n") + 1);
+		pos = this->_buffer_receive.find("\r\n");
+		if (pos == std::string::npos)
+			pos = this->_buffer_receive.find("\n");
+	}
 }

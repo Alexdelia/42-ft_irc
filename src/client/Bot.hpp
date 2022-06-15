@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 18:18:01 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:51:53 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ class Bot : public Client
 		Bot(const std::string name) throw (PipeErrorException);
 		virtual ~Bot();
 
-		ssize_t	send_buffer(void);
+		virtual ssize_t	send_buffer(void);
+		virtual void	receive(Server *server);
 
 	private:
 		int	_pipe_fd;
