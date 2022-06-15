@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 16:43:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:57:28 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,25 +127,24 @@ void	Client::receive(Server *server)
 		return ;
 	}
 
-	std::vector<std::string>			lines = ft_split(this->_buffer_receive, "\r\n");
-	std::vector<std::string>::iterator	i = lines.begin();
-	std::size_t							to_clear = 0;
-
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "| ") << this->_fd
 			<< "\t| received:" << std::endl;
 
-	while (i != lines.end())
-	{
-		to_clear += i->size() + 2;
+	std::size_t	pos = this->_buffer_receive.find("\r\n");
 
-		if (*(i->end() - 1) == '\n')
-			*i = i->substr(0, i->find("\n"));
+	while (pos != std::string::npos)
+	{
+		std::string	line = this->_buffer_receive.substr(0, pos);
+		if (*line.rbegin() == '\n')
+			line.resize(line.size() - 1);
+
 		if (DEBUG)
-			std::cerr << s_debug("\t\t\t") << *i << std::endl;
+			std::cerr << s_debug("\t\t\t") << line << std::endl;
 		Cmd	c(*i, this);
 		c.exec(server);
-		++i;
+
+		this->_buffer_receive.erase(0, pos);
 	}
 
 	this->_buffer_receive.erase(0, to_clear);
