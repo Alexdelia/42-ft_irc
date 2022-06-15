@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 14:12:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:51:51 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::ERR_NORECIPIENT] = Reply::r_ERR_NORECIPIENT;
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 	Server::replies[Reply::ERR_UNKNOWNCOMMAND] = Reply::r_ERR_UNKNOWNCOMMAND;
+	Server::replies[Reply::ERR_NICKNAMEINUSE] = Reply::r_ERR_NICKNAMEINUSE;
 	Server::replies[Reply::ERR_PASSWDMISMATCH] = Reply::r_ERR_PASSWDMISMATCH;
 	Server::replies[Reply::ERR_NOPRIVILEGES] = Reply::r_ERR_NOPRIVILEGES;
 }
