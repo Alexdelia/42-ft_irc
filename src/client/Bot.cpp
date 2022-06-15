@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bot.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:13 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/15 19:01:13 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:41:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,44 @@ Bot::~Bot() {
 		<< ANSI::reset << std::endl;
 }
 
+static int	rps_to_int(const std::string &rps)
+{
+	if (rps == "rock")
+		return (0);
+	else if (rps == "paper")
+		return (1);
+	else if (rps == "scissors")
+		return (2);
+	else
+		return (-1);
+}
+
+static std::string	int_to_rps(const int move)
+{
+	switch (move)
+	{
+		case 0:
+			return ("rock");
+		case 1:
+			return ("paper");
+		case 2:
+			return ("scissor");
+	}
+	return ("");
+}
+
+static std::string	rps_win_msg(const int client, const int bot)
+{
+	int	winner = (3 + client - bot) % 3;
+
+	if (winner == 1)
+		return ("You won!");
+	else if (winner == 2)
+		return ("You lose");
+	else
+		return ("It's a draw");
+}
+
 ssize_t	Bot::send_buffer(void)
 {
 	if (!this->_buffer_to_send.length())
@@ -62,28 +100,28 @@ ssize_t	Bot::send_buffer(void)
 		}
 		else if (c.get_cmd_name() == "PRIVMSG" && c.get_arg()[0][0] != '#')
 		{
-			std::string nick = c.get_prefix().substr(0, c.get_prefix().find('!'));
-			std::string msg = c.get_trailing();
+			std::string	nick = c.get_prefix().substr(0, c.get_prefix().find('!'));
+			std::string	msg = c.get_trailing();
+			int			client_move;
+			int			bot_move;
+
 			for (size_t i = 0; i < msg.size(); ++i)
 				msg[i] = tolower(msg[i]);
-			if (c.get_trailing() == "rock" || c.get_trailing() == "paper" || c.get_trailing() == "scissor")
+
+			client_move = rps_to_int(msg);
+			if (client_move >= 0)
 			{
-				switch (rand() % 3)
-				{
-					case 0:
-						msg = "rock";
-						break;
-					case 1:
-						msg = "rock";
-						break;
-					case 2:
-						msg = "rock";
-						break;
-				}
+				bot_move = rand() % 3;
+				msg = int_to_rps(bot_move);
 			}
 			else
-				msg = "You have to play either \"rock\", \"paper\" or \"scissor\".";
-			std::string buf("PRIVMSG " + nick + " :" + msg + "\r\n");
+				msg = "You have to play either \"rock\", \"paper\" or \"scissors\".";
+			std::string	buf("NOTICE " + nick + " :" + msg + "\r\n");
+			if (msg.size() <= 7)
+			{
+				msg = rps_win_msg(client_move, bot_move);
+				buf += "NOTICE " + nick + " :" + msg + "\r\n";
+			}
 			write(_pipe_fd, buf.c_str(), buf.size());
 		}
 		++i;

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 20:01:12 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:13:04 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	Server::process(void)
 void	Server::add_client(Client* client)
 {
 	this->_clients[client->get_fd()] = client;
-	this->_clients_by_nick[client->get_nickname()] = client;
+	this->_clients_by_nick[irc_tolower(client->get_nickname())] = client;
 
 	this->_pfds.push_back(pollfd());
 	this->_pfds.back().fd = client->get_fd();
