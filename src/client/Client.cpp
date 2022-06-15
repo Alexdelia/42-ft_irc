@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 16:12:07 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:43:42 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ void	Client::receive(Server *server)
 			*i = i->substr(0, i->find("\n"));
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << *i << std::endl;
-		const Cmd	c(*i, server, this);
+		Cmd	c(*i, this);
+		c.exec(server);
 		++i;
 	}
 

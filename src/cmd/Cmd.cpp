@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 15:18:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:43:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ std::map<std::string, Cmd::f_cmd>	Cmd::cmds
 //
 //	<crlf>     ::= CR LF
 
-Cmd::Cmd(const std::string &line, Server *server, Client *client):
-	_server(server), _client(client), _cmd_name(""), _prefix("")
+Cmd::Cmd(const std::string &line, Client *sender):
+	_server(NULL), _client(sender), _cmd_name(""), _prefix("")
 {
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
@@ -69,6 +69,17 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 	}
 
 	// possibly fully wrong
+}
+
+Cmd::~Cmd()
+{
+	debug("CMD", "done");
+}
+
+void	Cmd::exec(Server *server)
+{
+	this->_server = server;
+
 	std::cout << ANSI::reset << ANSI::bold << "[  CMD  ]:\t" << ANSI::reset << (*this) << std::endl;
 
 	if (this->cmds.count(this->_cmd_name))
@@ -81,11 +92,6 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 			<< "\" isn't supported" << ANSI::reset << std::endl;
 		Server::reply(Reply::ERR_UNKNOWNCOMMAND, this->get_client(), this->get_cmd_name());
 	}
-}
-
-Cmd::~Cmd()
-{
-	debug("CMD", "done");
 }
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src)

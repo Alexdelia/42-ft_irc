@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:03:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:42:57 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ class Cmd
 	typedef	void	(*f_cmd)(const Cmd &c);
 	
 	public:
-		Cmd(const std::string &line, Server *server, Client *client);
+		Cmd(const std::string &line, Client *sender);
 		~Cmd();
 		
 		static std::map<std::string, f_cmd>	cmds;
+
+		void	exec(Server *server);
 
 		Server	&get_server(void) const;
 		Client	&get_client(void) const;
