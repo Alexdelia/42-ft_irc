@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 14:51:02 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 20:01:12 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ namespace Reply
 	static const std::string	ERR_UNKNOWNCOMMAND(		"421");
 	const std::string	r_ERR_UNKNOWNCOMMAND(const std::vector<std::string> &av);
 	static const std::string	ERR_NONICKNAMEGIVEN(	"431");
+	static const std::string	ERR_ERRONEUSNICKNAME(	"432");
+	const std::string	r_ERR_ERRONEUSNICKNAME(const std::vector<std::string> &av);
 	static const std::string	ERR_NICKNAMEINUSE(		"433");
 	const std::string	r_ERR_NICKNAMEINUSE(const std::vector<std::string> &av);
 	static const std::string	ERR_NICKCOLLISION(		"436");
