@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/15 19:42:11 by adelille         ###   ########.fr        #
+#    Updated: 2022/06/15 23:48:07 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ CXX					:=	c++
 RM					:=	rm
 
 CXXFLAGS			:=	-Wall -Wextra -Werror -std=c++98
-OPTFLAG				:=	-DDEBUG=1
+OPTFLAG				:=
+#OPTFLAG				:=	-DDEBUG=1
 LIBFLAGS			:=
 
 NAME				:=	$(PROGNAME)
@@ -69,7 +70,7 @@ OUTDIR				:=	$(OBJDIR)
 DEBUGNAME			:= $(addsuffix .debug,$(PROGNAME))
 
 ifdef DEBUG
-	OPTFLAG 		+=	-g
+	OPTFLAG 		+=	-g -DDEBUG=1
 	NAME			:=	$(DEBUGNAME)
 	OUTDIR			:=	$(DEBUGDIR)
 endif
