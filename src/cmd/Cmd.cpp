@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 17:26:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:39:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ Cmd::Cmd(const std::string &line, Client *sender):
 
 	if ((*e.begin())[0] == ':')
 	{
-		this->_trailing = std::string(&(*e.begin())[1]);
+		this->_prefix = std::string(&(*e.begin())[1]);
 		e.erase(e.begin());
 	}
 
@@ -117,6 +117,8 @@ Client	&Cmd::get_client(void) const
 { return (*this->_client); }
 Server	&Cmd::get_server(void) const
 { return (*this->_server); }
+const std::string				&Cmd::get_prefix(void) const
+{ return (this->_prefix); }
 const std::string				&Cmd::get_cmd_name(void) const
 { return (this->_cmd_name); }
 const std::vector<std::string>	&Cmd::get_arg(void) const
