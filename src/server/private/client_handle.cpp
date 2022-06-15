@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:04:36 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 18:22:57 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,7 @@ void	Server::_handle_client_status(void)
 				std::cerr << s_debug("SERVER", "| ") << i->second->get_fd()
 					<< "\t|" << i->second->get_nickname() << "\t| REGISTER ("
 					<< REGISTER << ')' << ANSI::reset << std::endl;
-			debug("tmp register user");
-			i->second->set_status(ONLINE);
-			reply(Reply::RPL_WELCOME, *i->second, std::vector<std::string>(1, i->second->get_prefix()));
 		}
-		//reply(RPL_WELCOME, *(*i));
 		++i;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 17:49:49 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	Cmd::USER(const Cmd &c)
 
 	c.get_client().set_username(c.get_arg()[0]);
 	c.get_client().set_realname(c.get_trailing());
-	c.get_client().set_status(REGISTER);
-	//Server::reply(Reply::RPL_WELCOME, c.get_client(), c.get_client().get_prefix());
+	if (c.get_client().get_status() == PASSWORD)
+	{
+		c.get_client().set_status(ONLINE);
+		Server::reply(Reply::RPL_WELCOME, c.get_client(), c.get_client().get_prefix());
+	}
+	else
+		c.get_client().set_status(ONLINE);
 }

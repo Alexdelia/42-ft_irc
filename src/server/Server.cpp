@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 14:51:51 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:25:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,14 @@ void	Server::unbind_nick(const std::string &nickname)
 
 bool	Server::nick_exists(const std::string &nickname)
 {
-	return (this->_clients_by_nick.find(nickname) != this->_clients_by_nick.end());
+	std::string lowernick = irc_tolower(nickname);
+	for (std::map<std::string, std::string>	i = this->_clients_by_nick.begin();
+			i != this->_clients_by_nick.end(); ++i)
+	{
+		if (lowernick == irc_tolower(i->get_nickname()))
+			return (true);
+	}
+	return (false);
 }
 
 void	Server::write_all_buffers(const std::string &msg)

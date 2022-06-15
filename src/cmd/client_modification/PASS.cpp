@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/10 16:56:53 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,13 @@ void	Cmd::PASS(const Cmd &c)
 	if (c.get_server().get_config().get("password") == c.get_arg()[0])
 	{
 		debug("CMD", "PASS:\tcorrect");
-		c.get_client().set_status(PASSWORD);
+		if (c.get_client().get_status() != REGISTER)
+			c.get_client().set_status(PASSWORD);
+		else
+		{
+			c.get_client().set_status(ONLINE);
+			Server::reply(Reply::RPL_WELCOME, c.get_client(), c.get_client().get_prefix());
+		}
 	}
 	else
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
