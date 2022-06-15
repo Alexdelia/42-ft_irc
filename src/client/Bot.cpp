@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:13 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/15 21:41:59 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:25:23 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static std::string	int_to_rps(const int move)
 		case 1:
 			return ("paper");
 		case 2:
-			return ("scissor");
+			return ("scissors");
 	}
 	return ("");
 }
