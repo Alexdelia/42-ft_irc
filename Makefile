@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/15 19:34:27 by adelille         ###   ########.fr        #
+#    Updated: 2022/06/15 19:42:11 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,13 @@ SHELL				=	/bin/sh
 
 PROGNAME			:=	ircserv
 
-INCLUDEDIR			:=	src
+INCLUDEDIR			:=	src				\
+						src/channel		\
+						src/client		\
+						src/cmd			\
+						src/server		\
+						src/utils		\
+
 SRCDIR				:=	src
 
 OBJDIR				:=	./obj
@@ -33,6 +39,7 @@ COMMONSRCS			:=	main.cpp							\
 						server/private/client_handle.cpp	\
 						channel/Channel.cpp					\
 						client/Client.cpp					\
+						client/Bot.cpp						\
 						cmd/Cmd.cpp							\
 						cmd/PING.cpp						\
 						cmd/PONG.cpp						\
@@ -69,7 +76,7 @@ endif
 
 $(OUTDIR)/%.o		:	$(SRCDIR)/%.cpp | $(OUTDIR)
 	@mkdir -p $(dir $@)
-	$(CXX) -c -MMD -MP $(CXXFLAGS) $(OPTFLAG) $< -o $@
+	$(CXX) -c -MMD -MP $(CXXFLAGS) $(OPTFLAG) $(addprefix -I ,$(INCLUDEDIR)) $< -o $@
 
 $(NAME)				:	$(addprefix $(OUTDIR)/,$(COMMONSRCS:.cpp=.o))
 	$(CXX) $(CXXFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(COMMONSRCS:.cpp=.o)) $(LIBFLAGS)

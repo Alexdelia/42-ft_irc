@@ -6,7 +6,7 @@
 /*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 15:21:56 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:51:30 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ class Client
 
 		void	write_buffer(const std::string &str);
 		void	write_to(Client &c, const std::string &msg);
-		ssize_t	send_buffer(void);
-		void	receive(Server *server);
+		virtual ssize_t	send_buffer(void);
+		virtual void	receive(Server *server);
 
 		void	set_status(const int status);
 		void	set_last_ping(const int last_ping);
