@@ -3,23 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/15 16:07:36 by adelille         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/15 15:24:11 by jraffin          ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
+
+Client::Client()
+	: _op(false)
+	, _fd()
+	, _status()
+	, _last_ping()
+{}
 
 Client::Client(const int fd, struct sockaddr_in addr)
 	: _op(false)
 	, _fd(fd)
 	, _status(INIT)
 	, _last_ping(std::time(NULL))
-	, _nickname()
-	, _username()
-	, _realname()
 {
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 
