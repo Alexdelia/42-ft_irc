@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:56:47 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/13 16:29:17 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:01:57 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	Cmd::PRIVMSG(const Cmd &c)
 		if ((*i)[0] == '#' && c.get_server().get_channel(*i) != NULL)
 			c.get_server().get_channel(*i)->write_all_buffers(
 				":" + c.get_client().get_prefix() + " " + c.get_cmd_name()
-				+ " " + c.get_arg()[0] + " :" + c.get_prefix());
+				+ " " + c.get_arg()[0] + " :" + c.get_prefix(),
+				c.get_client().get_nickname());
 		else if (c.get_server().nick_exists(*i))
 			c.get_client().write_to(*c.get_server().get_client(*i),
 				std::string(c.get_cmd_name() + " " + c.get_arg()[0] + " :" + c.get_prefix()));

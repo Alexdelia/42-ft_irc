@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:21:44 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/13 12:46:13 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:01:18 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ public:
 	void	del(Client& member);
 
 	void	write_all_buffers(const std::string& msg) const;
+	void	write_all_buffers(const std::string& msg,
+				const std::string &exclude_nick) const;
 
 	bool	is_operator(Client& client) const;
 	bool	is_member(Client& client) const;
