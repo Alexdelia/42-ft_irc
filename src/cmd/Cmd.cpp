@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 17:39:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:04:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ Cmd::Cmd(const std::string &line, Client *sender):
 
 	while (!e.empty())
 	{
-		if ((*e.begin())[0] == ':')	// need to check if take everything behind : , or only first word, or something else
+		if ((*e.begin())[0] == ':')
 		{
 			this->_trailing = std::string(&(*e.begin())[1]);
 			e.erase(e.begin());
@@ -67,8 +67,6 @@ Cmd::Cmd(const std::string &line, Client *sender):
 			e.erase(e.begin());
 		}
 	}
-
-	// possibly fully wrong
 }
 
 Cmd::~Cmd()
