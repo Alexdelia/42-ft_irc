@@ -6,7 +6,7 @@
 #    By: adelille <adelille@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/30 19:21:49 by adelille          #+#    #+#              #
-#    Updated: 2022/06/15 13:12:23 by adelille         ###   ########.fr        #
+#    Updated: 2022/06/15 19:34:27 by adelille         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ COMMONSRCS			:=	main.cpp							\
 						utils/ft_split.cpp					\
 						utils/error.cpp						\
 						utils/time.cpp						\
+						utils/irc_tolower.cpp				\
 						server/Config.cpp					\
 						server/Server.cpp					\
 						server/Reply.cpp					\

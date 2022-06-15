@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 19:21:17 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 19:26:08 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:33:54 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 const std::string	irc_tolower(const std::string &str)
 {
-	for (std::)
+	std::string	res(str);
+
+	for (size_t i = 0; i < str.size(); ++i)
+	{
+		if (res[i] >= 'A' && res[i] <= ']')
+			res[i] = str[i] + 32;
+	}
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:04:36 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:39:08 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	Server::_delete_client(Client &client)
 
 	this->_clients.erase(client.get_fd());
 	if (client.get_nickname().size() > 0)
-		this->_clients_by_nick.erase(client.get_nickname());
+		this->unbind_nick(client.get_nickname());
 	delete	&client;
 
 	// quit message to remaining client

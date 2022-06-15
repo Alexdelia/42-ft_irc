@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 19:25:54 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 19:37:45 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,9 @@ std::map<int, Client *>	&Server::get_clients(void)
 
 Client	*Server::get_client(const std::string &nickname)
 {
-	if (nick_exists(nickname) == false)
+	if (!nick_exists(nickname))
 		return (NULL);
-	return (this->_clients_by_nick[nickname]);
+	return (this->_clients_by_nick[irc_tolower(nickname)]);
 }
 
 Channel*					Server::get_channel(const std::string& chan_name)
@@ -240,24 +240,17 @@ void						Server::leave_channel(const std::string& chan_name , Client& client)
 
 void	Server::bind_nick(const std::string &nickname, Client *client)
 {
-	this->_clients_by_nick[nickname] = client;
+	this->_clients_by_nick[irc_tolower(nickname)] = client;
 }
 
 void	Server::unbind_nick(const std::string &nickname)
 {
-	this->_clients_by_nick.erase(nickname);
+	this->_clients_by_nick.erase(irc_tolower(nickname));
 }
 
 bool	Server::nick_exists(const std::string &nickname)
 {
-	std::string lowernick = irc_tolower(nickname);
-	for (std::map<std::string, std::string>	i = this->_clients_by_nick.begin();
-			i != this->_clients_by_nick.end(); ++i)
-	{
-		if (lowernick == irc_tolower(i->get_nickname()))
-			return (true);
-	}
-	return (false);
+	return (this->_clients_by_nick.find(irc_tolower(nickname)) != this->_clients_by_nick.end());
 }
 
 void	Server::write_all_buffers(const std::string &msg)
