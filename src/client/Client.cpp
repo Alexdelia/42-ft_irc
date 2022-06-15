@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 17:46:45 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:29:50 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Client::Client()
 	: _op(false)
 	, _fd()
 	, _status()
-	, _last_ping()
+	, _last_ping(std::time(NULL))
 {}
 
 Client::Client(const int fd, struct sockaddr_in addr)

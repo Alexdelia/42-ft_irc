@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 14:51:51 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:14:25 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,15 @@ void	Server::process(void)
 	// might display client on server
 }
 
+void	Server::add_client(Client* client)
+{
+	this->_clients[client->get_fd()] = client;
+
+	this->_pfds.push_back(pollfd());
+	this->_pfds.back().fd = client->get_fd();
+	this->_pfds.back().events = POLLIN;
+}
+
 Config				&Server::get_config(void)
 { return (this->_config); }
 
@@ -199,7 +208,7 @@ void	Server::_init_m_reply(void)
 void	Server::_init_m_oper(void)
 {
 	std::ifstream	ifs("./config/oper.conf", std::ifstream::in);
-	
+
 	if (!ifs.good())
 		exit(error("ifstream config file\t(oper)", 1));
 

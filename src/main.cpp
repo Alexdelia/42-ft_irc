@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 14:12:44 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:38:13 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils/utils.hpp"
 #include "server/Server.hpp"
+#include "Bot.hpp"
 
 #include <iostream>
 #include <csignal>
@@ -42,9 +43,13 @@ int	main(int ac, char **av)
 
 	std::cout << ANSI::bold << "launched" << ANSI::reset << std::endl;
 
+	Bot* rps =  new Bot("RPS");
+
+	server.add_client(rps);
+
 	while (!g_shutdown)
 		server.process();
-	
+
 	std::cout << std::endl << ANSI::bold << "shutdown" << ANSI::reset << std::endl;
 
 	return (0);

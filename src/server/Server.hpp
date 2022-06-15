@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 19:32:37 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 18:02:39 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ class Server
 		~Server();
 
 		void		process(void);
+
+		void		add_client(Client* client);
 
 		typedef	const std::string	(*f_reply)(const std::vector<std::string> &av);
 		static std::map<std::string, f_reply>	replies;
