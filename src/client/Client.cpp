@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:02 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:46:45 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,23 +132,22 @@ void	Client::receive(Server *server)
 			<< "\t| received:" << std::endl;
 
 	std::size_t	pos = this->_buffer_receive.find("\r\n");
+	if (pos == std::string::npos)
+		pos = this->_buffer_receive.find("\n");
 
 	while (pos != std::string::npos)
 	{
 		std::string	line = this->_buffer_receive.substr(0, pos);
-		std::cerr << line << "|line" << std::endl;
-		/*if (*line.rbegin() == '\n')
-			line.resize(line.size() - 1);*/
-		if (*(line.end() - 1) == '\n')
-			line = line.substr(0, line.find("\n"));
 
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << line << std::endl;
 		Cmd	c(line, this);
 		c.exec(server);
 
-		this->_buffer_receive.erase(0, pos + 2);
+		this->_buffer_receive.erase(0, this->_buffer_receive.find("\n") + 1);
 		pos = this->_buffer_receive.find("\r\n");
+		if (pos == std::string::npos)
+			pos = this->_buffer_receive.find("\n");
 	}
 }
 
