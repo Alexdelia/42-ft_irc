@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:58:25 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ void	Cmd::USER(const Cmd &c)
 		Server::reply(Reply::RPL_WELCOME, c.get_client(), c.get_client().get_prefix());
 	}
 	else
-		c.get_client().set_status(ONLINE);
+		c.get_client().set_status(REGISTER);
 }

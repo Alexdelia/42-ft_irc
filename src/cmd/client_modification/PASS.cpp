@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 19:09:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:00:12 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	Cmd::PASS(const Cmd &c)
 {
 	if (!c.get_arg().size())
 		return (Server::reply(Reply::ERR_NEEDMOREPARAMS, c.get_client()));
-	if (c.get_client().get_status() != INIT)
+	if (c.get_client().get_status() == ONLINE)
 	{
 		if (DEBUG)
 			std::cerr << s_debug("CMD", "PASS:\twrong status\t(")

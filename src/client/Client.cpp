@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 18:29:50 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:02:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,13 @@ void	Client::receive(Server *server)
 	{
 		std::string	line = this->_buffer_receive.substr(0, pos);
 
-		if (DEBUG)
-			std::cerr << s_debug("\t\t\t") << line << std::endl;
-		Cmd	c(line, this);
-		c.exec(server);
+		if (line.size())
+		{
+			if (DEBUG)
+				std::cerr << s_debug("\t\t\t") << line << std::endl;
+			Cmd	c(line, this);
+			c.exec(server);
+		}
 
 		this->_buffer_receive.erase(0, this->_buffer_receive.find("\n") + 1);
 		pos = this->_buffer_receive.find("\r\n");
