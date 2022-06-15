@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 16:42:57 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:19:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ class Cmd
 
 		const std::string				&get_cmd_name(void) const;
 		const std::vector<std::string>	&get_arg(void) const;
-		const std::string				&get_prefix(void) const;
+		const std::string				&get_trailing(void) const;
 
 	private:
 		Server	*_server;
@@ -51,7 +51,7 @@ class Cmd
 
 		std::string					_cmd_name;
 		std::vector<std::string>	_arg;
-		std::string					_prefix;
+		std::string					_trailing;
 
 		Cmd();	
 		Cmd(const Cmd &src);	

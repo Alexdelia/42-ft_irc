@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 19:01:01 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/12 15:27:01 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:26:31 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ namespace ANSI
 
 	static const std::string	time(		"\033[38;2;255;0;120m");
 	static const std::string	src(		"\033[38;2;255;229;196m");
-	static const std::string	prefix(		"\033[1;38;2;0;90;190m");
+	static const std::string	trailing(	"\033[1;38;2;0;90;190m");
 	static const std::string	cmd(		"\033[1;38;2;255;200;200m");
 	static const std::string	arg(		"\033[1;38;2;120;230;180m");
 	static const std::string	reply(		"\033[1;38;2;169;230;190m");

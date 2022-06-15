@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 19:10:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:25:14 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	Cmd::USER(const Cmd &c)
 		return (Server::reply(Reply::ERR_ALREADYREGISTRED, c.get_client()));
 
 	c.get_client().set_username(c.get_arg()[0]);
-	c.get_client().set_realname(c.get_prefix());
+	c.get_client().set_realname(c.get_trailing());
 	c.get_client().set_status(REGISTER);
 	//Server::reply(Reply::RPL_WELCOME, c.get_client(), c.get_client().get_prefix());
 }

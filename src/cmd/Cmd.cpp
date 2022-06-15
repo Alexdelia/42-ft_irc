@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 16:43:43 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:26:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ std::map<std::string, Cmd::f_cmd>	Cmd::cmds
 //	<crlf>     ::= CR LF
 
 Cmd::Cmd(const std::string &line, Client *sender):
-	_server(NULL), _client(sender), _cmd_name(""), _prefix("")
+	_server(NULL), _client(sender)
 {
 
 	std::vector<std::string>			e = ft_split(line + " ", " ");
 
 	if ((*e.begin())[0] == ':')
 	{
-		this->_prefix = std::string(&(*e.begin())[1]);
+		this->_trailing = std::string(&(*e.begin())[1]);
 		e.erase(e.begin());
 	}
 
@@ -53,11 +53,11 @@ Cmd::Cmd(const std::string &line, Client *sender):
 	{
 		if ((*e.begin())[0] == ':')	// need to check if take everything behind : , or only first word, or something else
 		{
-			this->_prefix = std::string(&(*e.begin())[1]);
+			this->_trailing = std::string(&(*e.begin())[1]);
 			e.erase(e.begin());
 			while (!e.empty())
 			{
-				this->_prefix += " " + std::string(&(*e.begin())[0]);
+				this->_trailing += " " + std::string(&(*e.begin())[0]);
 				e.erase(e.begin());
 			}
 		}	
@@ -96,9 +96,6 @@ void	Cmd::exec(Server *server)
 
 std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 {
-	if (src.get_prefix().length())
-		o << ANSI::prefix << ':' << src.get_prefix() << ANSI::reset << ' ';
-	
 	o << ANSI::cmd << src.get_cmd_name() << ANSI::reset;
 
 	std::vector<std::string>			cpy = src.get_arg();
@@ -109,6 +106,9 @@ std::ostream	&operator<<(std::ostream &o, const Cmd &src)
 		o << ' ' << ANSI::arg << *i << ANSI::reset;
 		++i;
 	}
+	
+	if (src.get_trailing().length())
+		o << ' ' << ANSI::trailing << ':' << src.get_trailing() << ANSI::reset;
 
 	return (o);
 }
@@ -121,5 +121,5 @@ const std::string				&Cmd::get_cmd_name(void) const
 { return (this->_cmd_name); }
 const std::vector<std::string>	&Cmd::get_arg(void) const
 { return (this->_arg); }
-const std::string				&Cmd::get_prefix(void) const
-{ return (this->_prefix); }
+const std::string				&Cmd::get_trailing(void) const
+{ return (this->_trailing); }

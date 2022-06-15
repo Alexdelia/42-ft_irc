@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 16:57:28 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:02 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,18 +136,20 @@ void	Client::receive(Server *server)
 	while (pos != std::string::npos)
 	{
 		std::string	line = this->_buffer_receive.substr(0, pos);
-		if (*line.rbegin() == '\n')
-			line.resize(line.size() - 1);
+		std::cerr << line << "|line" << std::endl;
+		/*if (*line.rbegin() == '\n')
+			line.resize(line.size() - 1);*/
+		if (*(line.end() - 1) == '\n')
+			line = line.substr(0, line.find("\n"));
 
 		if (DEBUG)
 			std::cerr << s_debug("\t\t\t") << line << std::endl;
-		Cmd	c(*i, this);
+		Cmd	c(line, this);
 		c.exec(server);
 
-		this->_buffer_receive.erase(0, pos);
+		this->_buffer_receive.erase(0, pos + 2);
+		pos = this->_buffer_receive.find("\r\n");
 	}
-
-	this->_buffer_receive.erase(0, to_clear);
 }
 
 std::ostream	&operator<<(std::ostream &o, const Client &src)
