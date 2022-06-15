@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:47:21 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:21:56 by jraffin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class Client
 {
 	public:
 		Client(const int fd, struct sockaddr_in addr);
-		~Client();
+		virtual ~Client();
 
 		void	write_buffer(const std::string &str);
 		void	write_to(Client &c, const std::string &msg);
@@ -67,7 +67,7 @@ class Client
 		const std::string	&get_username(void) const;
 		const std::string	&get_realname(void) const;
 
-	private:
+	protected:
 		bool		_op;
 		int			_fd;
 		int			_status;
@@ -83,6 +83,8 @@ class Client
 		std::string	_hostname;
 
 		Client();
+
+	private:
 		Client(const Client &src);
 		Client	&operator=(const Client &src);
 };
