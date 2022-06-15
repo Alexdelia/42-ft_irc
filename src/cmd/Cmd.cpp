@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 17:26:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:18:17 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ Cmd::Cmd(const std::string &line, Server *server, Client *client):
 
 	if (this->cmds.count(this->_cmd_name))
 		this->cmds[this->_cmd_name](*this);
-	else
+	else if (this->_cmd_name != "CAP"
+			&& this->_cmd_name != "MODE")
 	{
 		std::cerr << ANSI::bold << ANSI::yellow << "[WARNING]:\t" << ANSI::reset
 			<< ANSI::yellow << "command \"" << this->_cmd_name
