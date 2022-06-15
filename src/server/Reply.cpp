@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 19:36:47 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:02:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,6 @@ const std::string	Reply::r_ERR_UNKNOWNCOMMAND(const std::vector<std::string> &av
 
 const std::string	Reply::r_ERR_PASSWDMISMATCH(const std::vector<std::string> &av)
 { return (":Password incorrect"); (void)av; }
+
+const std::string	Reply::r_ERR_NOPRIVILEGES(const std::vector<std::string> &av)
+{ return (":Permission Denied- You're not an IRC operator"); (void)av; }

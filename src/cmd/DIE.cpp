@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   QUIT.cpp                                           :+:      :+:    :+:   */
+/*   DIE.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/28 15:55:48 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:33:31 by adelille         ###   ########.fr       */
+/*   Created: 2022/06/15 12:59:46 by adelille          #+#    #+#             */
+/*   Updated: 2022/06/15 13:16:59 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Cmd.hpp"
-#include "../../client/Client.hpp"
-#include "../../server/Server.hpp"
+#include "Cmd.hpp"
+#include "../client/Client.hpp"
+#include "../server/Server.hpp"
 
-void	Cmd::QUIT(const Cmd &c)
+extern bool	g_shutdown;
+
+void	Cmd::DIE(const Cmd &c)
 {
-	c.get_client().set_status(DELETE);
-	std::string	msg_to_all(":" + c.get_client().get_prefix()
-		+ " " + c.get_cmd_name());
-	if (c.get_prefix().size())
-		msg_to_all += " " + c.get_prefix();
-	c.get_server().write_all_buffers(msg_to_all);
+	if (!c.get_client().is_operator())
+		return (Server::reply(Reply::ERR_NOPRIVILEGES, c.get_client()));
+	
+	c.get_server().write_all_buffers(c.get_cmd_name());
+	g_shutdown = true;
 }

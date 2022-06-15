@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 19:35:53 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:47:34 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ Server::~Server()
 
 		while (i != get_clients().end())
 		{
-			_delete_client(*i->second);
+			Client	*current = i->second;
 			++i;
+			_delete_client(*current);
 		}
 	}
 
@@ -108,6 +109,11 @@ void	Server::process(void)
 			++i;
 			if (current->get_status() == DELETE)
 				_delete_client(*current);
+			else if (current->get_status() == KILLED)
+			{
+				current->send_buffer();
+				_delete_client(*current);
+			}
 		}
 
 		_handle_client_status();	// need to take care if that function change the status
@@ -166,6 +172,8 @@ void	Server::_init_m_cmd(void)
 	Cmd::cmds["JOIN"] = Cmd::JOIN;
 	Cmd::cmds["PART"] = Cmd::PART;
 	Cmd::cmds["OPER"] = Cmd::OPER;
+	Cmd::cmds["KILL"] = Cmd::KILL;
+	Cmd::cmds["DIE"] = Cmd::DIE;
 }
 
 void	Server::_init_m_reply(void)
@@ -186,6 +194,7 @@ void	Server::_init_m_reply(void)
 	Server::replies[Reply::ERR_NOTEXTTOSEND] = Reply::r_ERR_NOTEXTTOSEND;
 	Server::replies[Reply::ERR_UNKNOWNCOMMAND] = Reply::r_ERR_UNKNOWNCOMMAND;
 	Server::replies[Reply::ERR_PASSWDMISMATCH] = Reply::r_ERR_PASSWDMISMATCH;
+	Server::replies[Reply::ERR_NOPRIVILEGES] = Reply::r_ERR_NOPRIVILEGES;
 }
 
 void	Server::_init_m_oper(void)

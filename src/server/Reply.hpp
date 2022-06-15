@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:29:35 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/14 19:19:47 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:01:37 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ namespace Reply
 	static const std::string	ERR_ALREADYREGISTRED(	"462");
 	static const std::string	ERR_PASSWDMISMATCH(		"464");
 	const std::string	r_ERR_PASSWDMISMATCH(const std::vector<std::string> &av);
+	static const std::string	ERR_NOPRIVILEGES(		"481");
+	const std::string	r_ERR_NOPRIVILEGES(const std::vector<std::string> &av);
 };
 
 #endif

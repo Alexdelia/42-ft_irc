@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jraffin <jraffin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/13 16:40:29 by jraffin          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:32:31 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,7 +204,12 @@ std::string	Client::get_prefix(void) const
 {
 	if (this->_status != ONLINE
 			|| !this->get_host().length())
-		return (std::string(""));
+	{
+		if (this->_nickname.size())
+			return (this->_nickname);
+		else
+			return (std::string(""));
+	}
 
 	std::string	prefix = this->_nickname;
 
