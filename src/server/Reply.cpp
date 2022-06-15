@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:52:44 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:02:36 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:51:21 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ const std::string	Reply::r_ERR_NOTEXTTOSEND(const std::vector<std::string> &av)
 
 const std::string	Reply::r_ERR_UNKNOWNCOMMAND(const std::vector<std::string> &av)
 { return (av[0] + " :Unknown command"); }
+
+const std::string	Reply::r_ERR_NICKNAMEINUSE(const std::vector<std::string> &av)
+{ return (av[0] + " :Nickname is already in use"); }
 
 const std::string	Reply::r_ERR_PASSWDMISMATCH(const std::vector<std::string> &av)
 { return (":Password incorrect"); (void)av; }
