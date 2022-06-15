@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:47:34 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:12:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ void	Server::process(void)
 	}
 
 	// might display client on server
-
-	debug("SERVER", "processed");
 }
 
 Config				&Server::get_config(void)

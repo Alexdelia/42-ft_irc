@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 15:22:04 by adelille          #+#    #+#             */
-/*   Updated: 2022/05/11 13:59:42 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:12:44 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,7 @@ int	main(int ac, char **av)
 	std::cout << ANSI::bold << "launched" << ANSI::reset << std::endl;
 
 	while (!g_shutdown)
-	{
 		server.process();
-		if (DEBUG)
-			std::cerr << s_debug("")
-				<< s_time(std::time(NULL) - server.get_start_time())
-				<< ANSI::red << "\tloop" << ANSI::reset << std::endl;
-	}
 	
 	std::cout << std::endl << ANSI::bold << "shutdown" << ANSI::reset << std::endl;
 
