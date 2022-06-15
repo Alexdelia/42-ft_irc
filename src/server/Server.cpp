@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 21:13:04 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 23:39:00 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ Client	*Server::get_client(const std::string &nickname)
 
 Channel*					Server::get_channel(const std::string& chan_name)
 {
-	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	std::map<std::string, Channel>::iterator	it = _channels.find(irc_tolower(chan_name));
 	if (it == _channels.end())
 		return NULL;
 	return &it->second;
@@ -235,13 +235,13 @@ void	Server::_init_m_oper(void)
 
 void						Server::join_channel(const std::string& chan_name, Client& client)
 {
-	Channel&	chan = _channels[chan_name];
+	Channel&	chan = _channels[irc_tolower(chan_name)];
 	chan.add(client, chan.is_operator(client));
 }
 
 void						Server::leave_channel(const std::string& chan_name , Client& client)
 {
-	std::map<std::string, Channel>::iterator	it = _channels.find(chan_name);
+	std::map<std::string, Channel>::iterator	it = _channels.find(irc_tolower(chan_name));
 	if (it == _channels.end())
 		return;
 	it->second.del(client);
