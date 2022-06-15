@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 17:04:24 by adelille          #+#    #+#             */
-/*   Updated: 2022/06/15 13:32:31 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:07:36 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ void	Client::receive(Server *server)
 	}
 
 	std::vector<std::string>			lines = ft_split(this->_buffer_receive, "\r\n");
-
 	std::vector<std::string>::iterator	i = lines.begin();
+	std::size_t							to_clear = 0;
 
 	if (DEBUG)
 		std::cerr << s_debug("CLIENT", "| ") << this->_fd
@@ -133,6 +133,8 @@ void	Client::receive(Server *server)
 
 	while (i != lines.end())
 	{
+		to_clear += i->size() + 2;
+
 		if (*(i->end() - 1) == '\n')
 			*i = i->substr(0, i->find("\n"));
 		if (DEBUG)
@@ -141,7 +143,7 @@ void	Client::receive(Server *server)
 		++i;
 	}
 
-	this->_buffer_receive.clear();
+	this->_buffer_receive.erase(0, to_clear);
 }
 
 std::ostream	&operator<<(std::ostream &o, const Client &src)
