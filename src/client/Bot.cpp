@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:13 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/16 14:06:33 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:28:55 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ ssize_t	Bot::send_buffer(void)
 			else
 				msg = "You have to play either \"rock\", \"paper\" or \"scissors\".";
 			std::string	buf("NOTICE " + nick + " :" + msg + "\r\n");
-			if (msg.size() <= 7)
+			if (msg.size() <= 8)
 			{
 				msg = rps_win_msg(client_move, bot_move);
 				buf += "NOTICE " + nick + " :" + msg + "\r\n";
