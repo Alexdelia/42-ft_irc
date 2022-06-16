@@ -6,7 +6,7 @@
 /*   By: adelille <adelille@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:02:13 by jraffin           #+#    #+#             */
-/*   Updated: 2022/06/15 22:25:23 by adelille         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:06:33 by adelille         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "Bot.hpp"
 #include "Cmd.hpp"
 
-Bot::Bot(const std::string name) throw (PipeErrorException)
+Bot::Bot(const std::string &name) throw (PipeErrorException)
 {
 	int pipefd[2];
 
